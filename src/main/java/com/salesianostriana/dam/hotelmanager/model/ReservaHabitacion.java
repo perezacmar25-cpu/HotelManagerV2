@@ -26,6 +26,11 @@ public class ReservaHabitacion {
     @ManyToOne
     @JoinColumn(name = "habitacion_id")
     private Habitacion habitacion;
+    
+    @ManyToOne 
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+  
 
    
 

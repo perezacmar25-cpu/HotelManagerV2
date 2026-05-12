@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
 
 public class Cliente {
 	

@@ -19,18 +19,23 @@ public class ClienteController {
 
 	 private final ClienteService clienteService;
 
-	 @GetMapping("/inicio")
+	 @GetMapping("/registro")
 	    public String formulario(Model model) {
+		 	model.addAttribute("cliente", new Cliente());
 	        return "cliente";
 	    }
 
 	    @PostMapping("/nuevo")
 	    public String guardar(@ModelAttribute Cliente cliente ,Model model) {
-	    	model.addAttribute("cliente", new Cliente("", "", "", ""));
 	        clienteService.save(cliente);
 	        return "redirect:/";
 	
-	
-	
 }
+	    
+	    
+	    @GetMapping("/")
+	    public String listar(Model model) {
+	        model.addAttribute("clientes", clienteService.findAll());
+	        return "clientes";
+	    }
 }
