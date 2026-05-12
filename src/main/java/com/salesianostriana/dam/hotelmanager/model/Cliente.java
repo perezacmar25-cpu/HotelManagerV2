@@ -6,19 +6,19 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@Data
+
 public class Cliente {
 	
 
 
-	public Cliente(String dni, String nombre, String email, String telefono) {
-		super();
-		this.dni = dni;
-		this.nombre = nombre;
-		this.email = email;
-		this.telefono = telefono;
-	}
 
 	@Id 
 	private String dni;
@@ -30,6 +30,7 @@ public class Cliente {
 	private String telefono;
 	
 	@OneToMany(mappedBy="cliente")
+	@Builder.Default
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();
 	
 	
