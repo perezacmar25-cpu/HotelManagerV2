@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.hotelmanager.controller;
+	package com.salesianostriana.dam.hotelmanager.controller;
 
 import org.springframework.stereotype.Controller;
 
