@@ -41,10 +41,7 @@ public class ClienteController {
 	    }
 	    
 	       
-		     @GetMapping("/")
-		     public String indice() {
-		    	 return "index";
-		     }
+		     
 	    
 	    
 	    
