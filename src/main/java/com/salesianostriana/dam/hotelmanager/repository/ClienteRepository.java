@@ -1,8 +1,11 @@
 package com.salesianostriana.dam.hotelmanager.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class ClienteRepository {
+import com.salesianostriana.dam.hotelmanager.model.Cliente;
 
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, String> {
+	
 }
