@@ -1,8 +1,12 @@
 package com.salesianostriana.dam.hotelmanager.service;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import com.salesianostriana.dam.hotelmanager.model.Habitacion;
+import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
+
 @Service
-public class HabitacionService {
+public class HabitacionService extends BaseServiceImpl<Habitacion, Integer, JpaRepository<Habitacion,Integer>>{
 
 }
