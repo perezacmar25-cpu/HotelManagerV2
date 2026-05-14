@@ -14,18 +14,18 @@ import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("/reserva")
+@RequiredArgsConstructor
 public class ReservaHabitacionController {
 
-    @Autowired
-    private HabitacionService habitacionService; 
+    private final HabitacionService habitacionService; 
 
-    @Autowired
-    private ReservaService reservaService;
+    private final ReservaService reservaService;
     
-    @Autowired
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
 
     @GetMapping("/nueva")
     public String crearReservaForm(Model model) {

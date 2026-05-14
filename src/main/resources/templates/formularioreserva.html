@@ -38,6 +38,29 @@
 									<input type="date" th:field="*{fechaFin}" class="form-control" required>
 								</div>
 							</div>
+							<div>
+								<label class="form-label">Número de Personas:</label>
+								<input type="number" th:field="*{numPersonas}" class="form-control"
+									placeholder="Escriba el número de personas" required>
+							</div>
+							<div>
+								<label class="form-label">Tipo de Habitación:</label>
+								<select th:field="*{tipo}" class="form-select" required>
+									<option value="" disabled selected>Seleccione un tipo de habitación</option>
+									<option value="Individual">Individual</option>
+									<option value="Double">Double</option>
+									<option value="Suite">Suite</option>
+								</select>
+							</div>
+							<div>
+								<label for="">Servicio</label>
+								<select th:field="*{nomber.servicio}" class="form-select" required>
+									<option value="" disabled selected>Seleccione un servicio</option>
+									<option value="Futbol">Pista de fútbol</option>
+									<option value="Padel">Pista de pádel</option>
+									<option value="Arco">Tiro con arco</option>
+									<option value="Spa">Spa</option>
+							</div>
 
 							<div class="d-grid gap-2 mt-3">
 								<button type="submit" class="btn btn-success">Confirmar Reserva</button>

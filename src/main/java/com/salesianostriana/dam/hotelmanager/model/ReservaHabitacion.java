@@ -24,11 +24,15 @@ public class ReservaHabitacion {
     @Id @GeneratedValue
     private Long id;
 
-    private String estado;
-
-    private double costeServicios;
+    private EstadoReserva estado;
 
     private String observaciones;
+    
+    private boolean futbol;
+    private boolean padel;
+    private boolean arco;
+    private boolean spa;
+
 
     @ManyToOne 
     @JoinColumn(name = "reserva_id")

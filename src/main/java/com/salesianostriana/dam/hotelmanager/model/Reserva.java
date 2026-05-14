@@ -30,8 +30,8 @@ public class Reserva {
 	private LocalDate fechaFin;
 	
 	private double precioTotal;
-	
-	private EstadoReserva estado;
+
+	private int numeroPersonas;
 	
 	@ManyToOne
 	@JoinColumn(name ="cliente_dni")
