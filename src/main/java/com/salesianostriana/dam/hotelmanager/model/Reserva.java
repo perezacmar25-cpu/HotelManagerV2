@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,7 @@ public class Reserva {
 
 	private int numeroPersonas;
 	
+	
 	@ManyToOne
 	@JoinColumn(name ="cliente_dni")
 	private Cliente cliente;
@@ -41,7 +44,21 @@ public class Reserva {
 	@OneToMany(mappedBy = "reserva")
 	private List<ReservaHabitacion> listadoReservaHab = new ArrayList<>();
 	
-	
+	 @ManyToMany
+	    @JoinTable(
+	        name = "reserva_servicio",
+	        joinColumns = @JoinColumn(name = "reserva_id"),
+	        inverseJoinColumns = @JoinColumn(name = "servicio_id")
+	    )
+	    @Builder.Default
+	    private List<Servicio> servicios = new ArrayList<>();
+
+
+	    public double calcularPrecioServicios() {
+	        return servicios.stream()
+	            .mapToDouble(Servicio::getPrecio)
+	            .sum();
+	    }
 	
 	
 
