@@ -30,6 +30,11 @@ public class ReservaController {
 	        return "redirect:/reservas";
 	    }
 	
+	   @GetMapping()
+	   public String eliminarReserva(@PathVariable Long id) {
+		   reservaService.deleteById(id);
+		   return "redirect:/reservas";
+	   }
 	
 	
 	
