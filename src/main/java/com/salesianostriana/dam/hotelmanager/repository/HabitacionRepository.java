@@ -30,4 +30,6 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
 		        @Param("fechaInicio") LocalDate fechaInicio,
 		        @Param("fechaFin") LocalDate fechaFin
 		);
+	
+	 List<Habitacion> findByTipo(String tipo);
 }

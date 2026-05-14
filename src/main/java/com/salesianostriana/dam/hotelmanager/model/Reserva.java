@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,44 +34,43 @@ public class Reserva {
     private LocalDate fechaFin;
     private double precioTotal;
     private int numeroPersonas;
-    private Habitacion habitacion;
 
-    
     @ManyToOne
     @JoinColumn(name = "cliente_dni")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "reserva")
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ReservaHabitacion> listadoReservaHab = new ArrayList<>();
 
-    
     @ManyToMany
     @JoinTable(
             name = "reserva_servicio",
             joinColumns = @JoinColumn(name = "reserva_id"),
             inverseJoinColumns = @JoinColumn(name = "servicio_id")
     )
-    
     @Builder.Default
     private List<Servicio> servicios = new ArrayList<>();
 
+   
     public double calcularPrecioTotal() {
-        if (habitacion == null || fechaInicio == null || fechaFin == null || !fechaFin.isAfter(fechaInicio)) {
+        if (fechaInicio == null || fechaFin == null || !fechaFin.isAfter(fechaInicio)) {
             return 0.0;
         }
 
         long dias = fechaFin.toEpochDay() - fechaInicio.toEpochDay();
-        
-        
-        double totalHabitacion = dias * habitacion.getPrecioNoche();
-        
-        
-        double totalServicios = servicios.stream()
-                                         .mapToDouble(Servicio::getPrecio)
-                                         .sum();
 
-        this.precioTotal = totalHabitacion + totalServicios;
-        
+
+        double totalHabitaciones = listadoReservaHab.stream()
+                .mapToDouble(rh -> rh.getHabitacion().getPrecioNoche() * dias)
+                .sum();
+
+
+        double totalServicios = servicios.stream()
+                .mapToDouble(Servicio::getPrecio)
+                .sum();
+
+        this.precioTotal = totalHabitaciones + totalServicios;
+
         return precioTotal;
     }
 }

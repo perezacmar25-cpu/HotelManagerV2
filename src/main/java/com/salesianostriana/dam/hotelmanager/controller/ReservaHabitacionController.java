@@ -4,11 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
+import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
@@ -26,13 +31,10 @@ public class ReservaHabitacionController {
     private final ClienteService clienteService;
     private final ServicioService servicioService;
 
-    //Le he preguntado a la ia:
-    private static final List<String> TIPOS =
-            List.of("Individual", "Doble", "Suite");
+    private static final List<String> TIPOS = List.of("Individual", "Doble", "Suite");
 
     @GetMapping("/nueva")
-    public String crearReservaForm(Model model) {
-
+    public String mostrarFormulario(Model model) {
         Reserva r = new Reserva();
         r.setCliente(new Cliente());
 
@@ -50,6 +52,7 @@ public class ReservaHabitacionController {
             @RequestParam(required = false) String tipoHabitacion,
             Model model) {
 
+        // Validación básica
         if (reserva.getFechaInicio() == null ||
             reserva.getFechaFin() == null ||
             tipoHabitacion == null || tipoHabitacion.isBlank() ||
@@ -62,36 +65,68 @@ public class ReservaHabitacionController {
             return "formularioreserva";
         }
 
-        List<Habitacion> disponibles = habitacionService.findDisponibles(
+        // Buscar habitaciones disponibles
+        List<Habitacion> disponibles = habitacionService.buscarDisponibles(
                 tipoHabitacion,
                 reserva.getFechaInicio(),
                 reserva.getFechaFin()
         );
 
         if (disponibles.isEmpty()) {
-
-            model.addAttribute("error", "No hay habitaciones disponibles");
+            model.addAttribute("error", "No hay habitaciones libres");
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("servicios", servicioService.findAll());
             return "formularioreserva";
         }
 
-        Cliente cliente = clienteService.findById(reserva.getCliente().getDni())
+        Habitacion habitacionElegida = disponibles.get(0);
+
+        // Verificar si ya está reservada con el servicio actual
+        boolean yaReservada = reservaService.estaReservada(
+                habitacionElegida.getNumero(),
+                reserva.getFechaInicio(),
+                reserva.getFechaFin()
+        );
+
+        if (yaReservada) {
+            model.addAttribute("error", "La habitación ya está ocupada en esas fechas");
+            model.addAttribute("tiposHabitacion", TIPOS);
+            model.addAttribute("servicios", servicioService.findAll());
+            return "formularioreserva";
+        }
+
+        // Crear relación reserva-habitación
+        ReservaHabitacion rH = new ReservaHabitacion();
+        rH.setHabitacion(habitacionElegida);
+        rH.setReserva(reserva);
+
+        reserva.getListadoReservaHab().add(rH);
+
+        // Guardar cliente si no existe
+        Cliente clienteExistente = clienteService.findById(reserva.getCliente().getDni())
                 .orElse(null);
 
-        if (cliente != null) {
-            reserva.setCliente(cliente);
+        if (clienteExistente != null) {
+            reserva.setCliente(clienteExistente);
         } else {
             clienteService.save(reserva.getCliente());
         }
 
+        // Asignar servicios si los hay
         if (serviciosIds != null) {
-            reserva.setServicios(servicioService.findAllById(serviciosIds));
+            reserva.setServicios(servicioService.buscarTodosPorId(serviciosIds));
         }
-        
-        reserva.calcularPrecioTotal();
 
-        reservaService.save(reserva);
+        // Calcular precio total y guardar reserva
+        reserva.calcularPrecioTotal();
+        boolean guardado = reservaService.guardar(reserva);
+
+        if (!guardado) {
+            model.addAttribute("error", "La habitación ya está reservada en esas fechas");
+            model.addAttribute("tiposHabitacion", TIPOS);
+            model.addAttribute("servicios", servicioService.findAll());
+            return "formularioreserva";
+        }
 
         return "redirect:/reserva/exito";
     }
