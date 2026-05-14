@@ -18,19 +18,19 @@ public class ReservaController {
 
 	private final ReservaService reservaService;
 	
-	   @GetMapping("editar/{id}")
+	   @GetMapping("/editar/{id}")
 	    public String editarReservaForm(@PathVariable Long id, Model model) {
 	        reservaService.findById(id).ifPresent(r -> model.addAttribute("reserva", r));
 	        return "editarReserva";
 	    }
 	   
-	   @PostMapping("editar/{id}")
+	   @PostMapping("/editar/{id}")
 	    public String editarReserva(@PathVariable Long id, @ModelAttribute Reserva reserva) {
 	        reservaService.save(reserva);
 	        return "redirect:/reservas";
 	    }
 	
-	   @GetMapping()
+	   @GetMapping("/{id}/eliminar")
 	   public String eliminarReserva(@PathVariable Long id) {
 		   reservaService.deleteById(id);
 		   return "redirect:/reservas";
