@@ -2,56 +2,114 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Hospedium - Reserva</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Reserva</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
 
-	<div class="container mt-5">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
+<div class="container mt-5">
 
-				<div class="card shadow">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-					<div class="card-header bg-primary text-white text-center">
-						<h4 class="mb-0">Formulario de Reserva</h4>
-					</div>
+            <div class="card shadow-sm border-0">
 
-					<div class="card-body p-4">
-						<form th:action="@{/reserva/confirmar}" th:object="${reserva}" method="post">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Formulario de reserva</h5>
+                </div>
 
-							<div class="mb-3">
-								<label class="form-label">DNI del Cliente:</label>
-								<input type="text" th:field="*{cliente.dni}" class="form-control"
-									placeholder="Escriba el DNI" required>
-							</div>
+                <div class="card-body">
 
-							<div class="row">
-								<div class="col-md-6 mb-3">
-									<label class="form-label">Fecha Entrada:</label>
-									<input type="date" th:field="*{fechaInicio}" class="form-control" required>
-								</div>
-								<div class="col-md-6 mb-3">
-									<label class="form-label">Fecha Salida:</label>
-									<input type="date" th:field="*{fechaFin}" class="form-control" required>
-								</div>
-							</div>
+                    <div th:if="${error}" class="alert alert-danger">
+                        <span th:text="${error}"></span>
+                    </div>
 
-							<div class="d-grid gap-2 mt-3">
-								<button type="submit" class="btn btn-success">Confirmar Reserva</button>
-								<a href="/" class="btn btn-danger">Cancelar</a>
-							</div>
+                    <form th:action="@{/reserva/confirmar}" th:object="${reserva}" method="post">
 
-						</form>
-					</div>
+                        <div class="mb-3">
+                            <label class="form-label">DNI</label>
+                            <input type="text" th:field="*{cliente.dni}" class="form-control" required>
+                        </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
+                        <div class="row mb-3">
+
+                            <div class="col">
+                                <label class="form-label">Entrada</label>
+                                <input type="date" th:field="*{fechaInicio}" class="form-control" required>
+                            </div>
+
+                            <div class="col">
+                                <label class="form-label">Salida</label>
+                                <input type="date" th:field="*{fechaFin}" class="form-control" required>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Número de personas</label>
+                            <input type="number" th:field="*{numeroPersonas}" min="1" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de habitación</label>
+
+			
+							<select name="tipoHabitacion" class="form-select" required>
+							    <option value="" disabled selected>Seleccione...</option>
+
+							    <option th:each="t : ${tiposHabitacion}"
+							            th:value="${t}"
+							            th:text="|${t}">
+							    </option>
+							</select>
+                        </div>
+
+                        <hr>
+
+                        <div class="mb-2">
+                            <strong>Servicios adicionales</strong>
+                        </div>
+
+                        <div class="row">
+
+                            <div th:each="s : ${servicios}" class="col-6 mb-2">
+
+                                <div class="border rounded p-2 d-flex align-items-center gap-2">
+
+                                    <input type="checkbox"
+                                           name="serviciosIds"
+                                           th:value="${s.id}">
+
+                                    <span th:text="${s.nombre}"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Confirmar reserva
+                        </button>
+
+                        <a href="/" class="btn btn-outline-secondary w-100 mt-2">
+                            Cancelar
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
 </body>
-
 </html>

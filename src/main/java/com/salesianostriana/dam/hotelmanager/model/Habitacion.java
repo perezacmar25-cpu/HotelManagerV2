@@ -26,6 +26,8 @@ public class Habitacion {
 	
 	private double precioNoche;
 	
+	private boolean disponible;
+	
 	
 	@OneToMany(mappedBy = "habitacion")
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();
