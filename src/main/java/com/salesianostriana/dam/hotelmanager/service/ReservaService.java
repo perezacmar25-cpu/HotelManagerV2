@@ -13,22 +13,5 @@ public class ReservaService {
 
     private final ReservaRepository reservaRepo;
 
-    public boolean guardar(Reserva r) {
-        for (ReservaHabitacion rh : r.getListadoReservaHab()) {
-            boolean ocupada = reservaRepo.existeReservaParaHabitacionYFechas(
-                rh.getHabitacion().getNumero(),
-                r.getFechaFin(),
-                r.getFechaInicio()
-            );
-            if (ocupada) {
-                return false;
-            }
-        }
-        reservaRepo.save(r);
-        return true;
-    }
-
-    public boolean estaReservada(int habitacionId, LocalDate inicio, LocalDate fin) {
-        return reservaRepo.existeReservaParaHabitacionYFechas(habitacionId, fin, inicio);
-    }
+   
 }

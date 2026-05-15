@@ -19,20 +19,7 @@ public class HabitacionService extends BaseServiceImpl<Habitacion, Integer, JpaR
 	
     private final HabitacionRepository habitacionRepository;
 
-    public boolean fechasSeSolapan(LocalDate inicioExistente, LocalDate finExistente,
-            LocalDate inicioNueva, LocalDate finNueva) {
-        return !finNueva.isBefore(inicioExistente) && !inicioNueva.isAfter(finExistente);
-    }
+  
     
-    public List<Habitacion> buscarDisponibles(String tipo, LocalDate inicio, LocalDate fin) {
-        return habitacionRepository.findByTipo(tipo).stream()
-            .filter(h -> h.getListadoReservas().stream()
-                .noneMatch(rh -> fechasSeSolapan(
-                    rh.getReserva().getFechaInicio(),
-                    rh.getReserva().getFechaFin(),
-                    inicio, fin
-                ))
-            )
-            .toList();
-    }
+   
 }

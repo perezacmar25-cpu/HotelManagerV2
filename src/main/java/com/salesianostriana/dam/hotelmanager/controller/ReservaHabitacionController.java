@@ -52,7 +52,7 @@ public class ReservaHabitacionController {
             @RequestParam(required = false) String tipoHabitacion,
             Model model) {
 
-        // Validación básica
+        
         if (reserva.getFechaInicio() == null ||
             reserva.getFechaFin() == null ||
             tipoHabitacion == null || tipoHabitacion.isBlank() ||
@@ -65,7 +65,7 @@ public class ReservaHabitacionController {
             return "formularioreserva";
         }
 
-        // Buscar habitaciones disponibles
+        
         List<Habitacion> disponibles = habitacionService.buscarDisponibles(
                 tipoHabitacion,
                 reserva.getFechaInicio(),
@@ -81,7 +81,7 @@ public class ReservaHabitacionController {
 
         Habitacion habitacionElegida = disponibles.get(0);
 
-        // Verificar si ya está reservada con el servicio actual
+        
         boolean yaReservada = reservaService.estaReservada(
                 habitacionElegida.getNumero(),
                 reserva.getFechaInicio(),
@@ -95,14 +95,14 @@ public class ReservaHabitacionController {
             return "formularioreserva";
         }
 
-        // Crear relación reserva-habitación
+        
         ReservaHabitacion rH = new ReservaHabitacion();
         rH.setHabitacion(habitacionElegida);
         rH.setReserva(reserva);
 
         reserva.getListadoReservaHab().add(rH);
 
-        // Guardar cliente si no existe
+        
         Cliente clienteExistente = clienteService.findById(reserva.getCliente().getDni())
                 .orElse(null);
 
@@ -112,12 +112,12 @@ public class ReservaHabitacionController {
             clienteService.save(reserva.getCliente());
         }
 
-        // Asignar servicios si los hay
+        
         if (serviciosIds != null) {
             reserva.setServicios(servicioService.buscarTodosPorId(serviciosIds));
         }
 
-        // Calcular precio total y guardar reserva
+        
         reserva.calcularPrecioTotal();
         boolean guardado = reservaService.guardar(reserva);
 
