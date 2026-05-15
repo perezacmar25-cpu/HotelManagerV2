@@ -31,6 +31,10 @@ public class Cliente {
 	
 	private String telefono;
 	
+	private String username;
+	
+	private String password;
+	
 	@OneToMany(mappedBy="cliente")
 	@Builder.Default
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();

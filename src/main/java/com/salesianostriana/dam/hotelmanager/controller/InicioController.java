@@ -26,7 +26,7 @@ public class InicioController {
 
     @GetMapping("/login")
     public String formularioRegistro() {
-        return "index"; 
+        return "formlogin"; 
     }
     
     
