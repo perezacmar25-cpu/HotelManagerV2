@@ -33,6 +33,11 @@ public class ClienteController {
 }
 	    
 	    
+	    public String login(Model model) {
+	    	
+	    }
+	    
+	    
 	    @GetMapping("/clientes")
 	    public String listar(Model model) {
 	        model.addAttribute("clientes", clienteService.findAll());

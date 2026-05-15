@@ -2,14 +2,17 @@ package com.salesianostriana.dam.hotelmanager.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
+import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 @Configuration
 public class DataSeed {
     @Bean
-    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer) {
+    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer,ClienteService cliSer) {
         return args -> {
             if (habSer.findAll().isEmpty()) {
             
@@ -63,6 +66,17 @@ public class DataSeed {
                 serSer.save(Servicio.builder().nombre("Spa").precio(40).build());
                 serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).build());
                 serSer.save(Servicio.builder().nombre("Wifi").precio(0).build());
+            }
+            
+            if(cliSer.findAll().isEmpty()) {
+            	cliSer.save(Cliente.builder()
+            			.dni("77854783U")
+            			.email("mario@gmail.com")
+            			.telefono("667555489")
+            			.nombre("Mario")
+            			.password("Mario")
+            			.username("Mario")
+            			.build());
             }
         };
     }
