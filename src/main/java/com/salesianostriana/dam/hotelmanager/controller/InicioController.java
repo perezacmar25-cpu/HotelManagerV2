@@ -28,4 +28,6 @@ public class InicioController {
     public String formularioRegistro() {
         return "index"; 
     }
+    
+    
 }

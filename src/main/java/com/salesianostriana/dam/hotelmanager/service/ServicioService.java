@@ -12,7 +12,5 @@ import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
 public class ServicioService extends BaseServiceImpl<Servicio, Long, ServicioRepository> {
 
 
-    public List<Servicio> buscarTodosPorId(List<Long> ids) {
-        return repository.findAllById(ids);
-    }
+
 }

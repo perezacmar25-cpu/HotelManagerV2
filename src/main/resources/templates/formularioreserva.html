@@ -55,14 +55,15 @@
                         <div class="mb-3">
                             <label class="form-label">Tipo de habitación</label>
 
-                            <select name="tipoHabitacion" class="form-select" required>
-                                <option value="" disabled selected>Seleccione...</option>
+			
+							<select name="tipoHabitacion" class="form-select" required>
+							    <option value="" disabled selected>Seleccione...</option>
 
-                                <option th:each="t : ${tiposHabitacion}"
-                                        th:value="${t}"
-                                        th:text="${t}">
-                                </option>
-                            </select>
+							    <option th:each="t : ${tiposHabitacion}"
+							            th:value="${t}"
+							            th:text="|${t}">
+							    </option>
+							</select>
                         </div>
 
                         <hr>

@@ -34,6 +34,7 @@ public class Reserva {
     private LocalDate fechaFin;
     private double precioTotal;
     private int numeroPersonas;
+    
 
     @ManyToOne
     @JoinColumn(name = "cliente_dni")

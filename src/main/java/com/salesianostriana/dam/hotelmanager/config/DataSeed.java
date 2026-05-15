@@ -13,48 +13,48 @@ public class DataSeed {
         return args -> {
             if (habSer.findAll().isEmpty()) {
             
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
 
             
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
 
               
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
             }
             if (serSer.findAll().isEmpty()) {
                 serSer.save(Servicio.builder().nombre("Pista de fútbol").precio(15.0).build());
