@@ -22,19 +22,19 @@
 
 					<div class="card-body">
 
-						<!-- Mensaje de error si algo falla -->
+						
 						<div th:if="${error}" class="alert alert-danger">
 							<span th:text="${error}"></span>
 						</div>
 
-						<!-- Mostramos el nombre del cliente logueado, no hace falta que lo rellene -->
+						
 						<div class="alert alert-info py-2">
 							Reservando como: <strong th:text="${nombreCliente}"></strong>
 						</div>
 
 						<form th:action="@{/reserva/confirmar}" th:object="${reserva}" method="post">
 
-							<!-- El DNI lo mandamos oculto, no lo tiene que rellenar el usuario -->
+							
 							<input type="hidden" th:field="*{cliente.dni}">
 
 							<div class="row mb-3">
