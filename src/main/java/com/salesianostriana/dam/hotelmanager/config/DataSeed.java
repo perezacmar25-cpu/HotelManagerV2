@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
+import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
@@ -74,8 +75,9 @@ public class DataSeed {
             			.email("mario@gmail.com")
             			.telefono("667555489")
             			.nombre("Mario")
-            			.password("Mario")
+            			.password("{noop}Mario")
             			.username("Mario")
+            			.rol(RolUsuario.USER)
             			.build());
             }
         };

@@ -21,6 +21,13 @@
 	                <li class="nav-item"><a class="nav-link" href="#hotelCarousel">Inicio</a></li>
 	                <li class="nav-item"><a class="nav-link" href="#estancias">Habitaciones</a></li>
 	                <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+					<li class="nav-item ms-2">
+					    <form th:action="@{/logout}" method="post">
+					        <button type="submit" class="btn btn-outline-danger btn-sm px-4">
+					            Cerrar sesión
+					        </button>
+					    </form>
+					</li>
 	                <li class="nav-item ms-2">
 	                    <a class="btn btn-outline-light btn-sm px-4" th:href="@{/reserva/nueva}">Reservar</a>
 	                </li>
