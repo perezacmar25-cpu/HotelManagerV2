@@ -57,7 +57,7 @@
 		<div class="row g-4">
 			<div class="col-md-4" th:each="hab : ${habitaciones}">
 				<div class="card border-0 shadow-sm rounded-0 h-100">
-					<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}" class="card-img-top rounded-0 object-fit-cover" alt="Habitación">
+					<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}" class="card-img-top rounded-0 object-fit-cover w-100 h-100" alt="Habitación">
 
 					<div class="card-body p-4 text-dark">
 						<h5 class="card-title text-uppercase fw-bold" th:text="${hab.tipo}">Tipo</h5>

@@ -1,18 +1,23 @@
 package com.salesianostriana.dam.hotelmanager.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
+
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -38,6 +43,8 @@ public class ReservaHabitacionController {
 
 
         return "formularioreserva";
+        
+        
     }
 
     @PostMapping("/confirmar")
@@ -59,9 +66,6 @@ public class ReservaHabitacionController {
             model.addAttribute("servicios", servicioService.findAll());
             return "formularioreserva";
         }
-
-
-        
         Cliente clienteExistente = clienteService.findById(reserva.getCliente().getDni())
                 .orElse(null);
 
@@ -75,11 +79,7 @@ public class ReservaHabitacionController {
         if (serviciosIds != null) {
             reserva.setServicios(servicioService.findAll());
         }
-
-       
         reserva.calcularPrecioTotal();
-
-        
         Reserva guardada = reservaService.save(reserva);
 
         if (guardada == null) {
@@ -90,6 +90,41 @@ public class ReservaHabitacionController {
         }
 
         return "redirect:/reserva/exito";
+    }
+    
+    @GetMapping("/editar/{id}")
+    public String modificarReserva(@PathVariable("id") Long id, Model model) {
+    	
+    	Optional<Reserva> reserva = reservaService.findById(id);
+    	
+    	if(reserva.isPresent()) {
+    		model.addAttribute("reserva", reserva.get());
+    		return "admin/formularioreserva";
+    	}else {
+    		return "admin/reservas";
+    	}
+    	
+    }
+    
+    public String borrarReserva(@PathVariable("id") Long id, Model model) {
+    	
+    	Optional <Reserva> reserva = reservaService.findById(id);
+
+		if (reserva.isPresent()) {
+			reservaService.delete(reserva.get());
+		}
+		return "redirect:/admin/reservas/";
+    	
+    }
+    
+    public String listarReservas(Model model) {
+    	model.addAttribute("reservas", reservaService.findAll());
+    	return "reservas";
+    }
+    
+    @GetMapping("/formreserva")
+    public String redirigirReserva() {
+        return "formularioreserva";
     }
 
     @GetMapping("/exito")
