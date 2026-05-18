@@ -11,43 +11,44 @@
 <body class="bg-light">
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-	    <div class="container">
-	        <a class="navbar-brand fw-bold" href="#">HOSPEDIUM</a>
-	        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-	            <span class="navbar-toggler-icon"></span>
-	        </button>
-	        <div class="collapse navbar-collapse" id="navbarNav">
-	            <ul class="navbar-nav ms-auto text-uppercase align-items-center">
-	                <li class="nav-item"><a class="nav-link" href="#hotelCarousel">Inicio</a></li>
-	                <li class="nav-item"><a class="nav-link" href="#estancias">Habitaciones</a></li>
-	                <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+		<div class="container">
+			<a class="navbar-brand fw-bold" href="#">HOSPEDIUM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto text-uppercase align-items-center">
+					<li class="nav-item"><a class="nav-link" href="#hotelCarousel">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="#estancias">Habitaciones</a></li>
+					<li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
 					<li class="nav-item ms-2">
-					    <form th:action="@{/logout}" method="post">
-					        <button type="submit" class="btn btn-outline-danger btn-sm px-4">
-					            Cerrar sesión
-					        </button>
-					    </form>
 					</li>
-	                <li class="nav-item ms-2">
-	                    <a class="btn btn-outline-light btn-sm px-4" th:href="@{/reserva/nueva}">Reservar</a>
-	                </li>
-	            </ul>
-	        </div>
-	    </div>
+					<li class="nav-item ms-2">
+						<a class="btn btn-outline-light btn-sm px-4" th:href="@{/reserva/nueva}">Reservar</a>
+					</li>
+					<form th:action="@{/logout}" method="post">
+						<button type="submit" class="btn btn-outline-danger btn-sm px-4 m-3">
+							Cerrar sesión
+						</button>
+					</form>
+				</ul>
+			</div>
+		</div>
 	</nav>
 
 	<div id="hotelCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="/img/fotoheader.jpg" class="d-block w-100 vh-50 object-fit-cover" 
-					 style="filter: brightness(0.5);" alt="Hospedium Header">
-					 <!--filter es para que no se vea el fondo tan borroso-->
-				
+				<img src="/img/fotoheader.jpg" class="d-block w-100 vh-50 object-fit-cover"
+					style="filter: brightness(0.5);" alt="Hospedium Header">
+				<!--filter es para que no se vea el fondo tan borroso-->
+
 				<div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
 					<h1 class="display-3 fw-bold text-uppercase">Hospedium</h1>
 					<p class="lead text-uppercase small shadow-sm">Lujo y comodidad en el centro histórico</p>
 					<div class="mt-4">
-						<a href="#estancias" class="btn btn-outline-light rounded-0 px-4 py-2 text-uppercase">Explorar</a>
+						<a href="#estancias"
+							class="btn btn-outline-light rounded-0 px-4 py-2 text-uppercase">Explorar</a>
 					</div>
 				</div>
 			</div>
@@ -60,22 +61,30 @@
 				<h2 class="fw-light border-bottom d-inline-block pb-2">Nuestras Estancias</h2>
 			</div>
 		</div>
+	</div>
 
-		<div class="row g-4">
-			<div class="col-md-4" th:each="hab : ${habitaciones}">
-				<div class="card border-0 shadow-sm rounded-0 h-100">
-					<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}" class="card-img-top rounded-0 object-fit-cover w-100 h-100" alt="Habitación">
 
-					<div class="card-body p-4 text-dark">
-						<h5 class="card-title text-uppercase fw-bold" th:text="${hab.tipo}">Tipo</h5>
-						<div class="text-muted small">Estancia exclusiva en Hospedium con todas las comodidades.</div>
-						<hr>
-						<div class="h4 mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
-					</div>
+	<div class="row g-4 justify-content-center">
+		<div class="col-md-4" th:each="hab : ${habitaciones}">
+			<div class="card border-0 shadow-sm rounded-0 h-100">
+				<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}"
+					class="card-img-top rounded-0 object-fit-cover w-100 h-100" alt="Habitación">
+				<div class="card-body p-4 text-dark">
+					<h5 class="card-title text-uppercase fw-bold" th:text="${hab.tipo}">Tipo</h5>
+					<div class="text-muted small">Estancia exclusiva en Hospedium con todas las comodidades.</div>
+					<hr>
+					<div class="h4 mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="text-center my-5">
+		<a th:href="@{/reserva/nueva}" class="btn btn-dark btn-lg rounded-0 px-5 py-3 text-uppercase fw-bold">
+			¡Reserva ya!
+		</a>
+	</div>
+	</div>
+
 
 	<div class="bg-white py-5" id="servicios">
 		<div class="container text-center">

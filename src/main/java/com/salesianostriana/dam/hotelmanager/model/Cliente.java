@@ -26,9 +26,6 @@ import lombok.NoArgsConstructor;
 
 public class Cliente implements UserDetails{
 	
-
-
-
 	@Id 
 	private String dni;
 	

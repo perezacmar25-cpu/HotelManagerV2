@@ -31,7 +31,7 @@ public class ClienteController {
     @PostMapping("/nuevo")
     public String guardar(@ModelAttribute Cliente cliente,
                           @RequestParam String password,
-                          @RequestParam String confirmPassword,  // NUEVO
+                          @RequestParam String confirmPassword,  
                           Model model) {
  
         // comprobamos que las contraseñas coincidan

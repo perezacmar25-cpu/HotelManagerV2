@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.hotelmanager.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,18 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class InicioController {
 
-    @Autowired
-    private HabitacionService habitacionService; 
-    @Autowired	
-    private ServicioService servicioService;
+   
+    private final HabitacionService habitacionService; 
+ 
+    private final ServicioService servicioService;
     
     @GetMapping("/")
     public String init(Model model) {
  
-        model.addAttribute("habitaciones", habitacionService.findAll());
+        model.addAttribute("habitaciones", habitacionService.encontrarPorTipo());
         model.addAttribute("servicios", servicioService.findAll());
         return "inicio"; 
     }

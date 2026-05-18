@@ -35,6 +35,8 @@ public class ReservaController {
 		   reservaService.deleteById(id);
 		   return "redirect:/reservas";
 	   }
+	   
+	   
 	
 	
 	
