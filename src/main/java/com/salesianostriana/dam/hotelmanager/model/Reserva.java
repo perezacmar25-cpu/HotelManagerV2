@@ -41,6 +41,7 @@ public class Reserva {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "reserva", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @Builder.Default
     private List<ReservaHabitacion> listadoReservaHab = new ArrayList<>();
 
     @ManyToMany
@@ -54,9 +55,6 @@ public class Reserva {
 
    
     public double calcularPrecioTotal() {
-        if (fechaInicio == null || fechaFin == null || !fechaFin.isAfter(fechaInicio)) {
-            return 0.0;
-        }
 
         long dias = fechaFin.toEpochDay() - fechaInicio.toEpochDay();
 

@@ -30,6 +30,7 @@ public class Habitacion {
 	
 	
 	@OneToMany(mappedBy = "habitacion")
+	@Builder.Default
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();
 	
 	

@@ -15,7 +15,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
  
         http.authorizeHttpRequests(authz -> authz
-                // Páginas públicas: cualquiera puede entrar sin login
+              
+        		// Páginas públicas: cualquiera puede entrar sin login
                 .requestMatchers("/", "/index", "/login", "/registro", "/nuevo",
                                  "/css/**", "/js/**", "/img/**").permitAll()
                 
