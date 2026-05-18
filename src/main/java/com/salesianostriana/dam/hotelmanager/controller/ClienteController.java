@@ -65,10 +65,10 @@ public class ClienteController {
         return "redirect:/reserva/nueva";
     }
  
-    @GetMapping("/clientes")
+    @GetMapping("/admin/clientes")
     public String listar(Model model) {
         model.addAttribute("clientes", clienteService.findAll());
-        return "clientes";
+        return "/admin/clientes";
     }
 
 }

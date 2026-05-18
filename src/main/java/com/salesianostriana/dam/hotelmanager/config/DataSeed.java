@@ -79,6 +79,16 @@ public class DataSeed {
             			.username("Mario")
             			.rol(RolUsuario.USER)
             			.build());
+            	
+            	cliSer.save(Cliente.builder()
+                        .dni("00000000A")
+                        .nombre("Administrador")
+                        .email("admin@hospedium.com")
+                        .telefono("000000000")
+                        .username("admin")
+                        .password("{noop}admin")
+                        .rol(RolUsuario.ADMIN)
+                        .build());
             }
         };
     }

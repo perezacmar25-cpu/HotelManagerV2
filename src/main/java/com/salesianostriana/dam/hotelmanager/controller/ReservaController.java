@@ -17,29 +17,29 @@ public class ReservaController {
 
 	private final ReservaService reservaService;
 	
-	   @GetMapping("/editar/{id}")
+	   @GetMapping("/admin/editar/{id}")
 	    public String editarReservaForm(@PathVariable Long id, Model model) {
 	        reservaService.findById(id).ifPresent(r -> model.addAttribute("reserva", r));
-	        return "editarReserva";
+	        return "formularioReserva";
 	    }
 	   
-	   @PostMapping("/editar/{id}")
+	   @PostMapping("/admin/editar/{id}")
 	    public String editarReserva(@PathVariable Long id, @ModelAttribute Reserva reserva) {
 	        reservaService.save(reserva);
-	        return "redirect:/reservas";
+	        return "redirect:/admin/reservas";
 	    }
 	
-	   @GetMapping("/{id}/eliminar")
+	   @GetMapping("/admin/{id}/eliminar")
 	   public String eliminarReserva(@PathVariable Long id) {
 		   reservaService.deleteById(id);
-		   return "redirect:/reservas";
+		   return "redirect:/admin/reservas";
 	   }
 	   
 	   
-	   @GetMapping("/reservas")
+	   @GetMapping("/admin/reservas")
 	public String listarReservas(Model model) {
 		model.addAttribute("reservas", reservaService.findAll());
-		return "admin/reservas";
+		return "/admin/reservas";
 	}
 	
 	
