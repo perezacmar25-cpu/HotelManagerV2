@@ -28,7 +28,6 @@ public class SecurityConfig {
         })
         .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/reserva/nueva", true)  
                 .failureUrl("/login?error")                
                 .permitAll()
         );

@@ -86,18 +86,7 @@ public class ReservaHabitacionController {
  
         return "redirect:/reserva/exito";
     }
- 
-    @GetMapping("/editar/{id}")
-    public String modificarReserva(@PathVariable("id") Long id, Model model) {
-        Optional<Reserva> reserva = reservaService.findById(id);
-        if (reserva.isPresent()) {
-            model.addAttribute("reserva", reserva.get());
-            return "admin/formularioreserva";
-        } else {
-            return "admin/reservas";
-        }
-    }
- 
+
     @GetMapping("/exito")
     public String exito() {
         return "reservaConfirmada";

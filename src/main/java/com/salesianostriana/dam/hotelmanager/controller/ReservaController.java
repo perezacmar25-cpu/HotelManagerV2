@@ -37,6 +37,11 @@ public class ReservaController {
 	   }
 	   
 	   
+	   @GetMapping("/reservas")
+	public String listarReservas(Model model) {
+		model.addAttribute("reservas", reservaService.findAll());
+		return "admin/reservas";
+	}
 	
 	
 	
