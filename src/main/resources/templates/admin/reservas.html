@@ -31,6 +31,7 @@
 	                                <th class="py-3">Fecha fin</th>
 	                                <th class="py-3">Precio total</th>
 	                                <th class="py-3">Número de personas</th>
+									<th class="py-3">Servicios contratados</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody class="table-group-divider">
@@ -40,6 +41,7 @@
 	                                <td th:text="${reserva.fechaFin}"></td>
 	                                <td th:text="${reserva.precioTotal}"></td>
 									<td th:text="${reserva.numeroPersonas}"></td>
+									<td th:text="${reserva.servicios}"></td>
 	                            </tr>
 	                            <tr th:if="${#lists.isEmpty(reservas)}">
 	                                <td colspan="4" class="text-center py-5 text-muted italic">

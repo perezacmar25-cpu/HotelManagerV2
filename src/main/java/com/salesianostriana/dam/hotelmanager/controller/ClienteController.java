@@ -56,6 +56,7 @@ public class ClienteController {
         // guardamos el cliente en la base de datos
         clienteService.save(cliente);
  
+        //Hecho  con IA:
         // hacemos login automático con el cliente recién registrado
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken(cliente, null, cliente.getAuthorities());

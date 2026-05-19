@@ -25,7 +25,7 @@ public class Servicio {
 	
 	private double precio;
 	
-	
+    private String imagen;
 	
 
 }

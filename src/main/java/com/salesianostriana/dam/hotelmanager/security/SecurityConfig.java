@@ -18,7 +18,7 @@ public class SecurityConfig {
  
         http.authorizeHttpRequests(authz -> authz
               
-        		// Páginas públicas: cualquiera puede entrar sin login
+        		// Páginas públicas: cualquiera puede entrar sin login 																																		
                 .requestMatchers("/", "/index", "/login", "/registro", "/nuevo",
                                  "/css/**", "/js/**", "/img/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")

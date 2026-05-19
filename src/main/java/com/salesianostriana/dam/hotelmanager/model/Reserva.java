@@ -60,7 +60,7 @@ public class Reserva {
 
 
         double totalHabitaciones = listadoReservaHab.stream()
-                .mapToDouble(rh -> rh.getHabitacion().getPrecioNoche() * dias)
+                .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias)
                 .sum();
 
 

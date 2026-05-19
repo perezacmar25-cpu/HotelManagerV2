@@ -61,12 +61,12 @@ public class DataSeed {
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
             }
             if (serSer.findAll().isEmpty()) {
-                serSer.save(Servicio.builder().nombre("Pista de fútbol").precio(15.0).build());
-                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).build());
-                serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).build());
-                serSer.save(Servicio.builder().nombre("Spa").precio(40).build());
-                serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).build());
-                serSer.save(Servicio.builder().nombre("Wifi").precio(0).build());
+                serSer.save(Servicio.builder().nombre("Pista de fútbol").precio(15.0).imagen("futbol.jpg").build());
+                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).imagen("padel.jpg").build());
+                serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).imagen("arco.jpg").build());
+                serSer.save(Servicio.builder().nombre("Spa").precio(40).imagen("spa.jpg").build());
+                serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).imagen("gimnasio.jpg").build());
+                serSer.save(Servicio.builder().nombre("Wifi").precio(0).imagen("recepcion.jpg").build());
             }
             
             if(cliSer.findAll().isEmpty()) {
