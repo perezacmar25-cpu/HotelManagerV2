@@ -1,52 +1,49 @@
 package com.salesianostriana.dam.hotelmanager.controller;
- 
+
 import java.util.List;
 import java.util.Optional;
- 
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
- 
+
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
- 
+
 import lombok.RequiredArgsConstructor;
- 
+
 @Controller
 @RequestMapping("/reserva")
 @RequiredArgsConstructor
 public class ReservaHabitacionController {
- 
+
     private final ReservaService reservaService;
     private final ServicioService servicioService;
- 
+
     private static final List<String> TIPOS = List.of("Individual", "Doble", "Suite");
- 
+
     @GetMapping("/nueva")
     public String mostrarFormulario(Model model, @AuthenticationPrincipal Cliente clienteLogueado) {
- 
+
         Reserva r = new Reserva();
-        // Usamos directamente el cliente que ha iniciado sesión
         r.setCliente(clienteLogueado);
- 
+
         model.addAttribute("reserva", r);
         model.addAttribute("tiposHabitacion", TIPOS);
         model.addAttribute("servicios", servicioService.findAll());
-        // Pasamos el nombre del cliente al formulario para mostrarlo
         model.addAttribute("nombreCliente", clienteLogueado.getNombre());
- 
+
         return "formularioreserva";
     }
- 
+
     @PostMapping("/confirmar")
     public String procesarReserva(
             @ModelAttribute("reserva") Reserva reserva,
@@ -76,11 +73,10 @@ public class ReservaHabitacionController {
             reserva.setServicios(serviciosSeleccionados);
         }
 
-        reserva.calcularPrecioTotal();
-        Reserva guardada = reservaService.save(reserva);
+        Optional<Reserva> guardada = reservaService.crearReserva(reserva, tipoHabitacion);
 
-        if (guardada == null) {
-            model.addAttribute("error", "No se pudo guardar la reserva");
+        if (guardada.isEmpty()) {
+            model.addAttribute("error", "No hay habitaciones disponibles de tipo " + tipoHabitacion);
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("servicios", servicioService.findAll());
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());

@@ -27,8 +27,10 @@ public class AdminController {
 	@GetMapping("/admin/editar/reserva/{id}")
 	public String editarReservaForm(@PathVariable Long id, Model model) {
 	    Optional<Reserva> reserva = reservaService.findById(id);
-	    if (reserva.isEmpty()) return "redirect:/admin/reservas";
 	    model.addAttribute("reserva", reserva.get());
+	    if (reserva.isEmpty()) {
+	    	return "redirect:/admin/reservas";
+	    }
 	    return "formularioReserva";
 	}
 	   
@@ -58,7 +60,7 @@ public class AdminController {
 		   
 	   }
 	   
-	   @GetMapping("/admin/{id}/listar/habitaciones")
+	   @GetMapping("/admin/habitaciones")
 	   public String listarHabitaciones(Model model) {
 		   model.addAttribute("habitaciones",habitacionService.findAll());
 		   return "/admin/habitaciones";

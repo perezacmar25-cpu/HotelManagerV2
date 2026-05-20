@@ -20,7 +20,7 @@ public class SecurityConfig {
               
         		// Páginas públicas: cualquiera puede entrar sin login 																																		
                 .requestMatchers("/", "/index", "/login", "/registro", "/nuevo",
-                                 "/css/**", "/js/**", "/img/**").permitAll()
+                                 "/css/**", "/js/**", "/img/**","/error").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 
                 .anyRequest().authenticated()
