@@ -53,23 +53,16 @@ public class Reserva {
     @Builder.Default
     private List<Servicio> servicios = new ArrayList<>();
 
-   
     public double calcularPrecioTotal() {
 
         long dias = fechaFin.toEpochDay() - fechaInicio.toEpochDay();
-
-
         double totalHabitaciones = listadoReservaHab.stream()
                 .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias)
                 .sum();
-
-
         double totalServicios = servicios.stream()
                 .mapToDouble(Servicio::getPrecio)
                 .sum();
-
         this.precioTotal = totalHabitaciones + totalServicios;
-
         return precioTotal;
     }
 }

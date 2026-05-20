@@ -1,5 +1,7 @@
 	package com.salesianostriana.dam.hotelmanager.controller;
 
+import java.lang.invoke.StringConcatFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,30 +19,7 @@ public class ReservaController {
 
 	private final ReservaService reservaService;
 	
-	   @GetMapping("/admin/editar/{id}")
-	    public String editarReservaForm(@PathVariable Long id, Model model) {
-	        reservaService.findById(id).ifPresent(r -> model.addAttribute("reserva", r));
-	        return "formularioReserva";
-	    }
-	   
-	   @PostMapping("/admin/editar/{id}")
-	    public String editarReserva(@PathVariable Long id, @ModelAttribute Reserva reserva) {
-	        reservaService.save(reserva);
-	        return "redirect:/admin/reservas";
-	    }
-	
-	   @GetMapping("/admin/{id}/eliminar")
-	   public String eliminarReserva(@PathVariable Long id) {
-		   reservaService.deleteById(id);
-		   return "redirect:/admin/reservas";
-	   }
-	   
-	   
-	   @GetMapping("/admin/reservas")
-	public String listarReservas(Model model) {
-		model.addAttribute("reservas", reservaService.findAll());
-		return "/admin/reservas";
-	}
+	 
 	
 	
 	

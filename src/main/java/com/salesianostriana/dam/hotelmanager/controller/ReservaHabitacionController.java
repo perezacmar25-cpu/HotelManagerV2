@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
+import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
  
@@ -53,29 +54,31 @@ public class ReservaHabitacionController {
             @RequestParam(required = false) String tipoHabitacion,
             @AuthenticationPrincipal Cliente clienteLogueado,
             Model model) {
- 
-        // Validación de campos obligatorios
+
         if (reserva.getFechaInicio() == null ||
             reserva.getFechaFin() == null ||
             tipoHabitacion == null || tipoHabitacion.isBlank()) {
- 
+
             model.addAttribute("error", "Debes completar todos los campos");
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("servicios", servicioService.findAll());
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
             return "formularioreserva";
         }
- 
-        // Asignamos el cliente logueado a la reserva (no hace falta buscarlo ni crearlo)
+
         reserva.setCliente(clienteLogueado);
- 
+
         if (serviciosIds != null) {
-            reserva.setServicios(servicioService.findAll());
+            List<Servicio> serviciosSeleccionados = servicioService.findAll()
+                    .stream()
+                    .filter(s -> serviciosIds.contains(s.getId()))
+                    .toList();
+            reserva.setServicios(serviciosSeleccionados);
         }
- 
+
         reserva.calcularPrecioTotal();
         Reserva guardada = reservaService.save(reserva);
- 
+
         if (guardada == null) {
             model.addAttribute("error", "No se pudo guardar la reserva");
             model.addAttribute("tiposHabitacion", TIPOS);
@@ -83,7 +86,7 @@ public class ReservaHabitacionController {
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
             return "formularioreserva";
         }
- 
+
         return "redirect:/reserva/exito";
     }
 

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository<Reserva,Long>>{
 
     private final ReservaRepository reservaRepo;
+    
 
    
 }
