@@ -31,7 +31,7 @@
 
 					<!-- Botón Panel Admin: solo si está logueado como ADMIN -->
 					<li class="nav-item ms-2" sec:authorize="hasRole('ADMIN')">
-						<a class="btn btn-outline-warning btn-sm px-4 rounded-0" th:href="@{/admin/clientes}">Panel Admin</a>
+						<a class="btn btn-outline-warning btn-sm px-4 rounded-0" th:href="@{/admin/admininicio}">Panel Admin</a>
 					</li>
 
 					<!-- Botón Cerrar sesión: solo si está logueado -->
@@ -101,6 +101,13 @@
 			¡Reserva ya!
 		</a>
 	</div>
+	
+	<div class="text-center my-3">
+	    <a th:href="@{/habitaciones}" class="btn btn-outline-dark rounded-0 px-5 py-2 text-uppercase">
+	        Ver disponibilidad
+	    </a>
+	</div>
+	
 
 	<!-- Si no está logueado, invitarle a hacer login para reservar -->
 	<div class="text-center my-5" sec:authorize="!isAuthenticated()">

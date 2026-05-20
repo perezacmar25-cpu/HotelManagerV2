@@ -20,7 +20,7 @@ public class SecurityConfig {
               
         		// Páginas públicas: cualquiera puede entrar sin login 																																		
                 .requestMatchers("/", "/index", "/login", "/registro", "/nuevo",
-                                 "/css/**", "/js/**", "/img/**","/error").permitAll()
+                                 "/css/**", "/js/**", "/img/**","/error","/habitaciones").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 
                 .anyRequest().authenticated()
@@ -32,10 +32,15 @@ public class SecurityConfig {
         })
         .formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)
                 .failureUrl("/login?error")                
                 .permitAll()
+                
+                
+        ).logout(logout -> logout
+                .logoutSuccessUrl("/")
+                .permitAll()
         );
+        
  
         
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
