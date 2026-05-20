@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 
+
+
 @Repository
 public interface HabitacionRepository extends JpaRepository<Habitacion, Integer> {
 
 	
-
 	
 }

@@ -24,6 +24,12 @@ public class AdminController {
 	private final ClienteService clienteService;
 	private final HabitacionService habitacionService;
 	
+	
+	@GetMapping("/admin/admininicio")
+	public String panelAdmin() {
+		return "/admin/admininicio";
+	}
+	
 	@GetMapping("/admin/editar/reserva/{id}")
 	public String editarReservaForm(@PathVariable Long id, Model model) {
 	    Optional<Reserva> reserva = reservaService.findById(id);
@@ -47,24 +53,22 @@ public class AdminController {
 		   return "redirect:/admin/reservas";
 	   }
 	   
+	   
+	   
 	   @GetMapping("/admin/reservas")
 	public String listarReservas(Model model) {
 		model.addAttribute("reservas", reservaService.findAll());
 		return "/admin/reservas";
 	}
-	   
-	   @GetMapping("/admin/{id}/eliminar/habitaciones")
+
+		
+	 @GetMapping("/admin/{id}/eliminar/habitaciones")
 	   public String borrarHabitacion(@PathVariable int id) {
 			    habitacionService.deleteById(id);
 			    return "redirect:/admin/habitaciones";
 		   
 	   }
 	   
-	   @GetMapping("/admin/habitaciones")
-	   public String listarHabitaciones(Model model) {
-		   model.addAttribute("habitaciones",habitacionService.findAll());
-		   return "/admin/habitaciones";
-	   }
 	   
 	   
 	   @GetMapping("/admin/clientes")
