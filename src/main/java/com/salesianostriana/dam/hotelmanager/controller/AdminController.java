@@ -51,7 +51,12 @@ public class AdminController {
 		return "/admin/reservas";
 	}
 	   
-
+	   @GetMapping("/admin/{id}/eliminar/habitaciones")
+	   public String borrarHabitacion(@PathVariable int id) {
+			    habitacionService.deleteById(id);
+			    return "redirect:/admin/habitaciones";
+		   
+	   }
 	   
 	   
 	   
