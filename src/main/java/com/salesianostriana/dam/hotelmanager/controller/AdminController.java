@@ -58,6 +58,25 @@ public class AdminController {
 		   
 	   }
 	   
+	   @GetMapping("/admin/{id}/listar/habitaciones")
+	   public String listarHabitaciones(Model model) {
+		   model.addAttribute("habitaciones",habitacionService.findAll());
+		   return "/admin/habitaciones";
+	   }
+	   
+	   
+	   @GetMapping("/admin/clientes")
+	    public String listarClientes(Model model) {
+	        model.addAttribute("clientes", clienteService.findAll());
+	        return "/admin/clientes";
+	    }
+	   
+	   @GetMapping("/admin/{dni}/eliminar/cliente")
+	   public String eliminarCliente(@PathVariable String dni) {
+		   clienteService.deleteById(dni);
+		   return "redirect:/admin/clientes";
+	   }
+	   
 	   
 	   
 	
