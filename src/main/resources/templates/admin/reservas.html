@@ -16,6 +16,9 @@
 				<h2 class="display-6 fw-bold text-dark mb-0">Gestión de Reservas</h2>
 			</div>
 			<div class="col-auto">
+				<a th:href="@{/admin/admininicio}" class="btn btn-secondary btn-lg px-4">Volver</a>
+			</div>
+			<div class="col-auto">
 				<a th:href="@{/reserva/nueva}" class="btn btn-success btn-lg px-4 shadow-sm">
 					+ Nueva reserva
 				</a>
@@ -58,6 +61,10 @@
 					</table>
 				</div>
 			</div>
+		</div>
+
+		<div class="text-center mt-3">
+			<a th:href="@{/admin/admininicio}" class="btn btn-outline-dark rounded-0 px-4">Volver al panel</a>
 		</div>
 
 	</div>

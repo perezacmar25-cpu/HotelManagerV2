@@ -9,7 +9,11 @@ import com.salesianostriana.dam.hotelmanager.model.Reserva;
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
-	
+	/*
+	@Query("""
+			select count
+			""")
+	*/
 	
  
 }
