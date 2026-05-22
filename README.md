@@ -62,4 +62,4 @@ mvn spring-boot:run
 
 ## 👥 Autores
 
-> *(Añade aquí tu nombre o el de tu equipo)*
+Mario Pérez Acosta
