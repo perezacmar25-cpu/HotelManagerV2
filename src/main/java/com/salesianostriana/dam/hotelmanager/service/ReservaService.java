@@ -1,15 +1,15 @@
 package com.salesianostriana.dam.hotelmanager.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
-import com.salesianostriana.dam.hotelmanager.repository.ReservaRepository;
+import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
 import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -18,31 +18,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository<Reserva, Long>> {
 
-    private final ReservaRepository reservaRepo;
-    private final HabitacionService habitacionService;
+    private final HabitacionRepository habitacionRepository;
 
     public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion) {
-        Optional<Habitacion> habitacion = habitacionService.findAll()
-                .stream()
-                .filter(h -> h.getTipo().equalsIgnoreCase(tipoHabitacion) && h.isDisponible())
-                .findFirst();
 
-        if (habitacion.isEmpty()) {
+        List<Habitacion> disponibles = habitacionRepository.findDisponiblesSinSolapamiento(
+                tipoHabitacion,
+                reserva.getFechaInicio(),
+                reserva.getFechaFin()
+        );
+
+
+        if (disponibles.isEmpty()) {
             return Optional.empty();
         }
 
-        Habitacion habitacion2 = habitacion.get();
-        habitacion2.setDisponible(false);
-        habitacionService.save(habitacion2);
+        Habitacion habitacion = disponibles.get(0);
 
+
+
+        //así se hace con builder
         ReservaHabitacion reservaHabitacion = ReservaHabitacion.builder()
-                .habitacion(habitacion2)
+                .habitacion(habitacion)
                 .reserva(reserva)
                 .build();
 
         reserva.getListadoReservaHab().add(reservaHabitacion);
-
-
         reserva.calcularPrecioTotal();
 
         return Optional.of(save(reserva));
