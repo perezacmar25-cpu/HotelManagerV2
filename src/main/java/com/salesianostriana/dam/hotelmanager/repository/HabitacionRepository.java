@@ -30,5 +30,16 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
 		            @Param("fechaInicio") LocalDate fechaInicio,
 		            @Param("fechaFin")    LocalDate fechaFin
 		    );
+	 
+	 @Query("""
+	            SELECT h FROM Habitacion h
+	            WHERE h.numero IN (
+	                SELECT rh.habitacion.numero
+	                FROM ReservaHabitacion rh
+	                WHERE rh.reserva.fechaInicio <= :hoy
+	                  AND rh.reserva.fechaFin    >  :hoy
+	            )
+	            """)
+	    List<Habitacion> findOcupadasHoy(@Param("hoy") LocalDate hoy);
 	
 }

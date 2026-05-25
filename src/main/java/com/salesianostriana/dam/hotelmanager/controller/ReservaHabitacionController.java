@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
@@ -73,10 +74,12 @@ public class ReservaHabitacionController {
             reserva.setServicios(serviciosSeleccionados);
         }
 
-        Optional<Reserva> guardada = reservaService.crearReserva(reserva, tipoHabitacion);
+        Optional<Reserva> guardada;
 
-        if (guardada.isEmpty()) {
-            model.addAttribute("error", "No hay habitaciones disponibles de tipo " + tipoHabitacion);
+        try {
+            guardada = reservaService.crearReserva(reserva, tipoHabitacion);
+        } catch (FechaFinInicioException ex) {
+            model.addAttribute("error", ex.getMessage());
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("servicios", servicioService.findAll());
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());

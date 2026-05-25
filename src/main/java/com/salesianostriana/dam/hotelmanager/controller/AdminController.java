@@ -1,6 +1,10 @@
 package com.salesianostriana.dam.hotelmanager.controller;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
+import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
@@ -23,6 +29,7 @@ public class AdminController {
 	private final ReservaService reservaService;
 	private final ClienteService clienteService;
 	private final HabitacionService habitacionService;
+	private final HabitacionRepository habitacionRepository;
 	
 	
 	@GetMapping("/admin/admininicio")
@@ -82,6 +89,22 @@ public class AdminController {
 		   clienteService.deleteById(dni);
 		   return "redirect:/admin/clientes";
 	   }
+	   
+		@GetMapping("/admin/habitaciones")
+		public String listarHabitaciones(Model model) {
+	 
+			LocalDate hoy = LocalDate.now();
+			Set<Integer> ocupadasHoy = habitacionRepository.findOcupadasHoy(hoy)
+					.stream()
+					.map(Habitacion::getNumero)
+					.collect(Collectors.toSet());
+	 
+			List<Habitacion> todas = habitacionService.findAll();
+			todas.forEach(h -> h.setDisponible(!ocupadasHoy.contains(h.getNumero())));
+	 
+			model.addAttribute("habitaciones", todas);
+			return "/admin/habitaciones";
+		}
 	   
 	   
 	   

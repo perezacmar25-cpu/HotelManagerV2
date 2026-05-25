@@ -34,9 +34,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         }
 
         Habitacion habitacion = disponibles.get(0);
-
-
-
+        
         //así se hace con builder
         ReservaHabitacion reservaHabitacion = ReservaHabitacion.builder()
                 .habitacion(habitacion)

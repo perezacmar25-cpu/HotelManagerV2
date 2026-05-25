@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container py-4">
+
         <div class="row mb-4 align-items-center">
             <div class="col">
                 <h4 class="fw-bold text-dark mb-0">Habitaciones disponibles</h4>
@@ -25,7 +26,23 @@
             </div>
         </div>
 
-        <div class="row g-4 justify-content-center">
+        <form th:action="@{/habitaciones}" method="get" class="row g-2 align-items-end mb-4 p-3 bg-light border">
+            <div class="col-md-4">
+                <label class="form-label small text-uppercase text-secondary mb-1">Entrada</label>
+                <input type="date" name="fechaInicio" class="form-control rounded-0"
+                       th:value="${fechaInicio}" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label small text-uppercase text-secondary mb-1">Salida</label>
+                <input type="date" name="fechaFin" class="form-control rounded-0"
+                       th:value="${fechaFin}" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-dark rounded-0 w-100 text-uppercase">Ver disponibilidad</button>
+            </div>
+        </form>
+
+        <div th:if="${disponibles != null}" class="row g-4 justify-content-center">
             <div class="col-md-4" th:each="hab : ${habitaciones}">
                 <div class="card border-0 shadow-sm rounded-0 h-100">
                     <img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}"
