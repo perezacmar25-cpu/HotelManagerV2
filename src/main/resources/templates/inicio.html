@@ -23,6 +23,9 @@
 					<li class="nav-item"><a class="nav-link" href="#hotelCarousel">Inicio</a></li>
 					<li class="nav-item"><a class="nav-link" href="#estancias">Habitaciones</a></li>
 					<li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+					<li class="nav-item ms-2" sec:authorize="hasRole('USER')">
+					    <a class="nav-link" th:href="@{/misreservas}">Mis reservas</a>
+					</li>
 
 					<!-- Botón Reservar: solo si está logueado como USER -->
 					<li class="nav-item ms-2" sec:authorize="hasRole('USER')">
@@ -60,7 +63,7 @@
 
 				<div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
 					<h1 class="display-2 fw-bold text-uppercase">Hospedium</h1>
-					<p class="lead text-uppercase small shadow-sm">Lujo y comodidad en el centro histórico</p>
+					<p class="lead text-uppercase small shadow-sm">El arte de descansar</p>
 					<div class="mt-4">
 						<a href="#estancias"
 							class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase">Explorar</a>

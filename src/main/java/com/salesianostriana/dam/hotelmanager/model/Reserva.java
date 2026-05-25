@@ -40,7 +40,7 @@ public class Reserva {
     @JoinColumn(name = "cliente_dni")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL,orphanRemoval = true)
     @Builder.Default
     private List<ReservaHabitacion> listadoReservaHab = new ArrayList<>();
 
@@ -56,12 +56,16 @@ public class Reserva {
     public double calcularPrecioTotal() {
 
         long dias = fechaFin.toEpochDay() - fechaInicio.toEpochDay();
+        long nochesACobrar = Math.max(dias, 1); // mínimo 1 noche 
+
         double totalHabitaciones = listadoReservaHab.stream()
-                .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias)
+                .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * nochesACobrar)
                 .sum();
+
         double totalServicios = servicios.stream()
                 .mapToDouble(Servicio::getPrecio)
                 .sum();
+
         this.precioTotal = totalHabitaciones + totalServicios;
         return precioTotal;
     }
