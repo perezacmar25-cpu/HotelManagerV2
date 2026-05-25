@@ -10,6 +10,7 @@ import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
+import com.salesianostriana.dam.hotelmanager.repository.ReservaRepository;
 import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository<Reserva, Long>> {
 
     private final HabitacionRepository habitacionRepository;
+    private final ReservaRepository reservaRepository;;
 
     public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion) {
 
@@ -45,5 +47,14 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         reserva.calcularPrecioTotal();
 
         return Optional.of(save(reserva));
+    }
+    public List<Reserva> findByClienteDni(String dni) {
+        return reservaRepository.findByClienteDni(dni);
+    }
+    
+    //elimina las reservas que están asociadas a la habitación que queremos borrar
+    public void eliminarPorHabitacion(int numeroHabitacion) {
+        List<Reserva> reservas = reservaRepository.findByListadoReserva_Habitacion_Numero(numeroHabitacion);
+        reservaRepository.deleteAll(reservas);
     }
 }

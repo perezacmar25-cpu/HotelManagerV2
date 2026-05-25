@@ -40,8 +40,7 @@ public class ReservaHabitacionController {
 
         model.addAttribute("reserva", r);
         model.addAttribute("tiposHabitacion", TIPOS);
-        model.addAttribute("servicios", servicioService.findAll());
-        model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+        model.addAttribute("servicios", servicioService.findAll());        model.addAttribute("nombreCliente", clienteLogueado.getNombre());
 
 
         return "formularioreserva";
