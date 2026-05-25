@@ -54,7 +54,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
     
     //elimina las reservas que están asociadas a la habitación que queremos borrar
     public void eliminarPorHabitacion(int numeroHabitacion) {
-        List<Reserva> reservas = reservaRepository.findByListadoReserva_Habitacion_Numero(numeroHabitacion);
+        List<Reserva> reservas = reservaRepository.findByHabitacionNumero(numeroHabitacion);
         reservaRepository.deleteAll(reservas);
     }
 }
