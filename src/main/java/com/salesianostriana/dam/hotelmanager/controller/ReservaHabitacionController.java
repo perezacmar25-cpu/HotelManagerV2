@@ -29,6 +29,7 @@ public class ReservaHabitacionController {
     private final ReservaService reservaService;
     private final ServicioService servicioService;
 
+
     private static final List<String> TIPOS = List.of("Individual", "Doble", "Suite");
 
     @GetMapping("/nueva")
@@ -41,6 +42,7 @@ public class ReservaHabitacionController {
         model.addAttribute("tiposHabitacion", TIPOS);
         model.addAttribute("servicios", servicioService.findAll());
         model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+
 
         return "formularioreserva";
     }

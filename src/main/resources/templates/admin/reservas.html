@@ -23,7 +23,7 @@
 			</div>
 			<div class="d-flex gap-2">
 				<a th:href="@{/reserva/nueva}" class="btn btn-dark btn-sm">+ Nueva reserva</a>
-				<a th:href="@{/admin/admininicio}" class="btn btn-outline-secondary btn-sm">← Panel</a>
+				<a th:href="@{/admin/admininicio}" class="btn btn-outline-secondary btn-sm"> Panel</a>
 			</div>
 		</div>
 
@@ -37,6 +37,7 @@
 						<th class="text-uppercase text-secondary small fw-normal">Precio total</th>
 						<th class="text-uppercase text-secondary small fw-normal">Personas</th>
 						<th class="text-uppercase text-secondary small fw-normal">Servicios</th>
+						<th class="text-uppercase text-secondary small fw-normal">Habitación</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,16 +52,22 @@
 								class="badge text-bg-secondary fw-normal me-1" th:text="${servicio.nombre}"></span>
 							<span th:if="${#lists.isEmpty(reserva.servicios)}" class="text-secondary">—</span>
 						</td>
+						<td>
+							<span th:each="rh : ${reserva.listadoReservaHab}" class="badge text-bg-dark fw-normal me-1"
+								th:text="${rh.habitacion.numero}"></span>
+							<span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">—</span>
+						</td>
 					</tr>
+
 					<tr th:if="${#lists.isEmpty(reservas)}">
-						<td colspan="6" class="text-center text-secondary py-5">Sin registros</td>
+						<td colspan="7" class="text-center text-secondary py-5">Sin registros</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
 		<div class="mt-4">
-			<a th:href="@{/admin/admininicio}" class="btn btn-outline-secondary btn-sm">← Volver al panel</a>
+			<a th:href="@{/admin/admininicio}" class="btn btn-outline-secondary btn-sm"> Volver al panel</a>
 		</div>
 	</div>
 </body>
