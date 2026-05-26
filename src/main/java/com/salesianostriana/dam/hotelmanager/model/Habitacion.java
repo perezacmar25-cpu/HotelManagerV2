@@ -3,6 +3,7 @@ package com.salesianostriana.dam.hotelmanager.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,8 +27,11 @@ public class Habitacion {
 	
 	private double precioNoche;
 	
+	private boolean disponible;
 	
-	@OneToMany(mappedBy = "habitacion")
+	
+	@OneToMany(mappedBy = "habitacion", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Builder.Default
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();
 	
 	

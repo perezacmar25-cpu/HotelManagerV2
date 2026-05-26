@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -10,37 +11,62 @@
 
 <body class="bg-light">
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-	    <div class="container">
-	        <a class="navbar-brand fw-bold" href="#">HOSPEDIUM</a>
-	        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-	            <span class="navbar-toggler-icon"></span>
-	        </button>
-	        <div class="collapse navbar-collapse" id="navbarNav">
-	            <ul class="navbar-nav ms-auto text-uppercase align-items-center">
-	                <li class="nav-item"><a class="nav-link" href="#hotelCarousel">Inicio</a></li>
-	                <li class="nav-item"><a class="nav-link" href="#estancias">Habitaciones</a></li>
-	                <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-	                <li class="nav-item ms-2">
-	                    <a class="btn btn-outline-light btn-sm px-4" th:href="@{/reserva/nueva}">Reservar</a>
-	                </li>
-	            </ul>
-	        </div>
-	    </div>
+	<!--He tenido que mirar la IA-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
+		<div class="container">
+			<a class="navbar-brand fw-bold fs-4" href="#">HOSPEDIUM</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto text-uppercase align-items-center gap-2">
+					<li class="nav-item"><a class="nav-link" href="#hotelCarousel">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="#estancias">Habitaciones</a></li>
+					<li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+					<li class="nav-item ms-2" sec:authorize="hasRole('USER')">
+					    <a class="nav-link" th:href="@{/misreservas}">Mis reservas</a>
+					</li>
+
+					<!-- Botón Reservar: solo si está logueado como USER -->
+					<li class="nav-item ms-2" sec:authorize="hasRole('USER')">
+						<a class="btn btn-outline-light btn-sm px-4 rounded-0" th:href="@{/reserva/nueva}">Reservar</a>
+					</li>
+
+					<!-- Botón Panel Admin: solo si está logueado como ADMIN -->
+					<li class="nav-item ms-2" sec:authorize="hasRole('ADMIN')">
+						<a class="btn btn-outline-warning btn-sm px-4 rounded-0" th:href="@{/admin/admininicio}">Panel Admin</a>
+					</li>
+
+					<!-- Botón Cerrar sesión: solo si está logueado -->
+					<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+						<button type="submit" class="btn btn-outline-danger btn-sm px-4 m-3 rounded-0">
+							CERRAR SESIÓN
+						</button>
+					</form>
+
+					<!-- Botón Login: solo si NO está logueado -->
+					<li class="nav-item ms-2" sec:authorize="!isAuthenticated()">
+						<a class="btn btn-outline-light btn-sm px-4 rounded-2" th:href="@{/login}">INICIAR SESIÓN</a>
+					</li>
+
+				</ul>
+			</div>
+		</div>
 	</nav>
 
 	<div id="hotelCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="/img/fotoheader.jpg" class="d-block w-100 vh-50 object-fit-cover" 
-					 style="filter: brightness(0.5);" alt="Hospedium Header">
-					 <!--filter es para que no se vea el fondo tan borroso-->
-				
+				<img src="/img/fotoheades.jpg" class="d-block w-100 object-fit-cover"
+					style="height:100vh; filter: brightness(0.4);" alt="Hospedium Header">
+				<!--filter es para que no se vea el fondo tan borroso-->
+
 				<div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-					<h1 class="display-3 fw-bold text-uppercase">Hospedium</h1>
-					<p class="lead text-uppercase small shadow-sm">Lujo y comodidad en el centro histórico</p>
+					<h1 class="display-2 fw-bold text-uppercase">Hospedium</h1>
+					<p class="lead text-uppercase small shadow-sm">El arte de descansar</p>
 					<div class="mt-4">
-						<a href="#estancias" class="btn btn-outline-light rounded-0 px-4 py-2 text-uppercase">Explorar</a>
+						<a href="#estancias"
+							class="btn btn-outline-light rounded-0 px-5 py-2 text-uppercase">Explorar</a>
 					</div>
 				</div>
 			</div>
@@ -50,39 +76,72 @@
 	<div class="container py-5" id="estancias">
 		<div class="row mb-5 text-center">
 			<div class="col">
-				<h2 class="fw-light border-bottom d-inline-block pb-2">Nuestras Estancias</h2>
+				<h2 class="fw-light border-bottom d-inline-block pb-2 fs-1">Nuestras Estancias</h2>
 			</div>
 		</div>
+	</div>
 
-		<div class="row g-4">
+	<div class="container">
+		<div class="row g-4 justify-content-center">
 			<div class="col-md-4" th:each="hab : ${habitaciones}">
 				<div class="card border-0 shadow-sm rounded-0 h-100">
-					<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}" class="card-img-top rounded-0 object-fit-cover w-100 h-100" alt="Habitación">
-
+					<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}"
+						class="card-img-top rounded-0 object-fit-cover" style="height:220px" alt="Habitación">
 					<div class="card-body p-4 text-dark">
-						<h5 class="card-title text-uppercase fw-bold" th:text="${hab.tipo}">Tipo</h5>
+						<h5 class="card-title text-uppercase fw-bold small" th:text="${hab.tipo}">Tipo</h5>
 						<div class="text-muted small">Estancia exclusiva en Hospedium con todas las comodidades.</div>
 						<hr>
-						<div class="h4 mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
+						<div class="fs-5 fw-semibold mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="bg-white py-5" id="servicios">
+	<!-- Botón ¡Reserva ya! solo visible para usuarios logueados como USER -->
+	<div class="text-center my-5" sec:authorize="hasRole('USER')">
+		<a th:href="@{/reserva/nueva}" class="btn btn-dark btn-lg rounded-0 px-5 py-3 text-uppercase fw-bold">
+			¡Reserva ya!
+		</a>
+	</div>
+	
+	<div class="text-center my-3">
+	    <a th:href="@{/habitaciones}" class="btn btn-outline-dark rounded-0 px-5 py-2 text-uppercase">
+	        Ver disponibilidad
+	    </a>
+	</div>
+	
+
+	<!-- Si no está logueado, invitarle a hacer login para reservar -->
+	<div class="text-center my-5" sec:authorize="!isAuthenticated()">
+		<a th:href="@{/login}" class="btn btn-dark btn-lg rounded-0 px-5 py-3 text-uppercase fw-bold">
+			Inicia sesión para reservar
+		</a>
+	</div>
+
+	<div class="bg-light py-5" id="servicios">
 		<div class="container text-center">
-			<div class="row g-5">
-				<div class="col-md-4 border-end" th:each="ser : ${servicios}">
-					<h6 class="fw-bold text-uppercase" th:text="${ser.nombre}">Servicio</h6>
-					<div class="small text-muted mb-2">Servicio premium para clientes.</div>
-					<div class="fw-bold text-dark" th:text="${ser.precio + '€'}">0€</div>
+			<div class="row mb-4">
+				<div class="col">
+					<h2 class="fw-light border-bottom d-inline-block pb-2 fs-1">Servicios</h2>
+				</div>
+			</div>
+			<div class="row g-4">
+				<div class="col-md-4" th:each="ser : ${servicios}">
+					<div class="bg-white h-100 border-top border-3 border-dark shadow-sm rounded-0 overflow-hidden">
+						<img th:src="@{'/img/' + ${ser.imagen}}" class="w-100 object-fit-cover" style="height:180px" alt="Servicio">
+						<div class="p-4">
+							<h6 class="fw-bold text-uppercase small mb-2" th:text="${ser.nombre}">Servicio</h6>
+							<div class="small text-muted mb-2">Servicio premium para clientes.</div>
+							<div class="fw-bold text-dark" th:text="${ser.precio == 0 ? 'Gratis' : ser.precio + '€'}">0€</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<footer class="bg-dark text-white py-4 mt-auto">
+	<footer class="bg-black text-white py-4 mt-auto">
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
