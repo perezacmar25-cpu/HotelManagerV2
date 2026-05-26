@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
@@ -23,6 +24,8 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
     private final ReservaRepository reservaRepository;;
 
     public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion) {
+
+        validarFechas(reserva);
 
         List<Habitacion> disponibles = habitacionRepository.findDisponiblesSinSolapamiento(
                 tipoHabitacion,
@@ -48,6 +51,21 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
 
         return Optional.of(save(reserva));
     }
+    
+    @Override
+    public Reserva save(Reserva reserva) {
+        validarFechas(reserva);
+        return super.save(reserva);
+    }
+    
+    private void validarFechas(Reserva reserva) {
+        if (reserva.getFechaInicio() != null &&
+                reserva.getFechaFin() != null &&
+                reserva.getFechaFin().isBefore(reserva.getFechaInicio())) {
+            throw new FechaFinInicioException("La fecha fin no puede ser antes que la fecha de inicio");
+        }
+    }
+    
     public List<Reserva> findByClienteDni(String dni) {
         return reservaRepository.findByClienteDni(dni);
     }
