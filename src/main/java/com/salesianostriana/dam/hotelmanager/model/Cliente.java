@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -40,7 +41,7 @@ public class Cliente implements UserDetails{
 	private String password;
 	
 	private RolUsuario rol;
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente",cascade = CascadeType.ALL, orphanRemoval = true)
 	@Builder.Default
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();
 
