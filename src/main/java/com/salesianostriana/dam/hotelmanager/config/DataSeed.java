@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
+import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
@@ -60,12 +61,12 @@ public class DataSeed {
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
             }
             if (serSer.findAll().isEmpty()) {
-                serSer.save(Servicio.builder().nombre("Pista de fútbol").precio(15.0).build());
-                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).build());
-                serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).build());
-                serSer.save(Servicio.builder().nombre("Spa").precio(40).build());
-                serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).build());
-                serSer.save(Servicio.builder().nombre("Wifi").precio(0).build());
+                serSer.save(Servicio.builder().nombre("Pista de fútbol").precio(15.0).imagen("futbol.jpg").build());
+                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).imagen("padel.jpg").build());
+                serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).imagen("arco.jpg").build());
+                serSer.save(Servicio.builder().nombre("Spa").precio(40).imagen("spa.jpg").build());
+                serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).imagen("gimnasio.jpg").build());
+                serSer.save(Servicio.builder().nombre("Wifi").precio(0).imagen("recepcion.jpg").build());
             }
             
             if(cliSer.findAll().isEmpty()) {
@@ -74,9 +75,20 @@ public class DataSeed {
             			.email("mario@gmail.com")
             			.telefono("667555489")
             			.nombre("Mario")
-            			.password("Mario")
+            			.password("{noop}Mario")
             			.username("Mario")
+            			.rol(RolUsuario.USER)
             			.build());
+            	
+            	cliSer.save(Cliente.builder()
+                        .dni("00000000A")
+                        .nombre("Administrador")
+                        .email("admin@hospedium.com")
+                        .telefono("000000000")
+                        .username("admin")
+                        .password("{noop}admin")
+                        .rol(RolUsuario.ADMIN)
+                        .build());
             }
         };
     }

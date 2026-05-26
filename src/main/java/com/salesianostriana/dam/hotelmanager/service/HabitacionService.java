@@ -1,25 +1,39 @@
 package com.salesianostriana.dam.hotelmanager.service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
-import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
 import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
+
 public class HabitacionService extends BaseServiceImpl<Habitacion, Integer, JpaRepository<Habitacion,Integer>>{
 	
-    private final HabitacionRepository habitacionRepository;
+	  @Autowired
+    private HabitacionRepository habitacionRepository;
 
-
+    //Método consultado de la ia
+    public List<Habitacion> encontrarPorTipo() {
+        return habitacionRepository.findAll()
+            .stream()
+            .collect(Collectors.toMap(
+                Habitacion::getTipo,
+                h -> h,
+                (existing, replacement) -> existing
+            ))
+            .values()
+            .stream()
+            .toList();
+    }
+    
+    
   
     
    
