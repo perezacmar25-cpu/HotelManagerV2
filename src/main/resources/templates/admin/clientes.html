@@ -40,7 +40,8 @@
                             <th class="text-uppercase text-secondary small fw-semibold ps-4 py-3">DNI</th>
                             <th class="text-uppercase text-secondary small fw-semibold py-3">Nombre</th>
                             <th class="text-uppercase text-secondary small fw-semibold py-3">Email</th>
-                            <th class="text-uppercase text-secondary small fw-semibold pe-4 py-3">Teléfono</th>
+                            <th class="text-uppercase text-secondary small fw-semibold py-3">Teléfono</th>
+                            <th class="text-uppercase text-secondary small fw-semibold pe-4 py-3">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,10 +52,14 @@
                                 <span class="badge bg-success-subtle border border-success-subtle text-success-emphasis fw-normal rounded-pill px-3 py-2"
                                     th:text="${cliente.email}"></span>
                             </td>
-                            <td class="pe-4" th:text="${cliente.telefono}"></td>
+                            <td th:text="${cliente.telefono}"></td>
+                            <td class="pe-4">
+                                <a th:href="@{'/admin/' + ${cliente.dni} + '/eliminar/cliente'}"
+                                    class="btn btn-outline-danger btn-sm px-3">Eliminar</a>
+                            </td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(clientes)}">
-                            <td colspan="4" class="text-center text-secondary py-5">Sin registros</td>
+                            <td colspan="5" class="text-center text-secondary py-5">Sin registros</td>
                         </tr>
                     </tbody>
                 </table>
