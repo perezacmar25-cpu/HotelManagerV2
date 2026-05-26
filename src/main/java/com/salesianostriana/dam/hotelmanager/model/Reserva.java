@@ -56,7 +56,7 @@ public class Reserva {
     public double calcularPrecioTotal() {
 
         long dias = fechaFin.toEpochDay() - fechaInicio.toEpochDay();
-        long nochesACobrar = Math.max(dias, 1); // mínimo 1 noche 
+        long nochesACobrar = Math.max(dias, 1);   // mínimo 1 noche 
 
         double totalHabitaciones = listadoReservaHab.stream()
                 .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * nochesACobrar)

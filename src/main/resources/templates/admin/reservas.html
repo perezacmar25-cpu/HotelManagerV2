@@ -38,6 +38,7 @@
 						<th class="text-uppercase text-secondary small fw-normal">Personas</th>
 						<th class="text-uppercase text-secondary small fw-normal">Servicios</th>
 						<th class="text-uppercase text-secondary small fw-normal">Habitación</th>
+						<th class="text-uppercase text-secondary small fw-normal">Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,7 +58,11 @@
 								th:text="${rh.habitacion.numero}"></span>
 							<span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">—</span>
 						</td>
-						
+						<td>
+							<a th:href="@{'/admin/' + ${reserva.id} + '/eliminar/reserva'}"
+								class="btn btn-outline-danger btn-sm">Eliminar</a>
+						</td>
+
 					</tr>
 
 					<tr th:if="${#lists.isEmpty(reservas)}">
