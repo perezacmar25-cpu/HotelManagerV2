@@ -98,7 +98,7 @@
 		</div>
 	</div>
 
-	<!-- Botón ¡Reserva ya! solo visible para usuarios logueados como USER -->
+	<!-- Botón reserva ya solo visible para usuarios logueados como user -->
 	<div class="text-center my-5" sec:authorize="hasRole('USER')">
 		<a th:href="@{/reserva/nueva}" class="btn btn-dark btn-lg rounded-0 px-5 py-3 text-uppercase fw-bold">
 			¡Reserva ya!
