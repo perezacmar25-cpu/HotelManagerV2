@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
+import com.salesianostriana.dam.hotelmanager.model.ReservaServicio;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
@@ -40,7 +42,7 @@ public class ReservaHabitacionController {
 
         model.addAttribute("reserva", r);
         model.addAttribute("tiposHabitacion", TIPOS);
-        model.addAttribute("servicios", servicioService.findAll());        model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+        model.addAttribute("nombreCliente", clienteLogueado.getNombre());
 
 
         return "formularioreserva";
@@ -49,7 +51,6 @@ public class ReservaHabitacionController {
     @PostMapping("/confirmar")
     public String procesarReserva(
             @ModelAttribute("reserva") Reserva reserva,
-            @RequestParam(required = false) List<Long> serviciosIds,
             @RequestParam(required = false) String tipoHabitacion,
             @AuthenticationPrincipal Cliente clienteLogueado,
             Model model) {
@@ -60,20 +61,11 @@ public class ReservaHabitacionController {
 
             model.addAttribute("error", "Debes completar todos los campos");
             model.addAttribute("tiposHabitacion", TIPOS);
-            model.addAttribute("servicios", servicioService.findAll());
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
             return "formularioreserva";
         }
 
         reserva.setCliente(clienteLogueado);
-
-        if (serviciosIds != null) {
-            List<Servicio> serviciosSeleccionados = servicioService.findAll()
-                    .stream()
-                    .filter(s -> serviciosIds.contains(s.getId()))
-                    .toList();
-            reserva.setServicios(serviciosSeleccionados);
-        }
 
         Optional<Reserva> guardada;
 
@@ -82,10 +74,65 @@ public class ReservaHabitacionController {
         } catch (FechaFinInicioException ex) {
             model.addAttribute("error", ex.getMessage());
             model.addAttribute("tiposHabitacion", TIPOS);
-            model.addAttribute("servicios", servicioService.findAll());
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
             return "formularioreserva";
         }
+
+        if (guardada.isEmpty()) {
+            model.addAttribute("error", "No quedan habitaciones disponibles de ese tipo");
+            model.addAttribute("tiposHabitacion", TIPOS);
+            model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            return "formularioreserva";
+        }
+
+        return "redirect:/reserva/" + guardada.get().getId() + "/servicios";
+    }
+
+    @GetMapping("/{id}/servicios")
+    public String mostrarFormularioServicios(@PathVariable Long id, Model model) {
+        Optional<Reserva> reserva = reservaService.findById(id);
+
+        if (reserva.isEmpty()) {
+            return "redirect:/reserva/nueva";
+        }
+
+        model.addAttribute("reserva", reserva.get());
+        model.addAttribute("servicios", servicioService.findAll());
+
+        return "formularioServicios";
+    }
+
+    @PostMapping("/{id}/servicios")
+    public String guardarServicios(
+            @PathVariable Long id,
+            @RequestParam(required = false) List<Long> serviciosIds) {
+
+        Optional<Reserva> reservaBuscada = reservaService.findById(id);
+
+        if (reservaBuscada.isEmpty()) {
+            return "redirect:/reserva/nueva";
+        }
+
+        Reserva reserva = reservaBuscada.get();
+        reserva.getServiciosReservados().clear();
+
+        if (serviciosIds != null) {
+            for (Servicio servicio : servicioService.findAll()) {
+                if (serviciosIds.contains(servicio.getId())) {
+                    ReservaServicio reservaServicio = ReservaServicio.builder()
+                            .reserva(reserva)
+                            .servicio(servicio)
+                            .cantidad(1)
+                            .precioUnidad(servicio.getPrecio())
+                            .build();
+
+                    reserva.getServiciosReservados().add(reservaServicio);
+                }
+            }
+        }
+
+        reserva.calcularPrecioTotal();
+        reservaService.save(reserva);
 
         return "redirect:/reserva/exito";
     }

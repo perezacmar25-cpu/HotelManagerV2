@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Reserva confirmada</title>
@@ -22,7 +23,12 @@
         <h2 class="fw-light mb-3" style="font-family:Georgia,serif">Reserva confirmada</h2>
         <hr>
         <p class="text-secondary mb-4">Su reserva se ha registrado correctamente.<br>Le esperamos en <strong>Hospedium</strong>.</p>
-        <a href="/" class="btn btn-dark rounded-0 w-100 text-uppercase" style="letter-spacing:.05em">Volver al inicio</a>
+
+        <a th:href="@{/admin/admininicio}" sec:authorize="hasRole('ADMIN')"
+           class="btn btn-dark rounded-0 w-100 text-uppercase" style="letter-spacing:.05em">Continuar</a>
+
+        <a th:href="@{/misreservas}" sec:authorize="hasRole('USER')"
+           class="btn btn-dark rounded-0 w-100 text-uppercase" style="letter-spacing:.05em">Continuar</a>
     </div>
 </div>
 </body>

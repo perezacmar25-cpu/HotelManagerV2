@@ -98,12 +98,12 @@
                         <div class="col-md-4 ps-4">
                             <p class="text-uppercase text-secondary small mb-1">Total</p>
                             <div class="fs-4 fw-bold mb-2" th:text="${r.precioTotal} + ' €'"></div>
-                            <div th:if="${not #lists.isEmpty(r.servicios)}">
+                            <div th:if="${not #lists.isEmpty(r.serviciosReservados)}">
                                 <p class="text-uppercase text-secondary small mb-1">Servicios</p>
                                 <div class="d-flex flex-wrap gap-1">
-                                    <span th:each="s : ${r.servicios}"
+                                    <span th:each="rs : ${r.serviciosReservados}"
                                           class="badge bg-dark rounded-0 fw-normal small"
-                                          th:text="${s.nombre}"></span>
+                                          th:text="${rs.servicio.nombre}"></span>
                                 </div>
                             </div>
                         </div>

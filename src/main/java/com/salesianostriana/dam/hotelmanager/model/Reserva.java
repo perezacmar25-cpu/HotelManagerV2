@@ -10,8 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -44,14 +42,9 @@ public class Reserva {
     @Builder.Default
     private List<ReservaHabitacion> listadoReservaHab = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "reserva_servicio",
-            joinColumns = @JoinColumn(name = "reserva_id"),
-            inverseJoinColumns = @JoinColumn(name = "servicio_id")
-    )
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Servicio> servicios = new ArrayList<>();
+    private List<ReservaServicio> serviciosReservados = new ArrayList<>();
 
     public double calcularPrecioTotal() {
 
@@ -61,11 +54,9 @@ public class Reserva {
                 .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias)
                 .sum();
 
-        double totalServicios = 0;
-        
-        if (!servicios.isEmpty()) {
-            totalServicios = Servicio.calcularPrecioTotal(servicios);
-        }
+        double totalServicios = serviciosReservados.stream()
+                .mapToDouble(ReservaServicio::calcularSubtotal)
+                .sum();
 
         this.precioTotal = totalHabitaciones + totalServicios;
 

@@ -201,7 +201,8 @@
 				</div>
 			</div>
 			<div class="row g-4">
-				<div class="col-md-4" th:each="ser : ${servicios}">
+				<div class="col-md-4" th:each="ser : ${servicios}"
+				     th:unless="${ser.nombre == 'Masaje spa' or ser.nombre == 'Tratamiento facial'}">
 					<div class="bg-white h-100 border-top border-3 border-dark shadow-sm rounded-0 overflow-hidden">
 						<img th:src="@{'/img/' + ${ser.imagen}}" class="w-100 object-fit-cover" style="height:180px" alt="Servicio">
 						<div class="p-4">

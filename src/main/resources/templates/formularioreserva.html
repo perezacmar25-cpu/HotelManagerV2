@@ -55,16 +55,6 @@
                             </select>
                         </div>
 
-                        <p class="small text-uppercase text-secondary mb-2">Servicios adicionales</p>
-                        <div class="row mb-4">
-                            <div th:each="s : ${servicios}" class="col-6 mb-2">
-                                <div class="border p-2 d-flex align-items-center gap-2">
-                                    <input type="checkbox" name="serviciosIds" th:value="${s.id}" th:data-precio="${s.precio}">
-                                    <span class="small" th:text="${s.nombre}"></span>
-                                </div>
-                            </div>
-                        </div>
-
                         <div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
 
                         <div class="d-grid gap-2">
@@ -89,7 +79,6 @@
     const fechaInicio = document.querySelector('[name="fechaInicio"]');
     const fechaFin    = document.querySelector('[name="fechaFin"]');
     const tipoSelect  = document.querySelector('[name="tipoHabitacion"]');
-    const checkboxes  = document.querySelectorAll('[name="serviciosIds"]');
     const resumen     = document.getElementById('resumenPrecio');
 
     function calcularPrecio() {
@@ -106,28 +95,17 @@
         const precioHabitacion = PRECIOS_HABITACION[tipo] || 0;
         const totalHabitacion  = noches * precioHabitacion;
 
-        let totalServicios = 0;
-        checkboxes.forEach(cb => {
-            if (cb.checked) {
-                totalServicios += parseFloat(cb.dataset.precio) || 0;
-            }
-        });
-
-        const total = totalHabitacion + totalServicios;
-
         resumen.classList.remove('d-none');
         resumen.innerHTML = `
             <strong>Resumen de precio estimado</strong><br>
             ${noches} noche${noches !== 1 ? 's' : ''} x ${precioHabitacion.toFixed(2)} € = <strong>${totalHabitacion.toFixed(2)} €</strong><br>
-            ${totalServicios > 0 ? `Servicios adicionales: <strong>${totalServicios.toFixed(2)} €</strong><br>` : ''}
-            <strong>Total estimado: ${total.toFixed(2)} €</strong>
+            <strong>Total estancia: ${totalHabitacion.toFixed(2)} €</strong>
         `;
     }
 
     fechaInicio.addEventListener('change', calcularPrecio);
     fechaFin.addEventListener('change', calcularPrecio);
     tipoSelect.addEventListener('change', calcularPrecio);
-    checkboxes.forEach(cb => cb.addEventListener('change', calcularPrecio));
 </script>
 </body>
 </html>

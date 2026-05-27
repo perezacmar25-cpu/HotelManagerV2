@@ -56,9 +56,9 @@
 							<td class="fw-semibold text-success" th:text="${reserva.precioTotal + ' €'}"></td>
 							<td th:text="${reserva.numeroPersonas}"></td>
 							<td>
-								<span th:each="servicio : ${reserva.servicios}"
-									class="badge bg-info-subtle border border-info-subtle text-info-emphasis fw-normal rounded-pill me-1 mb-1 px-3 py-2" th:text="${servicio.nombre}"></span>
-								<span th:if="${#lists.isEmpty(reserva.servicios)}" class="text-secondary">Sin servicios</span>
+								<span th:each="reservaServicio : ${reserva.serviciosReservados}"
+									class="badge bg-info-subtle border border-info-subtle text-info-emphasis fw-normal rounded-pill me-1 mb-1 px-3 py-2" th:text="${reservaServicio.servicio.nombre}"></span>
+								<span th:if="${#lists.isEmpty(reserva.serviciosReservados)}" class="text-secondary">Sin servicios</span>
 							</td>
 							<td>
 								<span th:each="rh : ${reserva.listadoReservaHab}" class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis fw-normal rounded-pill me-1 px-3 py-2"
