@@ -37,18 +37,31 @@
 							
 							<!--Lo de th:classappend es para que salga lo del masaje y el tratamiento facial 
 								si la casilla spa está marcada-->
-                            <div th:each="s : ${servicios}"
-                                 class="servicio-linea row g-0 align-items-center border-bottom py-3 px-3"
-                                 th:classappend="${s.nombre == 'Masaje spa' or s.nombre == 'Tratamiento facial'} ? ' d-none extra-spa' : ''">
-                                <div class="col-8">
-                                    <label class="d-flex align-items-center gap-2 mb-0">
-                                        <input type="checkbox" name="serviciosIds" th:value="${s.id}"
-                                               th:data-precio="${s.precio}" th:data-nombre="${s.nombre}">
-                                        <span class="small fw-semibold" th:text="${s.nombre}"></span>
-                                    </label>
-                                </div>
-                                <div class="col-4 text-end small text-secondary" th:text="${s.precio} + ' €'"></div>
-                            </div>
+								<!-- Le damos un id único a cada checkbox combinando "cb-" con el id del servicio,
+								     por ejemplo cb-1, cb-2, cb-3... así cada uno es diferente -->
+								<div th:each="s : ${servicios}"
+								     class="servicio-linea row g-0 align-items-center border-bottom py-3 px-3"
+								     th:classappend="${s.nombre == 'Masaje spa' or s.nombre == 'Tratamiento facial'} ? ' d-none extra-spa' : ''">
+								    <div class="col-5">
+								        <label class="d-flex align-items-center gap-2 mb-0">
+								            <input type="checkbox" name="serviciosIds" th:value="${s.id}"
+								                   th:data-precio="${s.precio}" th:data-nombre="${s.nombre}"
+								                   th:id="'cb-' + ${s.id}">
+								            <span class="small fw-semibold" th:text="${s.nombre}"></span>
+								        </label>
+								    </div>
+								    <div class="col-4">
+								        <div class="input-group input-group-sm horas-input d-none">
+								            <input type="number" th:name="'horas_' + ${s.id}" th:data-id="${s.id}"
+								                   min="1" max="24" value="1"
+								                   class="form-control form-control-sm rounded-0"
+								                   style="max-width:70px">
+								            <span class="input-group-text rounded-0 small">h</span>
+								        </div>
+								    </div>
+								    <div class="col-3 text-end small text-secondary"
+								         th:text="${s.precio} + ' €/h'"></div>
+								</div>
                         </div>
 
                         <div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
@@ -71,45 +84,63 @@
     const extrasSpa = document.querySelectorAll('.extra-spa');
     const resumen = document.getElementById('resumenPrecio');
 
+    function getHoras(cb) {
+        const linea = cb.closest('.servicio-linea');
+        const horasInput = linea.querySelector('[name^="horas_"]');
+        return horasInput ? parseInt(horasInput.value) || 1 : 1;
+    }
+
     function calcularServicios() {
         let totalServicios = 0;
-
         checkboxes.forEach(cb => {
             if (cb.checked) {
-                totalServicios += parseFloat(cb.dataset.precio) || 0;
+                const precio = parseFloat(cb.dataset.precio) || 0;
+                const horas = getHoras(cb);
+                totalServicios += precio * horas;
             }
         });
-
         if (totalServicios === 0) {
             resumen.classList.add('d-none');
             return;
         }
-
         resumen.classList.remove('d-none');
         resumen.innerHTML = `<strong>Total servicios: ${totalServicios.toFixed(2)} €</strong>`;
     }
 
-    function mostrarExtrasSpa() {
-        if (!spaCheckbox) {
-            return;
+    function toggleHoras(cb) {
+        const linea = cb.closest('.servicio-linea');
+        const horasWrap = linea.querySelector('.horas-input');
+        const numberInput = linea.querySelector('[name^="horas_"]');
+        if (cb.checked) {
+            horasWrap.classList.remove('d-none');
+        } else {
+            horasWrap.classList.add('d-none');
+            if (numberInput) numberInput.value = 1;
         }
-
-        extrasSpa.forEach(extra => {
-            const checkbox = extra.querySelector('[name="serviciosIds"]');
-            extra.classList.toggle('d-none', !spaCheckbox.checked);
-
-            if (!spaCheckbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
         calcularServicios();
     }
 
-    checkboxes.forEach(cb => cb.addEventListener('change', calcularServicios));
-    if (spaCheckbox) {
-        spaCheckbox.addEventListener('change', mostrarExtrasSpa);
+    function mostrarExtrasSpa() {
+        if (!spaCheckbox) return;
+        extrasSpa.forEach(extra => {
+            const checkbox = extra.querySelector('[name="serviciosIds"]');
+            extra.classList.toggle('d-none', !spaCheckbox.checked);
+            if (!spaCheckbox.checked) {
+                checkbox.checked = false;
+                toggleHoras(checkbox);
+            }
+        });
+        calcularServicios();
     }
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => toggleHoras(cb));
+        const linea = cb.closest('.servicio-linea');
+        const horasInput = linea.querySelector('[name^="horas_"]');
+        if (horasInput) horasInput.addEventListener('input', calcularServicios);
+    });
+
+    if (spaCheckbox) spaCheckbox.addEventListener('change', mostrarExtrasSpa);
 </script>
 </body>
 </html>
