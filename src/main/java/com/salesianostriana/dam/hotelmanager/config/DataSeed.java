@@ -61,7 +61,7 @@ public class DataSeed {
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
             }
             if (serSer.findAll().isEmpty()) {
-                serSer.save(Servicio.builder().nombre("Pista de fútbol").precio(15.0).imagen("futbol.jpg").build());
+                serSer.save(Servicio.builder().nombre("Pista de voleyball").precio(15.0).imagen("voleyball.jpg").build());
                 serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).imagen("padel.jpg").build());
                 serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).imagen("arco.jpg").build());
                 serSer.save(Servicio.builder().nombre("Spa").precio(40).imagen("spa.jpg").build());
@@ -71,12 +71,12 @@ public class DataSeed {
             
             if(cliSer.findAll().isEmpty()) {
             	cliSer.save(Cliente.builder()
-            			.dni("77854783U")
-            			.email("mario@gmail.com")
+            			.dni("73854783U")
+            			.email("user@gmail.com")
             			.telefono("667555489")
-            			.nombre("Mario")
-            			.password("{noop}Mario")
-            			.username("Mario")
+            			.nombre("user")
+            			.password("{noop}user")
+            			.username("user")
             			.rol(RolUsuario.USER)
             			.build());
             	
