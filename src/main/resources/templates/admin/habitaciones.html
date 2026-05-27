@@ -24,6 +24,26 @@
 			</div>
 		</div>
 
+		<div class="card border-warning-subtle shadow-sm rounded-3 mb-4">
+			<div class="card-body p-4">
+				<h2 class="h6 text-uppercase text-warning-emphasis fw-semibold mb-3">Agregar habitación</h2>
+				<form th:action="@{/admin/agregar/habitacion}" method="get" class="row g-3">
+					<div class="col-md-8">
+						<label class="form-label">Tipo</label>
+						<select name="tipo" class="form-select" required>
+							<option value="">Elige un tipo</option>
+							<option value="Individual">Individual</option>
+							<option value="Doble">Doble</option>
+							<option value="Suite">Suite</option>
+						</select>
+					</div>
+					<div class="col-md-4 d-flex align-items-end">
+						<button type="submit" class="btn btn-warning w-100">Agregar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<div class="card border-warning-subtle shadow-sm rounded-3 overflow-hidden">
 			<div class="card-header bg-warning-subtle border-warning-subtle py-3 px-4">
 				<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">

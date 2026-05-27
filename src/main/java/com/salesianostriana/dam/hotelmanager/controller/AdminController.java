@@ -90,6 +90,20 @@ public class AdminController {
 		   return "redirect:/admin/clientes";
 	   }
 	   
+	   @GetMapping("/admin/agregar/habitacion")
+	   public String agregarHabitacion(@ModelAttribute Habitacion h) {
+		   if (h.getTipo().equals("Individual")) {
+			   h.setPrecioNoche(55.0);
+		   } else if (h.getTipo().equals("Doble")) {
+			   h.setPrecioNoche(100.0);
+		   } else if (h.getTipo().equals("Suite")) {
+			   h.setPrecioNoche(155.0);
+		   }
+	       habitacionService.save(h);
+	       return "redirect:/admin/habitaciones";
+	   }
+	   
+	   
 		@GetMapping("/admin/habitaciones")
 		public String listarHabitaciones(Model model) {
 	 
@@ -101,9 +115,22 @@ public class AdminController {
 	 
 			List<Habitacion> todas = habitacionService.findAll();
 			todas.forEach(h -> h.setDisponible(!ocupadasHoy.contains(h.getNumero())));
+			todas.sort((h1, h2) -> Integer.compare(ordenTipo(h1.getTipo()), ordenTipo(h2.getTipo())));
 	 
 			model.addAttribute("habitaciones", todas);
 			return "/admin/habitaciones";
+		}
+
+		// ordenarlas para que se muestre bien la lista
+		private int ordenTipo(String tipo) {
+			if (tipo.equals("Individual")) {
+				return 1;
+			} else if (tipo.equals("Doble")) {
+				return 2;
+			} else if (tipo.equals("Suite")) {
+				return 3;
+			}
+			return 4;
 		}
 	   
 	   
