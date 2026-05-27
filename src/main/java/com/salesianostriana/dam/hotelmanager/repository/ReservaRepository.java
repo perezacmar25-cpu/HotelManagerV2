@@ -15,6 +15,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
 	List<Reserva> findByClienteDni(String dni);
 	
+	
+	//esto me sirve para en el ReservaService borrar las reservas que estén asociadas a la habitación que queremos borrar.
 	@Query("""
 			SELECT r FROM Reserva r JOIN r.listadoReservaHab rh
 			WHERE rh.habitacion.numero = :numero
