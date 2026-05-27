@@ -92,6 +92,80 @@
 						<div class="text-muted small">Estancia exclusiva en Hospedium con todas las comodidades.</div>
 						<hr>
 						<div class="fs-5 fw-semibold mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
+						<button type="button" class="btn btn-outline-dark"
+							data-bs-toggle="modal" th:attr="data-bs-target=${'#modal' + hab.tipo}">
+							Ver detalles
+						</button>
+					</div>
+				</div>
+
+				<div class="modal fade" th:id="${'modal' + hab.tipo}">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" th:text="${'Habitación ' + hab.tipo}">
+									Habitación
+								</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Cerrar"></button>
+							</div>
+							<div class="modal-body">
+								<div class="carousel slide mb-3" th:id="${'carousel' + hab.tipo}">
+									<div class="carousel-inner">
+										<div th:if="${hab.tipo == 'Individual'}">
+											<div class="carousel-item active">
+												<img src="/img/individual.jpg" class="d-block w-100" alt="Habitación individual">
+											</div>
+											<div class="carousel-item">
+												<img src="/img/bañoindividual.jpg" class="d-block w-100" alt="Habitación">
+											</div>
+											<div class="carousel-item">
+												<img src="/img/terrazaindividual.jpg" class="d-block w-100" alt="Patio">
+											</div>
+										</div>
+
+										<div th:if="${hab.tipo == 'Doble'}">
+											<div class="carousel-item active">
+												<img src="/img/doble.jpg" class="d-block w-100" alt="Habitación doble">
+											</div>
+											<div class="carousel-item">
+												<img src="/img/bañodoble.jpg" class="d-block w-100" alt="Recepción">
+											</div>
+											<div class="carousel-item">
+												<img src="/img/terrazadoble.jpg" class="d-block w-100" alt="Fachada">
+											</div>
+										</div>
+
+										<div th:if="${hab.tipo == 'Suite'}">
+											<div class="carousel-item active">
+												<img src="/img/suite.jpg" class="d-block w-100" alt="Suite">
+											</div>
+											<div class="carousel-item">
+												<img src="/img/bañosuite.jpg" class="d-block w-100" alt="Baño suite">
+											</div>
+											<div class="carousel-item">
+												<img src="/img/terrazasuite.jpg" class="d-block w-100" alt="Terraza suite">
+											</div>
+										</div>
+									</div>
+
+									<button class="carousel-control-prev" type="button"
+										th:attr="data-bs-target=${'#carousel' + hab.tipo}" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon"></span>
+									</button>
+									<button class="carousel-control-next" type="button"
+										th:attr="data-bs-target=${'#carousel' + hab.tipo}" data-bs-slide="next">
+										<span class="carousel-control-next-icon"></span>
+									</button>
+								</div>
+
+								<p th:text="${hab.tipo}">Tipo</p>
+								<p th:text="${hab.precioNoche + '€/noche'}">0€/noche</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
