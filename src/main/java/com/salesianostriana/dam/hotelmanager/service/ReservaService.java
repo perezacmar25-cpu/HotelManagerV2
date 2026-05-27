@@ -47,6 +47,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
                 .build();
 
         reserva.getListadoReservaHab().add(reservaHabitacion);
+        
         reserva.calcularPrecioTotal();
 
         return Optional.of(save(reserva));

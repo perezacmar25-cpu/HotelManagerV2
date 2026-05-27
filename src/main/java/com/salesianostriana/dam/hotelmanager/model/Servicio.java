@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.hotelmanager.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -26,6 +25,12 @@ public class Servicio {
 	private double precio;
 	
     private String imagen;
+    
+    public static double calcularPrecioTotal(List<Servicio> servicios) {
+    	return servicios.stream()
+    			.mapToDouble(Servicio::getPrecio)
+    			.sum();
+    }
 	
 
 }
