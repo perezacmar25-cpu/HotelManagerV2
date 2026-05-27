@@ -1,4 +1,6 @@
 package com.salesianostriana.dam.hotelmanager.config;
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,17 +8,20 @@ import org.springframework.context.annotation.Configuration;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
+import com.salesianostriana.dam.hotelmanager.model.Temporada;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
+import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
+
 @Configuration
 public class DataSeed {
+
     @Bean
-    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer,ClienteService cliSer) {
+    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer) {
         return args -> {
             if (habSer.findAll().isEmpty()) {
-            
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
@@ -31,7 +36,6 @@ public class DataSeed {
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
 
-            
                 habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
@@ -46,7 +50,6 @@ public class DataSeed {
                 habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
 
-              
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
@@ -60,6 +63,7 @@ public class DataSeed {
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
                 habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
             }
+
             if (serSer.findAll().isEmpty()) {
                 serSer.save(Servicio.builder().nombre("Pista de voleyball").precio(15.0).imagen("voleyball.jpg").build());
                 serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).imagen("padel.jpg").build());
@@ -70,19 +74,19 @@ public class DataSeed {
                 serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).imagen("gimnasio.jpg").build());
                 serSer.save(Servicio.builder().nombre("Wifi").precio(0).imagen("recepcion.jpg").build());
             }
-            
-            if(cliSer.findAll().isEmpty()) {
-            	cliSer.save(Cliente.builder()
-            			.dni("73854783U")
-            			.email("user@gmail.com")
-            			.telefono("667555489")
-            			.nombre("user")
-            			.password("{noop}user")
-            			.username("user")
-            			.rol(RolUsuario.USER)
-            			.build());
-            	
-            	cliSer.save(Cliente.builder()
+
+            if (cliSer.findAll().isEmpty()) {
+                cliSer.save(Cliente.builder()
+                        .dni("73854783U")
+                        .email("user@gmail.com")
+                        .telefono("667555489")
+                        .nombre("user")
+                        .password("{noop}user")
+                        .username("user")
+                        .rol(RolUsuario.USER)
+                        .build());
+
+                cliSer.save(Cliente.builder()
                         .dni("00000000A")
                         .nombre("Administrador")
                         .email("admin@hospedium.com")
@@ -90,6 +94,21 @@ public class DataSeed {
                         .username("admin")
                         .password("{noop}admin")
                         .rol(RolUsuario.ADMIN)
+                        .build());
+            }
+
+            if (temSer.findAll().isEmpty()) {
+                temSer.save(Temporada.builder()
+                        .nombre("Temporada alta")
+                        .fechaInicio(LocalDate.of(2025, 6, 1))
+                        .fechaFin(LocalDate.of(2025, 9, 30))
+                        .multiplicador(1.5)
+                        .build());
+                temSer.save(Temporada.builder()
+                        .nombre("Temporada baja")
+                        .fechaInicio(LocalDate.of(2025, 10, 1))
+                        .fechaFin(LocalDate.of(2026, 5, 31))
+                        .multiplicador(1.0)
                         .build());
             }
         };

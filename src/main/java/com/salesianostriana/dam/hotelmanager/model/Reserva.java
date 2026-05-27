@@ -37,6 +37,10 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "cliente_dni")
     private Cliente cliente;
+    
+    @ManyToOne
+    @JoinColumn(name = "temporada_id")
+    private Temporada temporada;
 
     @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL,orphanRemoval = true)
     @Builder.Default
@@ -50,13 +54,19 @@ public class Reserva {
 
         long dias = fechaFin.toEpochDay() - fechaInicio.toEpochDay();
 
+        double multiplicador;
+        if (temporada != null) {
+            multiplicador = temporada.getMultiplicador();
+        } else {
+            multiplicador = 1.0;
+        }
+
         double totalHabitaciones = listadoReservaHab.stream()
-                .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias)
+                .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias * multiplicador)
                 .sum();
 
-        double totalServicios = serviciosReservados.stream()
-                .mapToDouble(ReservaServicio::calcularSubtotal)
-                .sum();
+
+        double totalServicios = Servicio.calcularTotalServicios(serviciosReservados);
 
         this.precioTotal = totalHabitaciones + totalServicios;
 

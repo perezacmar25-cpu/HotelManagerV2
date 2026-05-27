@@ -20,6 +20,7 @@ import com.salesianostriana.dam.hotelmanager.model.ReservaServicio;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
+import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class ReservaHabitacionController {
 
     private final ReservaService reservaService;
     private final ServicioService servicioService;
+    private final TemporadaService temporadaService;
 
 
     private static final List<String> TIPOS = List.of("Individual", "Doble", "Suite");
@@ -44,6 +46,7 @@ public class ReservaHabitacionController {
         model.addAttribute("reserva", r);
         model.addAttribute("tiposHabitacion", TIPOS);
         model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+        model.addAttribute("temporadas", temporadaService.findAll());
 
 
         return "formularioreserva";

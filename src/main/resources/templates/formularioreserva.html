@@ -1,111 +1,132 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Nueva Reserva</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            background: url('/img/habitacion.jpg') center / cover no-repeat fixed;
-        }
-        .overlay {
-            min-height: 100vh;
-            background: rgba(10, 8, 5, 0.65);
-        }
-    </style>
+	<meta charset="UTF-8">
+	<title>Nueva Reserva</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body {
+			min-height: 100vh;
+			background: url('/img/habitacion.jpg') center / cover no-repeat fixed;
+		}
+
+		.overlay {
+			min-height: 100vh;
+			background: rgba(10, 8, 5, 0.65);
+		}
+	</style>
 </head>
+
 <body>
-<div class="overlay d-flex align-items-center py-5">
-    <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-md-5">
-                <div class="bg-white p-5 shadow-lg">
+	<div class="overlay d-flex align-items-center py-5">
+		<div class="container">
+			<div class="row justify-content-end">
+				<div class="col-md-5">
+					<div class="bg-white p-5 shadow-lg">
 
-                    <p class="text-uppercase text-secondary small mb-1">Hospedium</p>
-                    <h2 class="fw-light mb-1" style="font-family:Georgia,serif">Nueva reserva</h2>
-                    <p class="text-secondary small mb-4">Bienvenido, <strong th:text="${nombreCliente}"></strong></p>
+						<p class="text-uppercase text-secondary small mb-1">Hospedium</p>
+						<h2 class="fw-light mb-1" style="font-family:Georgia,serif">Nueva reserva</h2>
+						<p class="text-secondary small mb-4">Bienvenido, <strong th:text="${nombreCliente}"></strong>
+						</p>
 
-                    <div th:if="${error}" class="alert alert-danger small" th:text="${error}"></div>
+						<div th:if="${temporadas != null and !temporadas.isEmpty()}" class="alert alert-warning">
+							<strong>Aviso:</strong> Las reservas en temporada alta tienen un precio superior:
+							<ul>
+								<li th:each="t : ${temporadas}" th:if="${t.multiplicador > 1}">
+									<span th:text="${t.nombre}"></span>: del
+									<span th:text="${t.fechaInicio}"></span> al
+									<span th:text="${t.fechaFin}"></span>
+									(<span th:text="${t.multiplicador}"></span>x)
+								</li>
+							</ul>
+						</div>
 
-                    <form th:action="@{/reserva/confirmar}" th:object="${reserva}" method="post">
-                        <input type="hidden" th:field="*{cliente.dni}">
+						<div th:if="${error}" class="alert alert-danger small" th:text="${error}"></div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label small text-uppercase text-secondary">Entrada</label>
-                                <input type="date" th:field="*{fechaInicio}" class="form-control rounded-0 border-0 border-bottom" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label small text-uppercase text-secondary">Salida</label>
-                                <input type="date" th:field="*{fechaFin}" class="form-control rounded-0 border-0 border-bottom" required>
-                            </div>
-                        </div>
+						<form th:action="@{/reserva/confirmar}" th:object="${reserva}" method="post">
+							<input type="hidden" th:field="*{cliente.dni}">
 
-                        <div class="mb-3">
-                            <label class="form-label small text-uppercase text-secondary">Personas</label>
-                            <input type="number" th:field="*{numeroPersonas}" min="1" class="form-control rounded-0 border-0 border-bottom" required>
-                        </div>
+							<div class="row mb-3">
+								<div class="col">
+									<label class="form-label small text-uppercase text-secondary">Entrada</label>
+									<input type="date" th:field="*{fechaInicio}"
+										class="form-control rounded-0 border-0 border-bottom" required>
+								</div>
+								<div class="col">
+									<label class="form-label small text-uppercase text-secondary">Salida</label>
+									<input type="date" th:field="*{fechaFin}"
+										class="form-control rounded-0 border-0 border-bottom" required>
+								</div>
+							</div>
 
-                        <div class="mb-4">
-                            <label class="form-label small text-uppercase text-secondary">Tipo de habitación</label>
-                            <select name="tipoHabitacion" class="form-select rounded-0" required>
-                                <option value="" disabled selected>Seleccione...</option>
-                                <option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t}"></option>
-                            </select>
-                        </div>
+							<div class="mb-3">
+								<label class="form-label small text-uppercase text-secondary">Personas</label>
+								<input type="number" th:field="*{numeroPersonas}" min="1"
+									class="form-control rounded-0 border-0 border-bottom" required>
+							</div>
 
-                        <div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
+							<div class="mb-4">
+								<label class="form-label small text-uppercase text-secondary">Tipo de habitación</label>
+								<select name="tipoHabitacion" class="form-select rounded-0" required>
+									<option value="" disabled selected>Seleccione...</option>
+									<option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t}"></option>
+								</select>
+							</div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-dark rounded-0 text-uppercase" style="letter-spacing:.05em">Confirmar reserva</button>
-                            <a href="/" class="btn btn-outline-secondary rounded-0">Cancelar</a>
-                        </div>
-                    </form>
+							<div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+							<div class="d-grid gap-2">
+								<button type="submit" class="btn btn-dark rounded-0 text-uppercase"
+									style="letter-spacing:.05em">Confirmar reserva</button>
+								<a href="/" class="btn btn-outline-secondary rounded-0">Cancelar</a>
+							</div>
+						</form>
 
-<script>
-    const PRECIOS_HABITACION = {
-        'Individual': 55.0,
-        'Doble': 100.0,
-        'Suite': 155.0
-    };
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    const fechaInicio = document.querySelector('[name="fechaInicio"]');
-    const fechaFin    = document.querySelector('[name="fechaFin"]');
-    const tipoSelect  = document.querySelector('[name="tipoHabitacion"]');
-    const resumen     = document.getElementById('resumenPrecio');
+	<script>
+		const PRECIOS_HABITACION = {
+			'Individual': 55.0,
+			'Doble': 100.0,
+			'Suite': 155.0
+		};
 
-    function calcularPrecio() {
-        const inicio = fechaInicio.value ? new Date(fechaInicio.value) : null;
-        const fin    = fechaFin.value    ? new Date(fechaFin.value)    : null;
-        const tipo   = tipoSelect.value;
+		const fechaInicio = document.querySelector('[name="fechaInicio"]');
+		const fechaFin = document.querySelector('[name="fechaFin"]');
+		const tipoSelect = document.querySelector('[name="tipoHabitacion"]');
+		const resumen = document.getElementById('resumenPrecio');
 
-        if (!inicio || !fin || fin <= inicio || !tipo) {
-            resumen.classList.add('d-none');
-            return;
-        }
+		function calcularPrecio() {
+			const inicio = fechaInicio.value ? new Date(fechaInicio.value) : null;
+			const fin = fechaFin.value ? new Date(fechaFin.value) : null;
+			const tipo = tipoSelect.value;
 
-        const noches = Math.round((fin - inicio) / (1000 * 60 * 60 * 24));
-        const precioHabitacion = PRECIOS_HABITACION[tipo] || 0;
-        const totalHabitacion  = noches * precioHabitacion;
+			if (!inicio || !fin || fin <= inicio || !tipo) {
+				resumen.classList.add('d-none');
+				return;
+			}
 
-        resumen.classList.remove('d-none');
-        resumen.innerHTML = `
+			const noches = Math.round((fin - inicio) / (1000 * 60 * 60 * 24));
+			const precioHabitacion = PRECIOS_HABITACION[tipo] || 0;
+			const totalHabitacion = noches * precioHabitacion;
+
+			resumen.classList.remove('d-none');
+			resumen.innerHTML = `
             <strong>Resumen de precio estimado</strong><br>
             ${noches} noche${noches !== 1 ? 's' : ''} x ${precioHabitacion.toFixed(2)} € = <strong>${totalHabitacion.toFixed(2)} €</strong><br>
             <strong>Total estancia: ${totalHabitacion.toFixed(2)} €</strong>
         `;
-    }
+		}
 
-    fechaInicio.addEventListener('change', calcularPrecio);
-    fechaFin.addEventListener('change', calcularPrecio);
-    tipoSelect.addEventListener('change', calcularPrecio);
-</script>
+		fechaInicio.addEventListener('change', calcularPrecio);
+		fechaFin.addEventListener('change', calcularPrecio);
+		tipoSelect.addEventListener('change', calcularPrecio);
+	</script>
 </body>
+
 </html>

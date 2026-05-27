@@ -1,146 +1,156 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Servicios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            background: url('/img/spa.jpg') center / cover no-repeat fixed;
-        }
-        .overlay {
-            min-height: 100vh;
-            background: rgba(10, 8, 5, 0.65);
-        }
-    </style>
+	<meta charset="UTF-8">
+	<title>Servicios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body {
+			min-height: 100vh;
+			background: url('/img/spa.jpg') center / cover no-repeat fixed;
+		}
+
+		.overlay {
+			min-height: 100vh;
+			background: rgba(10, 8, 5, 0.65);
+		}
+	</style>
 </head>
+
 <body>
-<div class="overlay d-flex align-items-center py-5">
-    <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-md-5">
-                <div class="bg-white p-5 shadow-lg">
+	<div class="overlay d-flex align-items-center py-5">
+		<div class="container">
+			<div class="row justify-content-end">
+				<div class="col-md-5">
+					<div class="bg-white p-5 shadow-lg">
 
-                    <p class="text-uppercase text-secondary small mb-1">Hospedium</p>
-                    <h2 class="fw-light mb-1" style="font-family:Georgia,serif">Servicios extra</h2>
-                    <p class="text-secondary small mb-4">Elige solo los servicios que quieras añadir.</p>
+						<p class="text-uppercase text-secondary small mb-1">Hospedium</p>
+						<h2 class="fw-light mb-1" style="font-family:Georgia,serif">Servicios extra</h2>
+						<p class="text-secondary small mb-4">Elige solo los servicios que quieras añadir.</p>
 
-                    <form th:action="@{'/reserva/' + ${reserva.id} + '/servicios'}" method="post">
+						<form th:action="@{'/reserva/' + ${reserva.id} + '/servicios'}" method="post">
 
-                        <div class="border mb-3">
-                            <div class="row g-0 bg-light border-bottom py-2 px-3 small text-uppercase text-secondary">
-                                <div class="col-8">Servicio</div>
-                                <div class="col-4 text-end">Precio</div>
-                            </div>
+							<div class="border mb-3">
+								<div
+									class="row g-0 bg-light border-bottom py-2 px-3 small text-uppercase text-secondary">
+									<div class="col-8">Servicio</div>
+									<div class="col-4 text-end">Precio</div>
+								</div>
 
-							
-							<!--Lo de th:classappend es para que salga lo del masaje y el tratamiento facial 
+
+								<!--Lo de th:classappend es para que salga lo del masaje y el tratamiento facial 
 								si la casilla spa está marcada-->
 								<!-- Le damos un id único a cada checkbox combinando "cb-" con el id del servicio,
-								     por ejemplo cb-1, cb-2, cb-3... así cada uno es diferente -->
+								     por ejemplo cb-1, cb-2, cb-3... así cada uno es diferente (para que javascript sepa cuál es)-->
+								<!--Como cada servicio tiene su propio input de horas,
+									 necesito que cada uno tenga un nombre diferente para que
+									  cuando se envíe el formulario el controlador sepa las horas de cada servicio por separado.
+									   Por eso se combina horas_ con el id del servicio.-->
 								<div th:each="s : ${servicios}"
-								     class="servicio-linea row g-0 align-items-center border-bottom py-3 px-3"
-								     th:classappend="${s.nombre == 'Masaje spa' or s.nombre == 'Tratamiento facial'} ? ' d-none extra-spa' : ''">
-								    <div class="col-5">
-								        <label class="d-flex align-items-center gap-2 mb-0">
-								            <input type="checkbox" name="serviciosIds" th:value="${s.id}"
-								                   th:data-precio="${s.precio}" th:data-nombre="${s.nombre}"
-								                   th:id="'cb-' + ${s.id}">
-								            <span class="small fw-semibold" th:text="${s.nombre}"></span>
-								        </label>
-								    </div>
-								    <div class="col-4">
-								        <div class="input-group input-group-sm horas-input d-none">
-								            <input type="number" th:name="'horas_' + ${s.id}" th:data-id="${s.id}"
-								                   min="1" max="24" value="1"
-								                   class="form-control form-control-sm rounded-0"
-								                   style="max-width:70px">
-								            <span class="input-group-text rounded-0 small">h</span>
-								        </div>
-								    </div>
-								    <div class="col-3 text-end small text-secondary"
-								         th:text="${s.precio} + ' €/h'"></div>
+									class="servicio-linea row g-0 align-items-center border-bottom py-3 px-3"
+									th:classappend="${s.nombre == 'Masaje spa' or s.nombre == 'Tratamiento facial'} ? ' d-none extra-spa' : ''">
+									<div class="col-5">
+										<label class="d-flex align-items-center gap-2 mb-0">
+											<input type="checkbox" name="serviciosIds" th:value="${s.id}"
+												th:data-precio="${s.precio}" th:data-nombre="${s.nombre}"
+												th:id="'cb-' + ${s.id}">
+											<span class="small fw-semibold" th:text="${s.nombre}"></span>
+										</label>
+									</div>
+									<div class="col-4">
+										<div class="input-group input-group-sm horas-input d-none">
+											<input type="number" th:name="'horas_' + ${s.id}" th:data-id="${s.id}"
+												min="1" max="24" value="1"
+												class="form-control form-control-sm rounded-0" style="max-width:70px">
+											<span class="input-group-text rounded-0 small">h</span>
+										</div>
+									</div>
+									<div class="col-3 text-end small text-secondary" th:text="${s.precio} + ' €/h'">
+									</div>
 								</div>
-                        </div>
+							</div>
 
-                        <div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
+							<div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-dark rounded-0 text-uppercase" style="letter-spacing:.05em">Guardar servicios</button>
-                            <a th:href="@{/reserva/exito}" class="btn btn-outline-secondary rounded-0">Finalizar sin servicios</a>
-                        </div>
-                    </form>
+							<div class="d-grid gap-2">
+								<button type="submit" class="btn btn-dark rounded-0 text-uppercase"
+									style="letter-spacing:.05em">Guardar servicios</button>
+								<a th:href="@{/reserva/exito}" class="btn btn-outline-secondary rounded-0">Finalizar sin
+									servicios</a>
+							</div>
+						</form>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script>
-    const checkboxes = document.querySelectorAll('[name="serviciosIds"]');
-    const spaCheckbox = document.querySelector('[data-nombre="Spa"]');
-    const extrasSpa = document.querySelectorAll('.extra-spa');
-    const resumen = document.getElementById('resumenPrecio');
+	<script>
+		const checkboxes = document.querySelectorAll('[name="serviciosIds"]');
+		const spaCheckbox = document.querySelector('[data-nombre="Spa"]');
+		const extrasSpa = document.querySelectorAll('.extra-spa');
+		const resumen = document.getElementById('resumenPrecio');
 
-    function getHoras(cb) {
-        const linea = cb.closest('.servicio-linea');
-        const horasInput = linea.querySelector('[name^="horas_"]');
-        return horasInput ? parseInt(horasInput.value) || 1 : 1;
-    }
+		function getHoras(cb) {
+			const linea = cb.closest('.servicio-linea');
+			const horasInput = linea.querySelector('[name^="horas_"]');
+			return horasInput ? parseInt(horasInput.value) || 1 : 1;
+		}
 
-    function calcularServicios() {
-        let totalServicios = 0;
-        checkboxes.forEach(cb => {
-            if (cb.checked) {
-                const precio = parseFloat(cb.dataset.precio) || 0;
-                const horas = getHoras(cb);
-                totalServicios += precio * horas;
-            }
-        });
-        if (totalServicios === 0) {
-            resumen.classList.add('d-none');
-            return;
-        }
-        resumen.classList.remove('d-none');
-        resumen.innerHTML = `<strong>Total servicios: ${totalServicios.toFixed(2)} €</strong>`;
-    }
+		function calcularServicios() {
+			let totalServicios = 0;
+			checkboxes.forEach(cb => {
+				if (cb.checked) {
+					const precio = parseFloat(cb.dataset.precio) || 0;
+					const horas = getHoras(cb);
+					totalServicios += precio * horas;
+				}
+			});
+			if (totalServicios === 0) {
+				resumen.classList.add('d-none');
+				return;
+			}
+			resumen.classList.remove('d-none');
+			resumen.innerHTML = `<strong>Total servicios: ${totalServicios.toFixed(2)} €</strong>`;
+		}
 
-    function toggleHoras(cb) {
-        const linea = cb.closest('.servicio-linea');
-        const horasWrap = linea.querySelector('.horas-input');
-        const numberInput = linea.querySelector('[name^="horas_"]');
-        if (cb.checked) {
-            horasWrap.classList.remove('d-none');
-        } else {
-            horasWrap.classList.add('d-none');
-            if (numberInput) numberInput.value = 1;
-        }
-        calcularServicios();
-    }
+		function toggleHoras(cb) {
+			const linea = cb.closest('.servicio-linea');
+			const horasWrap = linea.querySelector('.horas-input');
+			const numberInput = linea.querySelector('[name^="horas_"]');
+			if (cb.checked) {
+				horasWrap.classList.remove('d-none');
+			} else {
+				horasWrap.classList.add('d-none');
+				if (numberInput) numberInput.value = 1;
+			}
+			calcularServicios();
+		}
 
-    function mostrarExtrasSpa() {
-        if (!spaCheckbox) return;
-        extrasSpa.forEach(extra => {
-            const checkbox = extra.querySelector('[name="serviciosIds"]');
-            extra.classList.toggle('d-none', !spaCheckbox.checked);
-            if (!spaCheckbox.checked) {
-                checkbox.checked = false;
-                toggleHoras(checkbox);
-            }
-        });
-        calcularServicios();
-    }
+		function mostrarExtrasSpa() {
+			if (!spaCheckbox) return;
+			extrasSpa.forEach(extra => {
+				const checkbox = extra.querySelector('[name="serviciosIds"]');
+				extra.classList.toggle('d-none', !spaCheckbox.checked);
+				if (!spaCheckbox.checked) {
+					checkbox.checked = false;
+					toggleHoras(checkbox);
+				}
+			});
+			calcularServicios();
+		}
 
-    checkboxes.forEach(cb => {
-        cb.addEventListener('change', () => toggleHoras(cb));
-        const linea = cb.closest('.servicio-linea');
-        const horasInput = linea.querySelector('[name^="horas_"]');
-        if (horasInput) horasInput.addEventListener('input', calcularServicios);
-    });
+		checkboxes.forEach(cb => {
+			cb.addEventListener('change', () => toggleHoras(cb));
+			const linea = cb.closest('.servicio-linea');
+			const horasInput = linea.querySelector('[name^="horas_"]');
+			if (horasInput) horasInput.addEventListener('input', calcularServicios);
+		});
 
-    if (spaCheckbox) spaCheckbox.addEventListener('change', mostrarExtrasSpa);
-</script>
+		if (spaCheckbox) spaCheckbox.addEventListener('change', mostrarExtrasSpa);
+	</script>
 </body>
+
 </html>

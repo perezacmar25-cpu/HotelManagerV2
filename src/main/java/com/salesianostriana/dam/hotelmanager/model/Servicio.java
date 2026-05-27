@@ -26,10 +26,11 @@ public class Servicio {
 	
     private String imagen;
     
-    public static double calcularPrecioTotal(List<Servicio> servicios) {
-    	return servicios.stream()
-    			.mapToDouble(Servicio::getPrecio)
-    			.sum();
+    public static double calcularTotalServicios(List<ReservaServicio> servicios) {
+        if (servicios.isEmpty()) return 0;
+        return servicios.stream()
+                .mapToDouble(ReservaServicio::calcularSubtotal)
+                .sum();
     }
 	
 
