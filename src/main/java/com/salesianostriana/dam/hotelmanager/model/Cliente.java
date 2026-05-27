@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.hotelmanager.model;
+			package com.salesianostriana.dam.hotelmanager.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
