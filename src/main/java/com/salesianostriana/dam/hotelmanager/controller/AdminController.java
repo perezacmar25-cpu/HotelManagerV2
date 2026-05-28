@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
+import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
@@ -66,8 +68,18 @@ public class AdminController {
 	   @GetMapping("/admin/reservas")
 	public String listarReservas(Model model) {
 		model.addAttribute("reservas", reservaService.findAll());
+		model.addAttribute("estados", EstadoReserva.values());
 		return "/admin/reservas";
 	}
+	   
+	   @PostMapping("/admin/{id}/cambiar/estado")
+	   public String cambiarEstadoReserva(@PathVariable Long id, @RequestParam EstadoReserva estado) {
+		   reservaService.findById(id).ifPresent(reserva -> {
+			   reserva.setEstadoReserva(estado);
+			   reservaService.save(reserva);
+		   });
+		   return "redirect:/admin/reservas";
+	   }
 
 		
 	   @GetMapping("/admin/{id}/eliminar/habitaciones")
