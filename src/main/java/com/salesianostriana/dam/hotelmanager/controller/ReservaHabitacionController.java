@@ -93,11 +93,13 @@ public class ReservaHabitacionController {
     }
 
     @GetMapping("/{id}/servicios")
-    public String mostrarFormularioServicios(@PathVariable Long id, Model model) {
+    public String mostrarFormularioServicios(@PathVariable Long id, Model model,
+                                             @AuthenticationPrincipal Cliente clienteLogueado) {
         Optional<Reserva> reserva = reservaService.findById(id);
 
-        if (reserva.isEmpty()) {
-            return "redirect:/reserva/nueva";
+        // Si la reserva no existe o no pertenece al cliente logueado, redirigir
+        if (reserva.isEmpty() || !reserva.get().getCliente().getDni().equals(clienteLogueado.getDni())) {
+            return "redirect:/misreservas";
         }
 
         model.addAttribute("reserva", reserva.get());
