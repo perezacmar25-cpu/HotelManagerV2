@@ -64,8 +64,6 @@ public class Reserva {
         double totalHabitaciones = listadoReservaHab.stream()
                 .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias * multiplicador)
                 .sum();
-
-
         double totalServicios = Servicio.calcularTotalServicios(serviciosReservados);
 
         this.precioTotal = totalHabitaciones + totalServicios;

@@ -12,6 +12,7 @@ import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
 import com.salesianostriana.dam.hotelmanager.repository.ReservaRepository;
+import com.salesianostriana.dam.hotelmanager.repository.TemporadaRepository;
 import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository<Reserva, Long>> {
 
     private final HabitacionRepository habitacionRepository;
-    private final ReservaRepository reservaRepository;;
+    private final ReservaRepository reservaRepository;
+    private final TemporadaRepository temporadaRepository;
 
     public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion) {
 
@@ -33,11 +35,9 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
                 reserva.getFechaFin()
         );
 
-
         if (disponibles.isEmpty()) {
             return Optional.empty();
         }
-
         Habitacion habitacion = disponibles.get(0);
         
         //así se hace con builder
@@ -45,14 +45,17 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
                 .habitacion(habitacion)
                 .reserva(reserva)
                 .build();
-
         reserva.getListadoReservaHab().add(reservaHabitacion);
         
+     // Busca si la fecha de inicio de la reserva cae en alguna temporada 
+     // y, si la hay, la asigna a la reserva para que calcularPrecioTotal() aplique el multiplicador correcto
+        //Seteamos la temporada que devuelva la query
+        temporadaRepository.findByFecha(reserva.getFechaInicio())
+        .ifPresent(reserva::setTemporada);
         reserva.calcularPrecioTotal();
 
         return Optional.of(save(reserva));
     }
-    
     @Override
     public Reserva save(Reserva reserva) {
         validarFechas(reserva);

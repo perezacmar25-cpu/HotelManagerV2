@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
@@ -76,8 +77,23 @@ public class AdminController {
 	       return "redirect:/admin/habitaciones";
 	   }
 	   
+	   @GetMapping("/admin/{dni}/editar/cliente")
+	   public String editarCliente(@PathVariable String dni,Model model) {
+		   Optional<Cliente> cliente = clienteService.findById(dni);
+		    model.addAttribute("cliente", cliente.get());
+		    if (cliente.isEmpty()) {
+		    	return "redirect:/admin/clientes";
+		    }
+		    return "cliente";
+		}
 	   
-	   
+	   @PostMapping("/admin/{dni}/editar/cliente")
+	   public String editarReserva(@PathVariable String dni, @ModelAttribute Cliente cliente) {
+	       cliente.setDni(dni);
+	       clienteService.save(cliente);
+	       return "redirect:/admin/clientes";
+	   }
+
 	   @GetMapping("/admin/clientes")
 	    public String listarClientes(Model model) {
 	        model.addAttribute("clientes", clienteService.findAll());
