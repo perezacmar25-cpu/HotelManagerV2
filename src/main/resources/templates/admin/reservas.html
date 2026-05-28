@@ -30,7 +30,8 @@
 			<div class="card-header bg-primary-subtle border-primary-subtle py-3 px-4">
 				<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
 					<h2 class="h6 text-uppercase text-primary-emphasis fw-semibold mb-0">Reservas registradas</h2>
-					<span class="badge bg-white border border-primary-subtle text-primary-emphasis rounded-pill px-3 py-2"
+					<span
+						class="badge bg-white border border-primary-subtle text-primary-emphasis rounded-pill px-3 py-2"
 						th:text="${#lists.size(reservas)} + ' registros'">0 registros</span>
 				</div>
 			</div>
@@ -57,13 +58,17 @@
 							<td th:text="${reserva.numeroPersonas}"></td>
 							<td>
 								<span th:each="reservaServicio : ${reserva.serviciosReservados}"
-									class="badge bg-info-subtle border border-info-subtle text-info-emphasis fw-normal rounded-pill me-1 mb-1 px-3 py-2" th:text="${reservaServicio.servicio.nombre}"></span>
-								<span th:if="${#lists.isEmpty(reserva.serviciosReservados)}" class="text-secondary">Sin servicios</span>
+									class="badge bg-info-subtle border border-info-subtle text-info-emphasis fw-normal rounded-pill me-1 mb-1 px-3 py-2"
+									th:text="${reservaServicio.servicio.nombre}"></span>
+								<span th:if="${#lists.isEmpty(reserva.serviciosReservados)}" class="text-secondary">Sin
+									servicios</span>
 							</td>
 							<td>
-								<span th:each="rh : ${reserva.listadoReservaHab}" class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis fw-normal rounded-pill me-1 px-3 py-2"
+								<span th:each="rh : ${reserva.listadoReservaHab}"
+									class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis fw-normal rounded-pill me-1 px-3 py-2"
 									th:text="${rh.habitacion.numero}"></span>
-								<span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">Sin habitación</span>
+								<span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">Sin
+									habitación</span>
 							</td>
 							<td class="pe-4">
 								<div class="d-flex flex-wrap gap-2">
@@ -72,6 +77,28 @@
 									<a th:href="@{'/admin/' + ${reserva.id} + '/eliminar/reserva'}"
 										class="btn btn-outline-danger btn-sm rounded-0 px-3">Eliminar</a>
 								</div>
+							</td>
+							<td>
+								<form th:action="@{/admin/{id}/cambiar/estado(id=${reserva.id})}" method="post"
+									class="d-flex align-items-center gap-2">
+
+									<select name="estado" class="form-select form-select-sm rounded-pill">
+										<option th:each="estado : ${estados}" th:value="${estado}"
+											th:selected="${estado == reserva.estadoReserva}" th:text="${estado}">
+										</option>
+									</select>
+
+									<button type="submit" class="btn btn-sm btn-outline-dark rounded-pill"
+										title="Guardar estado">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+											<path d="M11 2H9v3h2z" />
+											<path
+												d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z" />
+										</svg>
+									</button>
+
+								</form>
 							</td>
 						</tr>
 

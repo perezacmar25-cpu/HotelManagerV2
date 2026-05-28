@@ -65,8 +65,8 @@ public class DataSeed {
             }
 
             if (serSer.findAll().isEmpty()) {
-                serSer.save(Servicio.builder().nombre("Pista de voleyball").precio(15.0).imagen("voleyball.jpg").build());
-                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(10.0).imagen("padel.jpg").build());
+                serSer.save(Servicio.builder().nombre("Pista de voleyball").precio(10.0).imagen("voleyball.jpg").build());
+                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(15.0).imagen("padel.jpg").build());
                 serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).imagen("arco.jpg").build());
                 serSer.save(Servicio.builder().nombre("Spa").precio(40).imagen("spa.jpg").build());
                 serSer.save(Servicio.builder().nombre("Masaje spa").precio(30).imagen("spa.jpg").build());
