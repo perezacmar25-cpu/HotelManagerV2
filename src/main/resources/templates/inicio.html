@@ -82,95 +82,95 @@
 	</div>
 
 	<div class="container">
-		<div class="row g-4 justify-content-center">
-			<div class="col-md-4" th:each="hab : ${habitaciones}">
-				<div class="card border-0 shadow-sm rounded-0 h-100">
-					<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}"
-						class="card-img-top rounded-0 object-fit-cover" style="height:220px" alt="Habitación">
-					<div class="card-body p-4 text-dark">
-						<h5 class="card-title text-uppercase fw-bold small" th:text="${hab.tipo}">Tipo</h5>
-						<div class="text-muted small">Estancia exclusiva en Hospedium con todas las comodidades.</div>
-						<hr>
-						<div class="fs-5 fw-semibold mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
-						<button type="button" class="btn btn-outline-dark"
-							data-bs-toggle="modal" th:attr="data-bs-target=${'#modal' + hab.tipo}">
-							Ver detalles
-						</button>
+			<div class="row g-4 justify-content-center">
+				<div class="col-md-4" th:each="hab : ${habitaciones}">
+					<div class="card border-0 shadow-sm rounded-0 h-100">
+						<img th:src="@{'/img/' + ${hab.tipo} + '.jpg'}"
+							class="card-img-top rounded-0 object-fit-cover" style="height:220px" alt="Habitación">
+						<div class="card-body p-4 text-dark">
+							<h5 class="card-title text-uppercase fw-bold small" th:text="${hab.tipo}">Tipo</h5>
+							<div class="text-muted small">Estancia exclusiva en Hospedium con todas las comodidades.</div>
+							<hr>
+							<div class="fs-5 fw-semibold mb-4" th:text="${hab.precioNoche + '€'}">0€</div>
+							<button type="button" class="btn btn-outline-dark"
+								data-bs-toggle="modal" th:attr="data-bs-target=${'#modal' + hab.tipo}">
+								Ver detalles
+							</button>
+						</div>
 					</div>
-				</div>
 
-				<div class="modal fade" th:id="${'modal' + hab.tipo}">
-					<div class="modal-dialog modal-dialog-centered">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" th:text="${'Habitación ' + hab.tipo}">
-									Habitación
-								</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Cerrar"></button>
-							</div>
-							<div class="modal-body">
-								<div class="carousel slide mb-3" th:id="${'carousel' + hab.tipo}">
-									<div class="carousel-inner">
-										<div th:if="${hab.tipo == 'Individual'}">
-											<div class="carousel-item active">
-												<img src="/img/individual.jpg" class="d-block w-100" alt="Habitación individual">
+					<div class="modal fade" th:id="${'modal' + hab.tipo}">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" th:text="${'Habitación ' + hab.tipo}">
+										Habitación
+									</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Cerrar"></button>
+								</div>
+								<div class="modal-body">
+									<div class="carousel slide mb-3" th:id="${'carousel' + hab.tipo}">
+										<div class="carousel-inner">
+											<div th:if="${hab.tipo == 'Individual'}">
+												<div class="carousel-item active">
+													<img src="/img/individual.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Habitación individual">
+												</div>
+												<div class="carousel-item">
+													<img src="/img/bañoindividual.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Habitación">
+												</div>
+												<div class="carousel-item">
+													<img src="/img/terrazaindividual.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Patio">
+												</div>
 											</div>
-											<div class="carousel-item">
-												<img src="/img/bañoindividual.jpg" class="d-block w-100" alt="Habitación">
+
+											<div th:if="${hab.tipo == 'Doble'}">
+												<div class="carousel-item active">
+													<img src="/img/doble.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Habitación doble">
+												</div>
+												<div class="carousel-item">
+													<img src="/img/bañodoble.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Recepción">
+												</div>
+												<div class="carousel-item">
+													<img src="/img/terrazadoble.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Fachada">
+												</div>
 											</div>
-											<div class="carousel-item">
-												<img src="/img/terrazaindividual.jpg" class="d-block w-100" alt="Patio">
+
+											<div th:if="${hab.tipo == 'Suite'}">
+												<div class="carousel-item active">
+													<img src="/img/suite.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Suite">
+												</div>
+												<div class="carousel-item">
+													<img src="/img/bañosuite.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Baño suite">
+												</div>
+												<div class="carousel-item">
+													<img src="/img/terrazasuite.jpg" class="d-block w-100 object-fit-cover" style="height:250px" alt="Terraza suite">
+												</div>
 											</div>
 										</div>
 
-										<div th:if="${hab.tipo == 'Doble'}">
-											<div class="carousel-item active">
-												<img src="/img/doble.jpg" class="d-block w-100" alt="Habitación doble">
-											</div>
-											<div class="carousel-item">
-												<img src="/img/bañodoble.jpg" class="d-block w-100" alt="Recepción">
-											</div>
-											<div class="carousel-item">
-												<img src="/img/terrazadoble.jpg" class="d-block w-100" alt="Fachada">
-											</div>
-										</div>
-
-										<div th:if="${hab.tipo == 'Suite'}">
-											<div class="carousel-item active">
-												<img src="/img/suite.jpg" class="d-block w-100" alt="Suite">
-											</div>
-											<div class="carousel-item">
-												<img src="/img/bañosuite.jpg" class="d-block w-100" alt="Baño suite">
-											</div>
-											<div class="carousel-item">
-												<img src="/img/terrazasuite.jpg" class="d-block w-100" alt="Terraza suite">
-											</div>
-										</div>
+										<button class="carousel-control-prev" type="button"
+											th:attr="data-bs-target=${'#carousel' + hab.tipo}" data-bs-slide="prev">
+											<span class="carousel-control-prev-icon"></span>
+										</button>
+										<button class="carousel-control-next" type="button"
+											th:attr="data-bs-target=${'#carousel' + hab.tipo}" data-bs-slide="next">
+											<span class="carousel-control-next-icon"></span>
+										</button>
 									</div>
 
-									<button class="carousel-control-prev" type="button"
-										th:attr="data-bs-target=${'#carousel' + hab.tipo}" data-bs-slide="prev">
-										<span class="carousel-control-prev-icon"></span>
-									</button>
-									<button class="carousel-control-next" type="button"
-										th:attr="data-bs-target=${'#carousel' + hab.tipo}" data-bs-slide="next">
-										<span class="carousel-control-next-icon"></span>
-									</button>
+									<p th:text="${hab.tipo}">Tipo</p>
+									<p th:text="${hab.precioNoche + '€/noche'}">0€/noche</p>
 								</div>
-
-								<p th:text="${hab.tipo}">Tipo</p>
-								<p th:text="${hab.precioNoche + '€/noche'}">0€/noche</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 	<!-- Botón reserva ya solo visible para usuarios logueados como user -->
 	<div class="text-center my-5" sec:authorize="hasRole('USER')">
@@ -208,7 +208,7 @@
 						<div class="p-4">
 							<h6 class="fw-bold text-uppercase small mb-2" th:text="${ser.nombre}">Servicio</h6>
 							<div class="small text-muted mb-2">Servicio premium para clientes.</div>
-							<div class="fw-bold text-dark" th:text="${ser.precio == 0 ? 'Gratis' : ser.precio + '€'}">0€</div>
+							<div class="fw-bold text-dark" th:text="${ser.precio == 0 ? 'Gratis' : ser.precio + '€/h'}">0€</div>
 						</div>
 					</div>
 				</div>

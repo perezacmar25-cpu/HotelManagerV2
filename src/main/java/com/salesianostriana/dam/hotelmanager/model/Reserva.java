@@ -6,6 +6,8 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,6 +34,10 @@ public class Reserva {
     private LocalDate fechaFin;
     private double precioTotal;
     private int numeroPersonas;
+    
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private EstadoReserva estadoReserva = EstadoReserva.CHECKIN;
     
 
     @ManyToOne
