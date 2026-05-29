@@ -11,7 +11,7 @@
 
 <body class="bg-light">
 
-	<!--He tenido que mirar la IA-->
+	
 	<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
 		<div class="container">
 			<a class="navbar-brand fw-bold fs-4" href="#">HOSPEDIUM</a>
@@ -26,6 +26,8 @@
 					<li class="nav-item ms-2" sec:authorize="hasRole('USER')">
 					    <a class="nav-link" th:href="@{/misreservas}">Mis reservas</a>
 					</li>
+					
+					<!--He tenido que mirar la IA-->
 
 					<!-- Botón Reservar: solo si está logueado como USER -->
 					<li class="nav-item ms-2" sec:authorize="hasRole('USER')">
