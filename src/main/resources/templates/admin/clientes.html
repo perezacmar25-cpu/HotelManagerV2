@@ -60,11 +60,10 @@
 							<td>
 								<a th:href="@{'/admin/' + ${cliente.dni} + '/editar/cliente'}"
 									class="btn btn-outline-primary btn-sm px-3 me-2">Editar</a>
-							</td>
-							<td class="pe-4">
 								<a th:href="@{'/admin/' + ${cliente.dni} + '/eliminar/cliente'}"
 									class="btn btn-outline-danger btn-sm px-3">Eliminar</a>
 							</td>
+
 						</tr>
 						<tr th:if="${#lists.isEmpty(clientes)}">
 							<td colspan="5" class="text-center text-secondary py-5">Sin registros</td>

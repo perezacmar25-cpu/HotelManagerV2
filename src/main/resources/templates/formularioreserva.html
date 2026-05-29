@@ -86,7 +86,8 @@
 							<div class="d-grid gap-2">
 								<button type="submit" class="btn btn-dark rounded-0 text-uppercase"
 									style="letter-spacing:.05em">Confirmar reserva</button>
-								<a href="/admin/admininicio" class="btn btn-outline-secondary rounded-0">Cancelar</a>
+								<a sec:authorize="hasRole('USER')" href="/" class="btn btn-outline-secondary rounded-0">Cancelar</a>
+								<a sec:authorize="hasRole('ADMIN')" href="/admin/reservas" class="btn btn-outline-primary rounded-0">Cancelar</a>
 							</div>
 						</form>
 
