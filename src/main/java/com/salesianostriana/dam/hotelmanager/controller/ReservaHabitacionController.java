@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
+import com.salesianostriana.dam.hotelmanager.excepciones.PersonasExcedidasException;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaServicio;
@@ -79,6 +80,13 @@ public class ReservaHabitacionController {
             model.addAttribute("error", ex.getMessage());
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            return "formularioreserva";
+        }
+        catch (PersonasExcedidasException ex) {
+            model.addAttribute("error", ex.getMessage());
+            model.addAttribute("tiposHabitacion", TIPOS);
+            model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            model.addAttribute("temporadas", temporadaService.findAll());
             return "formularioreserva";
         }
 

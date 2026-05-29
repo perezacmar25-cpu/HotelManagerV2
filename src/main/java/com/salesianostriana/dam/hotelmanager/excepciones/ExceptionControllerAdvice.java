@@ -13,8 +13,8 @@ public class ExceptionControllerAdvice {
 		model.addAttribute("errorTitulo", "Fechas incorrectas");
 		model.addAttribute("errorMensaje", "La fecha fin no puede ser antes que la de inicio");
 		return "error";
-		
-		
+
 		
 	}
+
 }

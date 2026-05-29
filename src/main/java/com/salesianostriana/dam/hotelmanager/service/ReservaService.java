@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
+import com.salesianostriana.dam.hotelmanager.excepciones.PersonasExcedidasException;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
@@ -83,7 +84,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         }
 
         if (personas > maxPersonas) {
-            throw new IllegalArgumentException("La habitación " + tipoHabitacion + " admite un máximo de " + maxPersonas + " personas.");
+            throw new PersonasExcedidasException("La habitación " + tipoHabitacion + " admite un máximo de " + maxPersonas + " personas.");
         }
     }
     
