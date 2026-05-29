@@ -34,6 +34,7 @@ public class Reserva {
     private LocalDate fechaFin;
     private double precioTotal;
     private int numeroPersonas;
+
     
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -47,6 +48,10 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "temporada_id")
     private Temporada temporada;
+    
+    @ManyToOne
+    @JoinColumn(name = "plan_comida_id")
+    private PlanComida planComida;
 
     @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL,orphanRemoval = true)
     @Builder.Default
@@ -71,8 +76,15 @@ public class Reserva {
                 .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias * multiplicador)
                 .sum();
         double totalServicios = Servicio.calcularTotalServicios(serviciosReservados);
+        
+        double totalComida = 0;
+        if (planComida != null) {
+            planComida.setNumeroDias((int) dias);
 
-        this.precioTotal = totalHabitaciones + totalServicios;
+            totalComida = this.planComida.calcularTotalComida() * this.numeroPersonas;
+        }
+
+        this.precioTotal = totalHabitaciones + totalServicios + totalComida;
 
         return precioTotal;
     }
