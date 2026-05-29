@@ -88,7 +88,34 @@ public class AdminController {
 	       habitacionService.deleteById(id);            // borra la habitación
 	       return "redirect:/admin/habitaciones";
 	   }
-	   
+
+	   @GetMapping("/admin/editar/habitacion/{id}")
+	   public String editarHabitacion(@PathVariable int id, Model model) {
+		   Optional<Habitacion> habitacion = habitacionService.findById(id);
+		    model.addAttribute("habitacion", habitacion.get());
+		    if (habitacion.isEmpty()) {
+		    	return "redirect:/admin/habitaciones";
+		    }
+		    return "/admin/formulariohabitacion";
+		}
+
+	   @PostMapping("/admin/editar/habitacion/{id}")
+	   public String actualizarHabitacion(@PathVariable("id") int id, @ModelAttribute Habitacion habitacionForm) {
+	       
+	       Optional<Habitacion> habitacionOpt = habitacionService.findById(id);
+	       
+	       if (habitacionOpt.isPresent()) {
+	           Habitacion habitacionReal = habitacionOpt.get();
+	           
+	           habitacionReal.setTipo(habitacionForm.getTipo());
+	           habitacionReal.setPrecioNoche(habitacionForm.getPrecioNoche());
+	           
+	           habitacionService.save(habitacionReal);
+	       }
+	       
+	       return "redirect:/admin/habitaciones";
+	   }
+
 	   @GetMapping("/admin/{dni}/editar/cliente")
 	   public String editarCliente(@PathVariable String dni,Model model) {
 		   Optional<Cliente> cliente = clienteService.findById(dni);

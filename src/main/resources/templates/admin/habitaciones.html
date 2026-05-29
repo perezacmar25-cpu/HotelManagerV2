@@ -76,6 +76,8 @@
 									class="badge text-bg-danger fw-normal rounded-pill px-3 py-2">Ocupada</span>
 							</td>
 							<td class="pe-4">
+								<a th:href="@{'/admin/editar/habitacion/' + ${hab.numero}}"
+									class="btn btn-outline-warning btn-sm px-3">Editar</a>
 								<a th:href="@{'/admin/' + ${hab.numero} + '/eliminar/habitaciones'}"
 									class="btn btn-outline-danger btn-sm px-3">Eliminar</a>
 							</td>
