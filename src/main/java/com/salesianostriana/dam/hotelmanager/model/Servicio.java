@@ -27,7 +27,8 @@ public class Servicio {
     private String imagen;
     
     public static double calcularTotalServicios(List<ReservaServicio> servicios) {
-        if (servicios.isEmpty()) return 0;
+        if (servicios.isEmpty())
+        	return 0;
         return servicios.stream()
                 .mapToDouble(ReservaServicio::calcularSubtotal)
                 .sum();

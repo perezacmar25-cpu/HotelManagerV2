@@ -17,4 +17,10 @@ public class ExceptionControllerAdvice {
 		
 	}
 
+	 @ExceptionHandler(IllegalArgumentException.class)
+	    public String personasExcedidas(IllegalArgumentException ex, Model model) {
+	        model.addAttribute("errorTitulo", "Número de personas incorrecto");
+	        model.addAttribute("errorMensaje", ex.getMessage());
+	        return "error";
+	    }
 }
