@@ -28,6 +28,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
     public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion) {
 
         validarFechas(reserva);
+        validarPersonas(reserva.getNumeroPersonas(), tipoHabitacion);
 
         List<Habitacion> disponibles = habitacionRepository.findDisponiblesSinSolapamiento(
                 tipoHabitacion,
@@ -62,13 +63,30 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         return super.save(reserva);
     }
     
-    private void validarFechas(Reserva reserva) {
+    public void validarFechas(Reserva reserva) {
         if (reserva.getFechaInicio() != null &&
                 reserva.getFechaFin() != null &&
                 reserva.getFechaFin().isBefore(reserva.getFechaInicio())) {
             throw new FechaFinInicioException("La fecha fin no puede ser antes que la fecha de inicio");
         }
     }
+    
+    public void validarPersonas(int personas, String tipoHabitacion) {
+        int maxPersonas = 0;
+
+        if (tipoHabitacion.equals("Individual")) {
+            maxPersonas = 1;
+        } else if (tipoHabitacion.equals("Doble")) {
+            maxPersonas = 2;
+        } else if (tipoHabitacion.equals("Suite")) {
+            maxPersonas = 4;
+        }
+
+        if (personas > maxPersonas) {
+            throw new IllegalArgumentException("La habitación " + tipoHabitacion + " admite un máximo de " + maxPersonas + " personas.");
+        }
+    }
+    
     
     public List<Reserva> findByClienteDni(String dni) {
         return reservaRepository.findByClienteDni(dni);
