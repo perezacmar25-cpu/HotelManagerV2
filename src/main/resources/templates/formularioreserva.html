@@ -33,11 +33,8 @@
 						<div th:if="${temporadas != null and !temporadas.isEmpty()}" class="alert alert-warning">
 							<strong>Aviso:</strong> Las reservas en temporada alta tienen un precio superior:
 							<ul>
-								<li th:each="t : ${temporadas}" th:if="${t.multiplicador > 1}">
-									<span th:text="${t.nombre}"></span>: del
-									<span th:text="${t.fechaInicio}"></span> al
-									<span th:text="${t.fechaFin}"></span>
-									(<span th:text="${t.multiplicador}"></span>x)
+								<li th:each="t : ${temporadas}" th:if="${t.multiplicador > 1}"
+									th:text="${t.nombre} + ': del ' + ${t.fechaInicio} + ' al ' + ${t.fechaFin} + ' (' + ${t.multiplicador} + 'x)'">
 								</li>
 							</ul>
 						</div>
@@ -117,10 +114,10 @@
 
 			resumen.classList.remove('d-none');
 			resumen.innerHTML = `
-            <strong>Resumen de precio estimado</strong><br>
-            ${noches} noche${noches !== 1 ? 's' : ''} x ${precioHabitacion.toFixed(2)} € = <strong>${totalHabitacion.toFixed(2)} €</strong><br>
-            <strong>Total estancia: ${totalHabitacion.toFixed(2)} €</strong>
-        `;
+                <strong>Resumen de precio estimado</strong><br>
+                ${noches} noche${noches !== 1 ? 's' : ''} x ${precioHabitacion.toFixed(2)} € = <strong>${totalHabitacion.toFixed(2)} €</strong><br>
+                <strong>Total estancia: ${totalHabitacion.toFixed(2)} €</strong>
+            `;
 		}
 
 		fechaInicio.addEventListener('change', calcularPrecio);
