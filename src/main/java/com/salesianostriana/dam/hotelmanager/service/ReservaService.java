@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
 import com.salesianostriana.dam.hotelmanager.excepciones.PersonasExcedidasException;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
+import com.salesianostriana.dam.hotelmanager.model.PlanComida;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
+import com.salesianostriana.dam.hotelmanager.repository.PlanComidaRepository;
 import com.salesianostriana.dam.hotelmanager.repository.ReservaRepository;
 import com.salesianostriana.dam.hotelmanager.repository.TemporadaRepository;
 import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
@@ -25,8 +27,9 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
     private final HabitacionRepository habitacionRepository;
     private final ReservaRepository reservaRepository;
     private final TemporadaRepository temporadaRepository;
+    private final PlanComidaRepository planComidaRepository;
 
-    public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion) {
+    public Optional<Reserva> crearReserva(Reserva reserva, String tipoHabitacion, Integer planComidaId) {
 
         validarFechas(reserva);
         validarPersonas(reserva.getNumeroPersonas(), tipoHabitacion);
@@ -49,19 +52,19 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
                 .build();
         reserva.getListadoReservaHab().add(reservaHabitacion);
         
-     // Busca si la fecha de inicio de la reserva cae en alguna temporada 
-     // y, si la hay, la asigna a la reserva para que calcularPrecioTotal() aplique el multiplicador correcto
+        // Busca si la fecha de inicio de la reserva cae en alguna temporada 
+        // y, si la hay, la asigna a la reserva para que calcularPrecioTotal() aplique el multiplicador correcto
         //Seteamos la temporada que devuelva la query
         temporadaRepository.findByFecha(reserva.getFechaInicio())
-        .ifPresent(reserva::setTemporada);
+                .ifPresent(reserva::setTemporada);
+        
+        if (planComidaId != null) {
+            PlanComida plan = planComidaRepository.findById(planComidaId).orElse(null);
+            reserva.setPlanComida(plan);
+        }
         reserva.calcularPrecioTotal();
 
-        return Optional.of(save(reserva));
-    }
-    @Override
-    public Reserva save(Reserva reserva) {
-        validarFechas(reserva);
-        return super.save(reserva);
+        return Optional.of(reservaRepository.save(reserva));
     }
     
     public void validarFechas(Reserva reserva) {
@@ -87,7 +90,6 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
             throw new PersonasExcedidasException("La habitación " + tipoHabitacion + " admite un máximo de " + maxPersonas + " personas.");
         }
     }
-    
     
     public List<Reserva> findByClienteDni(String dni) {
         return reservaRepository.findByClienteDni(dni);

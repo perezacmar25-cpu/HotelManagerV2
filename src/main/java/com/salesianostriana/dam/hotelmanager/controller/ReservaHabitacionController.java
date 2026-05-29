@@ -19,6 +19,7 @@ import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaServicio;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
+import com.salesianostriana.dam.hotelmanager.repository.PlanComidaRepository;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
@@ -34,7 +35,8 @@ public class ReservaHabitacionController {
     private final ReservaService reservaService;
     private final ServicioService servicioService;
     private final TemporadaService temporadaService;
-
+    private final PlanComidaRepository planComidaRepository;
+    
 
     private static final List<String> TIPOS = List.of("Individual", "Doble", "Suite");
 
@@ -48,6 +50,7 @@ public class ReservaHabitacionController {
         model.addAttribute("tiposHabitacion", TIPOS);
         model.addAttribute("nombreCliente", clienteLogueado.getNombre());
         model.addAttribute("temporadas", temporadaService.findAll());
+        model.addAttribute("planesComida", planComidaRepository.findAll());
 
 
         return "formularioreserva";
@@ -57,6 +60,7 @@ public class ReservaHabitacionController {
     public String procesarReserva(
             @ModelAttribute("reserva") Reserva reserva,
             @RequestParam(required = false) String tipoHabitacion,
+            @RequestParam(required = false) Integer planComidaId,
             @AuthenticationPrincipal Cliente clienteLogueado,
             Model model) {
 
@@ -75,7 +79,7 @@ public class ReservaHabitacionController {
         Optional<Reserva> guardada;
 
         try {
-            guardada = reservaService.crearReserva(reserva, tipoHabitacion);
+            guardada = reservaService.crearReserva(reserva, tipoHabitacion,planComidaId);
         } catch (FechaFinInicioException ex) {
             model.addAttribute("error", ex.getMessage());
             model.addAttribute("tiposHabitacion", TIPOS);

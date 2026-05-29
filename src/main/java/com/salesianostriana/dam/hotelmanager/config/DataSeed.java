@@ -7,11 +7,14 @@ import org.springframework.context.annotation.Configuration;
 
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
+import com.salesianostriana.dam.hotelmanager.model.PlanComida;
+import com.salesianostriana.dam.hotelmanager.model.PlanComidaEnum;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.model.Temporada;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
+import com.salesianostriana.dam.hotelmanager.service.PlanComidaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
@@ -19,7 +22,7 @@ import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 public class DataSeed {
 
     @Bean
-    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer) {
+    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer,PlanComidaService planSer) {
         return args -> {
             if (habSer.findAll().isEmpty()) {
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
@@ -111,6 +114,25 @@ public class DataSeed {
                         .multiplicador(1.0)
                         .build());
             }
+            if (planSer.findAll().isEmpty()) {
+                PlanComida p1 = new PlanComida();
+                p1.setTipo(PlanComidaEnum.SOLO_DESAYUNO);
+                planSer.save(p1);
+
+                PlanComida p2 = new PlanComida();
+                p2.setTipo(PlanComidaEnum.MEDIA_PENSION);
+                planSer.save(p2);
+
+                PlanComida p3 = new PlanComida();
+                p3.setTipo(PlanComidaEnum.PENSION_COMPLETA);
+                planSer.save(p3);
+
+                PlanComida p4 = new PlanComida();
+                p4.setTipo(PlanComidaEnum.TODO_INCLUIDO);
+                planSer.save(p4);
+            }
+            
         };
+        
     }
 }

@@ -72,6 +72,14 @@
 									<option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t}"></option>
 								</select>
 							</div>
+							
+							<div class="mb-3">
+							    <label class="form-label small text-uppercase text-secondary">Plan de comida</label>
+							    <select name="planComidaId" class="form-select rounded-0" required>
+							        <option value="" disabled selected>Seleccione...</option>
+							        <option th:each="p : ${planesComida}" th:value="${p.id}" th:text="${p.tipo}"></option>
+							    </select>
+							</div>
 
 							<div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
 
