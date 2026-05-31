@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.hotelmanager.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class ReservaHabitacionController {
         model.addAttribute("nombreCliente", clienteLogueado.getNombre());
         model.addAttribute("temporadas", temporadaService.findAll());
         model.addAttribute("planesComida", planComidaRepository.findAll());
-
+        model.addAttribute("fechaMinima", LocalDate.now());
 
         return "formularioreserva";
     }
@@ -71,6 +72,9 @@ public class ReservaHabitacionController {
             model.addAttribute("error", "Debes completar todos los campos");
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            model.addAttribute("temporadas", temporadaService.findAll());
+            model.addAttribute("planesComida", planComidaRepository.findAll());
+            model.addAttribute("fechaMinima", LocalDate.now());
             return "formularioreserva";
         }
 
@@ -79,11 +83,14 @@ public class ReservaHabitacionController {
         Optional<Reserva> guardada;
 
         try {
-            guardada = reservaService.crearReserva(reserva, tipoHabitacion,planComidaId);
+            guardada = reservaService.crearReserva(reserva, tipoHabitacion, planComidaId);
         } catch (FechaFinInicioException ex) {
             model.addAttribute("error", ex.getMessage());
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            model.addAttribute("temporadas", temporadaService.findAll());
+            model.addAttribute("planesComida", planComidaRepository.findAll());
+            model.addAttribute("fechaMinima", LocalDate.now());
             return "formularioreserva";
         }
         catch (PersonasExcedidasException ex) {
@@ -91,6 +98,8 @@ public class ReservaHabitacionController {
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
             model.addAttribute("temporadas", temporadaService.findAll());
+            model.addAttribute("planesComida", planComidaRepository.findAll());
+            model.addAttribute("fechaMinima", LocalDate.now());
             return "formularioreserva";
         }
 
@@ -98,6 +107,9 @@ public class ReservaHabitacionController {
             model.addAttribute("error", "No quedan habitaciones disponibles de ese tipo");
             model.addAttribute("tiposHabitacion", TIPOS);
             model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            model.addAttribute("temporadas", temporadaService.findAll());
+            model.addAttribute("planesComida", planComidaRepository.findAll());
+            model.addAttribute("fechaMinima", LocalDate.now());
             return "formularioreserva";
         }
 

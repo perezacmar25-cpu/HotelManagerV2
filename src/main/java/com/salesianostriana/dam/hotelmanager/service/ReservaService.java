@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.hotelmanager.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,22 +69,34 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
     }
     
     public void validarFechas(Reserva reserva) {
-        if (reserva.getFechaInicio() != null &&
-                reserva.getFechaFin() != null &&
-                reserva.getFechaFin().isBefore(reserva.getFechaInicio())) {
-            throw new FechaFinInicioException("La fecha fin no puede ser antes que la fecha de inicio");
+        if (reserva.getFechaInicio() == null || reserva.getFechaFin() == null) {
+            throw new FechaFinInicioException("Debes indicar la fecha de entrada y la fecha de salida");
+        }
+        
+        if (reserva.getFechaInicio().isBefore(LocalDate.now())) {
+            throw new FechaFinInicioException("La fecha de entrada no puede ser anterior a hoy");
+        }
+        
+        if (!reserva.getFechaFin().isAfter(reserva.getFechaInicio())) {
+            throw new FechaFinInicioException("La fecha de salida debe ser posterior a la fecha de entrada");
         }
     }
     
     public void validarPersonas(int personas, String tipoHabitacion) {
         int maxPersonas = 0;
+        
+        if (personas <= 0) {
+            throw new PersonasExcedidasException("El número de personas debe ser mayor que 0");
+        }
 
-        if (tipoHabitacion.equals("Individual")) {
+        if ("Individual".equals(tipoHabitacion)) {
             maxPersonas = 1;
-        } else if (tipoHabitacion.equals("Doble")) {
+        } else if ("Doble".equals(tipoHabitacion)) {
             maxPersonas = 2;
-        } else if (tipoHabitacion.equals("Suite")) {
+        } else if ("Suite".equals(tipoHabitacion)) {
             maxPersonas = 4;
+        } else {
+            throw new PersonasExcedidasException("El tipo de habitación no es válido");
         }
 
         if (personas > maxPersonas) {

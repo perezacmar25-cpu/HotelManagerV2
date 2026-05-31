@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -43,41 +43,47 @@
 
 						<div th:if="${error}" class="alert alert-danger small" th:text="${error}"></div>
 
-						<form th:action="@{/reserva/confirmar}" th:object="${reserva}" method="post">
+						<form th:action="${editandoReserva == true} ? @{/admin/editar/reserva/{id}(id=${reserva.id})} : @{/reserva/confirmar}" th:object="${reserva}" method="post">
 							<input type="hidden" th:field="*{cliente.dni}">
 
 							<div class="row mb-3">
 								<div class="col">
 									<label class="form-label small text-uppercase text-secondary">Entrada</label>
 									<input type="date" th:field="*{fechaInicio}"
+										th:min="${fechaMinima}"
 										class="form-control rounded-0 border-0 border-bottom" required>
 								</div>
 								<div class="col">
 									<label class="form-label small text-uppercase text-secondary">Salida</label>
 									<input type="date" th:field="*{fechaFin}"
+										th:min="${fechaMinima}"
 										class="form-control rounded-0 border-0 border-bottom" required>
 								</div>
 							</div>
 
 							<div class="mb-3">
 								<label class="form-label small text-uppercase text-secondary">Personas</label>
-								<input type="number" th:field="*{numeroPersonas}" min="1"
+								<input type="number" th:field="*{numeroPersonas}" min="1" max="4"
 									class="form-control rounded-0 border-0 border-bottom" required>
 							</div>
 
 							<div class="mb-4">
 								<label class="form-label small text-uppercase text-secondary">Tipo de habitación</label>
 								<select name="tipoHabitacion" class="form-select rounded-0" required>
-									<option value="" disabled selected>Seleccione...</option>
-									<option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t}"></option>
+									<option value="" disabled th:selected="${tipoHabitacionSeleccionada == null}">Seleccione...</option>
+									<option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t}"
+										th:selected="${t == tipoHabitacionSeleccionada}"></option>
 								</select>
 							</div>
 							
 							<div class="mb-3">
+								<!-- data-tipo guarda el tipo de plan de comida en el html para poder leerlo después desde javascript -->
 							    <label class="form-label small text-uppercase text-secondary">Plan de comida</label>
 							    <select name="planComidaId" class="form-select rounded-0" required>
-							        <option value="" disabled selected>Seleccione...</option>
-							        <option th:each="p : ${planesComida}" th:value="${p.id}" th:text="${p.tipo}"></option>
+							        <option value="" disabled th:selected="${planComidaSeleccionado == null}">Seleccione...</option>
+							        <option th:each="p : ${planesComida}" th:value="${p.id}" th:text="${p.tipo}"
+										th:data-tipo="${p.tipo}"
+										th:selected="${p.id == planComidaSeleccionado}"></option>
 							    </select>
 							</div>
 
