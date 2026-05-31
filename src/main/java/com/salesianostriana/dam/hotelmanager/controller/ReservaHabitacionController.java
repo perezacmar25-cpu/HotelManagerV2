@@ -183,12 +183,6 @@ public class ReservaHabitacionController {
         reserva.calcularPrecioTotal();
         reservaService.save(reserva);
 
-        return "redirect:/reserva/exito";
-    }
-    
-
-    @GetMapping("/exito")
-    public String exito() {
-        return "reservaConfirmada";
+        return "redirect:/misreservas";
     }
 }
