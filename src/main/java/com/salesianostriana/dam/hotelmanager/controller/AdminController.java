@@ -19,6 +19,7 @@ import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
+import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
@@ -92,10 +93,10 @@ public class AdminController {
 	   @GetMapping("/admin/editar/habitacion/{id}")
 	   public String editarHabitacion(@PathVariable int id, Model model) {
 		   Optional<Habitacion> habitacion = habitacionService.findById(id);
-		    model.addAttribute("habitacion", habitacion.get());
 		    if (habitacion.isEmpty()) {
 		    	return "redirect:/admin/habitaciones";
 		    }
+		    model.addAttribute("habitacion", habitacion.get());
 		    return "/admin/formulariohabitacion";
 		}
 
@@ -119,18 +120,62 @@ public class AdminController {
 	   @GetMapping("/admin/{dni}/editar/cliente")
 	   public String editarCliente(@PathVariable String dni,Model model) {
 		   Optional<Cliente> cliente = clienteService.findById(dni);
-		    model.addAttribute("cliente", cliente.get());
 		    if (cliente.isEmpty()) {
 		    	return "redirect:/admin/clientes";
 		    }
+		    model.addAttribute("cliente", cliente.get());
+		    model.addAttribute("edicionCliente", true);
 		    return "cliente";
 		}
 	   
 	   @PostMapping("/admin/{dni}/editar/cliente")
-	   public String editarReserva(@PathVariable String dni, @ModelAttribute Cliente cliente) {
-	       cliente.setDni(dni);
-	       clienteService.save(cliente);
+	   public String editarCliente(@PathVariable String dni, @ModelAttribute Cliente cliente) {
+	       Optional<Cliente> clienteOpt = clienteService.findById(dni);
+	       
+	       if (clienteOpt.isPresent()) {
+	    	   Cliente clienteReal = clienteOpt.get();
+	    	   clienteReal.setNombre(cliente.getNombre());
+	    	   clienteReal.setEmail(cliente.getEmail());
+	    	   clienteReal.setTelefono(cliente.getTelefono());
+	    	   clienteReal.setUsername(cliente.getUsername());
+	    	   clienteService.save(clienteReal);
+	       }
+	       
 	       return "redirect:/admin/clientes";
+	   }
+
+	   @GetMapping("/admin/nuevo/cliente")
+	   public String nuevoCliente(Model model) {
+		   model.addAttribute("cliente", new Cliente());
+		   model.addAttribute("nuevoClienteAdmin", true);
+		   return "cliente";
+	   }
+	   
+	   @PostMapping("/admin/nuevo/cliente")
+	   public String guardarClienteAdmin(@ModelAttribute Cliente cliente,
+			   							 @RequestParam String password,
+			   							 @RequestParam String confirmPassword,
+			   							 Model model) {
+		   
+		   if (!password.equals(confirmPassword)) {
+			   model.addAttribute("error", "Las contraseñas no coinciden");
+			   model.addAttribute("cliente", cliente);
+			   model.addAttribute("nuevoClienteAdmin", true);
+			   return "cliente";
+		   }
+		   
+		   if (clienteService.findById(cliente.getDni()).isPresent()) {
+			   model.addAttribute("error", "Ya existe un usuario con ese DNI");
+			   model.addAttribute("cliente", cliente);
+			   model.addAttribute("nuevoClienteAdmin", true);
+			   return "cliente";
+		   }
+		   
+		   cliente.setRol(RolUsuario.USER);
+		   cliente.setPassword("{noop}" + password);
+		   clienteService.save(cliente);
+		   
+		   return "redirect:/admin/clientes";
 	   }
 
 	   @GetMapping("/admin/clientes")

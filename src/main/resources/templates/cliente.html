@@ -24,13 +24,15 @@
                 <div class="bg-white p-5 shadow-lg">
 
                     <p class="text-uppercase text-secondary small mb-1">Hospedium</p>
-                    <h2 class="fw-light mb-4" style="font-family:Georgia,serif">Alta de huésped</h2>
+                    <h2 class="fw-light mb-4" style="font-family:Georgia,serif"
+                        th:text="${edicionCliente == true} ? 'Editar cliente' : 'Alta de huésped'">Alta de huésped</h2>
 
-                    <form th:action="@{/nuevo}" th:object="${cliente}" method="post">
+                    <form th:action="${edicionCliente == true} ? @{/admin/{dni}/editar/cliente(dni=${cliente.dni})} : (${nuevoClienteAdmin == true} ? @{/admin/nuevo/cliente} : @{/nuevo})"
+                          th:object="${cliente}" method="post">
 
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">DNI / Pasaporte</label>
-                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{dni}" placeholder="DNI" required>
+                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{dni}" placeholder="DNI" th:readonly="${edicionCliente == true}" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">Nombre completo</label>
@@ -48,11 +50,11 @@
                             <label class="form-label small text-uppercase text-secondary">Usuario</label>
                             <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{username}" placeholder="Nombre de usuario" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" th:if="${edicionCliente != true}">
                             <label class="form-label small text-uppercase text-secondary">Contraseña</label>
                             <input type="password" class="form-control rounded-0 border-0 border-bottom" name="password" placeholder="Contraseña" required minlength="6">
                         </div>
-                        <div class="mb-4">
+                        <div class="mb-4" th:if="${edicionCliente != true}">
                             <label class="form-label small text-uppercase text-secondary">Confirmar contraseña</label>
                             <input type="password" class="form-control rounded-0 border-0 border-bottom" name="confirmPassword" placeholder="Repetir contraseña" required minlength="6">
                         </div>
@@ -60,8 +62,9 @@
                         <div th:if="${error}" class="alert alert-danger small py-2 mb-3" th:text="${error}"></div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-dark rounded-0 text-uppercase" style="letter-spacing:.05em">Registrar</button>
-                            <a th:href="@{/}" class="btn btn-outline-secondary rounded-0 btn-sm">Cancelar</a>
+                            <button type="submit" class="btn btn-dark rounded-0 text-uppercase" style="letter-spacing:.05em"
+                                th:text="${edicionCliente == true} ? 'Guardar cambios' : 'Registrar'">Registrar</button>
+                            <a th:href="${edicionCliente == true or nuevoClienteAdmin == true} ? @{/admin/clientes} : @{/}" class="btn btn-outline-secondary rounded-0 btn-sm">Cancelar</a>
                         </div>
 
                     </form>
