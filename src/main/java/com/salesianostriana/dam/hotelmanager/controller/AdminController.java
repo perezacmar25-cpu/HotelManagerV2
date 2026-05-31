@@ -19,10 +19,12 @@ import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
+import com.salesianostriana.dam.hotelmanager.repository.PlanComidaRepository;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
+import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +36,8 @@ public class AdminController {
 	private final ClienteService clienteService;
 	private final HabitacionService habitacionService;
 	private final HabitacionRepository habitacionRepository;
+	private final TemporadaService temporadaService;
+	private final PlanComidaRepository planComidaRepository;
 	
 	
 	@GetMapping("/admin/admininicio")
@@ -44,17 +48,50 @@ public class AdminController {
 	@GetMapping("/admin/editar/reserva/{id}")
 	public String editarReservaForm(@PathVariable Long id, Model model) {
 	    Optional<Reserva> reserva = reservaService.findById(id);
-	    model.addAttribute("reserva", reserva.get());
 	    if (reserva.isEmpty()) {
 	    	return "redirect:/admin/reservas";
 	    }
-	    return "formularioReserva";
+	    Reserva reservaEditar = reserva.get();
+	    model.addAttribute("reserva", reservaEditar);
+	    model.addAttribute("tiposHabitacion", List.of("Individual", "Doble", "Suite"));
+	    model.addAttribute("temporadas", temporadaService.findAll());
+	    model.addAttribute("planesComida", planComidaRepository.findAll());
+	    model.addAttribute("fechaMinima", LocalDate.now());
+	    model.addAttribute("nombreCliente", reservaEditar.getCliente().getNombre());
+	    model.addAttribute("editandoReserva", true);
+	    
+	    if (!reservaEditar.getListadoReservaHab().isEmpty()) {
+	    	model.addAttribute("tipoHabitacionSeleccionada",
+	    			reservaEditar.getListadoReservaHab().get(0).getHabitacion().getTipo());
+	    }
+	    
+	    if (reservaEditar.getPlanComida() != null) {
+	    	model.addAttribute("planComidaSeleccionado", reservaEditar.getPlanComida().getId());
+	    }
+	    
+	    return "formularioreserva";
 	}
 	   
 	   @PostMapping("/admin/editar/reserva/{id}")
-	   public String editarReserva(@PathVariable Long id, @ModelAttribute Reserva reserva) {
-	       reserva.setId(id);
-	       reservaService.save(reserva);
+	   public String editarReserva(@PathVariable Long id,
+			   					   @ModelAttribute Reserva reserva,
+			   					   @RequestParam(required = false) Integer planComidaId) {
+		   Optional<Reserva> reservaBuscada = reservaService.findById(id);
+		   
+		   if (reservaBuscada.isPresent()) {
+			   Reserva reservaEditar = reservaBuscada.get();
+			   reservaEditar.setFechaInicio(reserva.getFechaInicio());
+			   reservaEditar.setFechaFin(reserva.getFechaFin());
+			   reservaEditar.setNumeroPersonas(reserva.getNumeroPersonas());
+			   
+			   if (planComidaId != null) {
+				   planComidaRepository.findById(planComidaId).ifPresent(reservaEditar::setPlanComida);
+			   }
+			   
+			   reservaEditar.calcularPrecioTotal();
+			   reservaService.save(reservaEditar);
+		   }
+		   
 	       return "redirect:/admin/reservas";
 	   }
 	
