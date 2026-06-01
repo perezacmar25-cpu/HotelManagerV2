@@ -31,17 +31,31 @@ public class ReservaController {
 	        return "reservascliente";
 	    }
 	 
+	 
+	 //este método contiene código para que un cliente no se pueda meter en las reservas de otro
 	 @GetMapping("/reserva/{id}")
-	    public String verDetalles(@PathVariable("id") Long id, Model model) {
+	 public String verDetalles(@PathVariable("id") Long id,
+	                            @AuthenticationPrincipal Cliente clienteLogueado,
+	                            Model model) {
+	     Optional<Reserva> reservaOpt = reservaService.findById(id);
 
-	        Optional<Reserva> reservaOpt = reservaService.findById(id);
-	        
-	        if (reservaOpt.isPresent()) {
-	            model.addAttribute("reserva", reservaOpt.get());
-	            return "detallesreserva"; 
-	        }
-	        return "redirect:/misreservas";
-	    }
+	     if (reservaOpt.isEmpty()) {
+	         return "redirect:/misreservas";
+	     }
+
+	     Reserva reserva = reservaOpt.get();
+
+	     // si no es admin y la reserva no es suya, redirigir a sus reservas
+	     boolean esAdmin = clienteLogueado.getAuthorities().stream()
+	             .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+	     if (!esAdmin && !reserva.getCliente().getDni().equals(clienteLogueado.getDni())) {
+	         return "redirect:/misreservas";
+	     }
+
+	     model.addAttribute("reserva", reserva);
+	     return "detallesreserva";
+	 }
 	
 	 
 	

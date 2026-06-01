@@ -103,14 +103,14 @@ public class DataSeed {
             if (temSer.findAll().isEmpty()) {
                 temSer.save(Temporada.builder()
                         .nombre("Temporada alta")
-                        .fechaInicio(LocalDate.of(2025, 6, 1))
-                        .fechaFin(LocalDate.of(2025, 9, 30))
+                        .fechaInicio(LocalDate.of(2026, 6, 1))
+                        .fechaFin(LocalDate.of(2026, 9, 30))
                         .multiplicador(1.5)
                         .build());
                 temSer.save(Temporada.builder()
                         .nombre("Temporada baja")
-                        .fechaInicio(LocalDate.of(2025, 10, 1))
-                        .fechaFin(LocalDate.of(2026, 5, 31))
+                        .fechaInicio(LocalDate.of(2026, 10, 1))
+                        .fechaFin(LocalDate.of(2027, 5, 31))
                         .multiplicador(1.0)
                         .build());
             }

@@ -74,28 +74,69 @@ public class AdminController {
 	    return "formularioreserva";
 	}
 	   
-	   @PostMapping("/admin/editar/reserva/{id}")
-	   public String editarReserva(@PathVariable Long id,
-			   					   @ModelAttribute Reserva reserva,
-			   					   @RequestParam(required = false) Integer planComidaId) {
-		   Optional<Reserva> reservaBuscada = reservaService.findById(id);
-		   
-		   if (reservaBuscada.isPresent()) {
-			   Reserva reservaEditar = reservaBuscada.get();
-			   reservaEditar.setFechaInicio(reserva.getFechaInicio());
-			   reservaEditar.setFechaFin(reserva.getFechaFin());
-			   reservaEditar.setNumeroPersonas(reserva.getNumeroPersonas());
-			   
-			   if (planComidaId != null) {
-				   planComidaRepository.findById(planComidaId).ifPresent(reservaEditar::setPlanComida);
-			   }
-			   
-			   reservaEditar.calcularPrecioTotal();
-			   reservaService.save(reservaEditar);
-		   }
-		   
-	       return "redirect:/admin/reservas";
-	   }
+	@PostMapping("/admin/editar/reserva/{id}")
+	public String editarReserva(@PathVariable Long id,
+	                             @ModelAttribute Reserva reserva,
+	                             @RequestParam(required = false) Integer planComidaId,
+	                             Model model) {
+
+	    Optional<Reserva> reservaBuscada = reservaService.findById(id);
+	    if (reservaBuscada.isEmpty()) {
+	        return "redirect:/admin/reservas";
+	    }
+
+	    Reserva reservaEditar = reservaBuscada.get();
+
+
+	    if (reserva.getFechaInicio() == null || reserva.getFechaFin() == null) {
+	        model.addAttribute("error", "Las fechas son obligatorias");
+	        model.addAttribute("reserva", reservaEditar);
+	        model.addAttribute("tiposHabitacion", List.of("Individual", "Doble", "Suite"));
+	        model.addAttribute("temporadas", temporadaService.findAll());
+	        model.addAttribute("planesComida", planComidaRepository.findAll());
+	        model.addAttribute("fechaMinima", LocalDate.now());
+	        model.addAttribute("nombreCliente", reservaEditar.getCliente().getNombre());
+	        model.addAttribute("editandoReserva", true);
+	        return "formularioreserva";
+	    }
+
+	    if (!reserva.getFechaFin().isAfter(reserva.getFechaInicio())) {
+	        model.addAttribute("error", "La fecha de salida debe ser posterior a la de entrada");
+	        model.addAttribute("reserva", reservaEditar);
+	        model.addAttribute("tiposHabitacion", List.of("Individual", "Doble", "Suite"));
+	        model.addAttribute("temporadas", temporadaService.findAll());
+	        model.addAttribute("planesComida", planComidaRepository.findAll());
+	        model.addAttribute("fechaMinima", LocalDate.now());
+	        model.addAttribute("nombreCliente", reservaEditar.getCliente().getNombre());
+	        model.addAttribute("editandoReserva", true);
+	        return "formularioreserva";
+	    }
+
+	    if (reserva.getNumeroPersonas() < 1) {
+	        model.addAttribute("error", "El número de personas debe ser al menos 1");
+	        model.addAttribute("reserva", reservaEditar);
+	        model.addAttribute("tiposHabitacion", List.of("Individual", "Doble", "Suite"));
+	        model.addAttribute("temporadas", temporadaService.findAll());
+	        model.addAttribute("planesComida", planComidaRepository.findAll());
+	        model.addAttribute("fechaMinima", LocalDate.now());
+	        model.addAttribute("nombreCliente", reservaEditar.getCliente().getNombre());
+	        model.addAttribute("editandoReserva", true);
+	        return "formularioreserva";
+	    }
+
+	    reservaEditar.setFechaInicio(reserva.getFechaInicio());
+	    reservaEditar.setFechaFin(reserva.getFechaFin());
+	    reservaEditar.setNumeroPersonas(reserva.getNumeroPersonas());
+
+	    if (planComidaId != null) {
+	        planComidaRepository.findById(planComidaId).ifPresent(reservaEditar::setPlanComida);
+	    }
+
+	    reservaEditar.calcularPrecioTotal();
+	    reservaService.save(reservaEditar);
+
+	    return "redirect:/admin/reservas";
+	}
 	
 	   @GetMapping("/admin/{id}/eliminar/reserva")
 	   public String eliminarReserva(@PathVariable Long id) {
