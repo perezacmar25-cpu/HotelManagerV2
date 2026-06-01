@@ -65,7 +65,14 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         }
         reserva.calcularPrecioTotal();
 
-        return Optional.of(reservaRepository.save(reserva));
+        Reserva reservaGuardada = reservaRepository.save(reserva);
+        reservaGuardada.setCodigo(generarCodigoReserva(reservaGuardada));
+
+        return Optional.of(reservaRepository.save(reservaGuardada));
+    }
+
+    private String generarCodigoReserva(Reserva reserva) {
+        return "RES-" + reserva.getFechaInicio().getYear() + "-" + String.format("%03d", reserva.getId());
     }
     
     public void validarFechas(Reserva reserva) {

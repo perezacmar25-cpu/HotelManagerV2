@@ -56,6 +56,7 @@
 
 							<div class="col-md-4 border-end pe-4 mb-3 mb-md-0">
 								<p class="text-uppercase text-secondary small mb-1">Estancia</p>
+								<p class="fw-semibold text-primary mb-3" th:text="${r.codigo != null ? r.codigo : 'RES-' + r.id}"></p>
 								<div class="d-flex align-items-center gap-3">
 									<div class="text-center">
 										<div class="fs-3 fw-bold" th:text="${#temporals.day(r.fechaInicio)}"></div>

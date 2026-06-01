@@ -22,6 +22,7 @@ import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaServicio;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.repository.PlanComidaRepository;
+import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
@@ -134,12 +135,13 @@ public class ReservaHabitacionController {
         Optional<Reserva> reserva = reservaService.findById(id);
 
         // Si la reserva no existe o no pertenece al cliente logueado, redirigir
-        if (reserva.isEmpty() || !reserva.get().getCliente().getDni().equals(clienteLogueado.getDni())) {
-            return "redirect:/misreservas";
+        if (reserva.isEmpty() || (!esAdmin(clienteLogueado) && !reserva.get().getCliente().getDni().equals(clienteLogueado.getDni()))) {
+            return redireccionReservas(clienteLogueado);
         }
 
         model.addAttribute("reserva", reserva.get());
         model.addAttribute("servicios", servicioService.findAll());
+        model.addAttribute("urlFinalizar", esAdmin(clienteLogueado) ? "/admin/reservas" : "/misreservas");
 
         return "formularioServicios";
     }
@@ -150,7 +152,8 @@ public class ReservaHabitacionController {
     public String guardarServicios(
             @PathVariable Long id,
             @RequestParam(required = false) List<Long> serviciosIds,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            @AuthenticationPrincipal Cliente clienteLogueado) {
 
         Optional<Reserva> reservaBuscada = reservaService.findById(id);
 
@@ -195,6 +198,14 @@ public class ReservaHabitacionController {
         reserva.calcularPrecioTotal();
         reservaService.save(reserva);
 
-        return "redirect:/misreservas";
+        return redireccionReservas(clienteLogueado);
+    }
+
+    private boolean esAdmin(Cliente cliente) {
+        return cliente.getRol() == RolUsuario.ADMIN;
+    }
+
+    private String redireccionReservas(Cliente cliente) {
+        return esAdmin(cliente) ? "redirect:/admin/reservas" : "redirect:/misreservas";
     }
 }
