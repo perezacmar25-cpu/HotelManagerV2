@@ -68,7 +68,7 @@ public class ClienteController {
         cliente.setRol(RolUsuario.USER);
         cliente.setPassword("{noop}" + password);
         //noop sirve para comparar la contraseña directamente con la base de datos
-
+        
         // guardamos el cliente en la base de datos
         clienteService.save(cliente);
 
@@ -82,6 +82,18 @@ public class ClienteController {
         return "redirect:/reserva/nueva";
     }
     
+    @GetMapping("/mis-reservas")
+    public String listarReservas(Model model) {
+        model.addAttribute("nombreCliente", "Cliente");
+        model.addAttribute("reservas", reservaService.findAll()); 
+        return "reservascliente";
+    }
+    
+    @GetMapping("/{id}/eliminar/reserva")
+    public String eliminarReserva(@PathVariable Long id) {
+        reservaService.deleteById(id);
+        return "redirect:/mis-reservas";
+    }
 
 
 }
