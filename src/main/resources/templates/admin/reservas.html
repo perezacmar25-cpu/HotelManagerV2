@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
 
 <head>
 	<meta charset="UTF-8">
@@ -9,6 +10,7 @@
 </head>
 
 <body class="bg-light">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 	<div class="container py-5">
 
 		<div class="card border-primary-subtle shadow-sm rounded-3 mb-4">

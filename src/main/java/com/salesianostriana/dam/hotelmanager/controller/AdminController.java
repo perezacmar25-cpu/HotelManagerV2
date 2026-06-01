@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -189,10 +191,16 @@ public class AdminController {
 	   }
 	   
 	   @PostMapping("/admin/nuevo/cliente")
-	   public String guardarClienteAdmin(@ModelAttribute Cliente cliente,
+	   public String guardarClienteAdmin(@Valid @ModelAttribute Cliente cliente,
+			   								BindingResult result,
 			   							 @RequestParam String password,
 			   							 @RequestParam String confirmPassword,
 			   							 Model model) {
+		   
+		   if (result.hasErrors()) {
+		        model.addAttribute("nuevoClienteAdmin", true); 
+		        return "cliente";
+		    }
 		   
 		   if (!password.equals(confirmPassword)) {
 			   model.addAttribute("error", "Las contraseñas no coinciden");

@@ -4,16 +4,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
  
 @Controller
@@ -29,39 +30,45 @@ public class ClienteController {
     }
  
     @PostMapping("/nuevo")
-    public String guardar(@ModelAttribute Cliente cliente,
+    public String guardar(@Valid @ModelAttribute("cliente") Cliente cliente,
+                          BindingResult result,
                           @RequestParam String password,
                           @RequestParam String confirmPassword,  
                           Model model) {
- 
+
+    	if (result.hasErrors()) {
+    		
+    	    return "cliente";
+    	}
+
         // comprobamos que las contraseñas coincidan
         if (!password.equals(confirmPassword)) {
             model.addAttribute("error", "Las contraseñas no coinciden");
             model.addAttribute("cliente", cliente);
             return "cliente";
         }
- 
+
         // comprobamos que no exista ya un cliente con ese DNI
         if (clienteService.findById(cliente.getDni()).isPresent()) {
             model.addAttribute("error", "Ya existe un usuario con ese DNI");
             model.addAttribute("cliente", cliente);
             return "cliente";
         }
- 
+
         // asignamos rol USER y contraseña con {noop}
         cliente.setRol(RolUsuario.USER);
         cliente.setPassword("{noop}" + password);
         //noop sirve para comparar la contraseña directamente con la base de datos
- 
+
         // guardamos el cliente en la base de datos
         clienteService.save(cliente);
- 
+
         //Hecho  con IA:
         // hacemos login automático con el cliente recién registrado
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken(cliente, null, cliente.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
- 
+
         // mandamos directamente al formulario de reserva
         return "redirect:/reserva/nueva";
     }

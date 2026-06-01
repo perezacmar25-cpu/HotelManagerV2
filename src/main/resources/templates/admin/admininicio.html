@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
     </style>
 </head>
 <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div class="container py-5">
         <p class="text-uppercase text-secondary small ls-1 mb-1">Hotel Manager</p>
         <h1 class="fw-light mb-5">Panel de Administración</h1>

@@ -93,7 +93,7 @@ public class DataSeed {
                         .dni("00000000A")
                         .nombre("Administrador")
                         .email("admin@hospedium.com")
-                        .telefono("000000000")
+                        .telefono("600000000")
                         .username("admin")
                         .password("{noop}admin")
                         .rol(RolUsuario.ADMIN)

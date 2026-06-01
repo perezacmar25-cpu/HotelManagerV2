@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -59,11 +61,21 @@ public class ReservaHabitacionController {
 
     @PostMapping("/confirmar")
     public String procesarReserva(
-            @ModelAttribute("reserva") Reserva reserva,
+    		@Valid @ModelAttribute("reserva") Reserva reserva,
             @RequestParam(required = false) String tipoHabitacion,
+            BindingResult result,
             @RequestParam(required = false) Integer planComidaId,
             @AuthenticationPrincipal Cliente clienteLogueado,
             Model model) {
+    	
+    	if (result.hasErrors()) {
+            model.addAttribute("tiposHabitacion", TIPOS);
+            model.addAttribute("nombreCliente", clienteLogueado.getNombre());
+            model.addAttribute("temporadas", temporadaService.findAll());
+            model.addAttribute("planesComida", planComidaRepository.findAll());
+            model.addAttribute("fechaMinima", LocalDate.now());
+            return "formularioreserva";
+        }
 
         if (reserva.getFechaInicio() == null ||
             reserva.getFechaFin() == null ||

@@ -32,31 +32,36 @@
 
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">DNI / Pasaporte</label>
-                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{dni}" placeholder="DNI" th:readonly="${edicionCliente == true}" required>
+                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{dni}" placeholder="DNI" th:readonly="${edicionCliente == true}">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">Nombre completo</label>
-                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{nombre}" placeholder="Nombre" required>
+                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{nombre}" placeholder="Nombre">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">Email</label>
                             <input type="email" class="form-control rounded-0 border-0 border-bottom" th:field="*{email}" placeholder="Correo">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">Teléfono</label>
                             <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{telefono}" placeholder="Teléfono">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small text-uppercase text-secondary">Usuario</label>
-                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{username}" placeholder="Nombre de usuario" required>
+                            <input type="text" class="form-control rounded-0 border-0 border-bottom" th:field="*{username}" placeholder="Nombre de usuario">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                         </div>
                         <div class="mb-3" th:if="${edicionCliente != true}">
                             <label class="form-label small text-uppercase text-secondary">Contraseña</label>
-                            <input type="password" class="form-control rounded-0 border-0 border-bottom" name="password" placeholder="Contraseña" required minlength="6">
+                            <input type="password" class="form-control rounded-0 border-0 border-bottom" name="password" placeholder="Contraseña"minlength="6">
                         </div>
                         <div class="mb-4" th:if="${edicionCliente != true}">
                             <label class="form-label small text-uppercase text-secondary">Confirmar contraseña</label>
-                            <input type="password" class="form-control rounded-0 border-0 border-bottom" name="confirmPassword" placeholder="Repetir contraseña" required minlength="6">
+                            <input type="password" class="form-control rounded-0 border-0 border-bottom" name="confirmPassword" placeholder="Repetir contraseña"minlength="6">
                         </div>
 
                         <div th:if="${error}" class="alert alert-danger small py-2 mb-3" th:text="${error}"></div>
