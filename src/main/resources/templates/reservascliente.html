@@ -88,26 +88,32 @@
 
 							<div class="col-md-4 ps-4">
 								<p class="text-uppercase text-secondary small mb-1">Total</p>
-								<div class="fs-4 fw-bold mb-2" th:text="${r.precioTotal} + ' €'"></div>
+								<div class="fs-4 fw-bold mb-3" th:text="${r.precioTotal} + ' €'"></div>
+
 								<div th:if="${not #lists.isEmpty(r.serviciosReservados)}">
 									<p class="text-uppercase text-secondary small mb-1">Servicios</p>
-									<div class="d-flex flex-wrap gap-1">
+									<div class="d-flex flex-wrap gap-1 mb-3">
 										<span th:each="rs : ${r.serviciosReservados}"
 											class="badge bg-dark rounded-0 fw-normal small"
 											th:text="${rs.servicio.nombre}"></span>
 									</div>
 								</div>
 
-								<a th:href="@{/reserva/{id}/servicios(id=${r.id})}"
-									class="btn btn-outline-dark btn-sm rounded-0 text-uppercase mt-3">
-									Gestionar servicios
-								</a>
-								<a th:href="@{/reserva/{id}(id=${r.id})}"
-									class="btn btn-outline-primary btn-sm rounded-0 text-uppercase mt-3">
-									Ver detalles
-								</a>
-								<a th:href="@{${r.id} + '/eliminar/reserva'}"
-									class="btn btn-outline-danger btn-sm rounded-0 px-3">Cancelar</a>
+
+								<div class="d-flex flex-column flex-sm-row gap-2">
+									<a th:href="@{/reserva/{id}/servicios(id=${r.id})}"
+										class="btn btn-outline-dark btn-sm rounded-0 flex-fill text-uppercase">
+										Gestionar servicios
+									</a>
+									<a th:href="@{/reserva/{id}(id=${r.id})}"
+										class="btn btn-outline-primary btn-sm rounded-0 flex-fill text-uppercase">
+										Ver detalles
+									</a>
+									<a th:href="@{/{id}/eliminar/reserva(id=${r.id})}"
+										class="btn btn-outline-danger btn-sm rounded-0 flex-fill text-uppercase">
+										Cancelar
+									</a>
+								</div>
 							</div>
 
 						</div>
