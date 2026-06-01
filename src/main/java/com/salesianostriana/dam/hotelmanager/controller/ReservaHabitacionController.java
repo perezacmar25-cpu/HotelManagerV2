@@ -162,9 +162,14 @@ public class ReservaHabitacionController {
         }
 
         
+        
+        Reserva reserva = reservaBuscada.get();
+        
+        if (!esAdmin(clienteLogueado) && !reserva.getCliente().getDni().equals(clienteLogueado.getDni())) {
+            return redireccionReservas(clienteLogueado);
+        }
         //Es para cuando un usuario edita los servicios de una reserva que ya tenía guardada.
         //Limpia los servicios antiguos para sustituirlos por los nuevos que acaba de elegir.
-        Reserva reserva = reservaBuscada.get();
         reserva.getServiciosReservados().clear();
 
         if (serviciosIds != null) {

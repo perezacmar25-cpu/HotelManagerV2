@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException;
 import com.salesianostriana.dam.hotelmanager.excepciones.PersonasExcedidasException;
+import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.PlanComida;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
@@ -50,6 +51,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         ReservaHabitacion reservaHabitacion = ReservaHabitacion.builder()
                 .habitacion(habitacion)
                 .reserva(reserva)
+                .estado(EstadoReserva.RESERVADA)
                 .build();
         reserva.getListadoReservaHab().add(reservaHabitacion);
         

@@ -48,7 +48,7 @@ public class Reserva {
     
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private EstadoReserva estadoReserva = EstadoReserva.CHECKIN;
+    private EstadoReserva estadoReserva = EstadoReserva.RESERVADA;
     
 
     @ManyToOne

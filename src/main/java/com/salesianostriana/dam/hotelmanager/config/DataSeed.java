@@ -9,12 +9,14 @@ import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.PlanComida;
 import com.salesianostriana.dam.hotelmanager.model.PlanComidaEnum;
+import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.model.Temporada;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.PlanComidaService;
+import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
@@ -22,7 +24,7 @@ import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 public class DataSeed {
 
     @Bean
-    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer,PlanComidaService planSer) {
+    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer, PlanComidaService planSer, ReservaService reservaSer) {
         return args -> {
             if (habSer.findAll().isEmpty()) {
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
@@ -130,6 +132,19 @@ public class DataSeed {
                 PlanComida p4 = new PlanComida();
                 p4.setTipo(PlanComidaEnum.TODO_INCLUIDO);
                 planSer.save(p4);
+            }
+            
+            if (reservaSer.findByClienteDni("00000000A").isEmpty()) {
+                cliSer.findById("00000000A").ifPresent(admin -> {
+                    Reserva reservaAdmin = Reserva.builder()
+                            .fechaInicio(LocalDate.now().plusDays(15))
+                            .fechaFin(LocalDate.now().plusDays(18))
+                            .numeroPersonas(2)
+                            .cliente(admin)
+                            .build();
+                    
+                    reservaSer.crearReserva(reservaAdmin, "Doble", null);
+                });
             }
             
         };

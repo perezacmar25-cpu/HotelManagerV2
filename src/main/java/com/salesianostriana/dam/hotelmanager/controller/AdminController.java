@@ -157,6 +157,7 @@ public class AdminController {
 	   public String cambiarEstadoReserva(@PathVariable Long id, @RequestParam EstadoReserva estado) {
 		   reservaService.findById(id).ifPresent(reserva -> {
 			   reserva.setEstadoReserva(estado);
+			   reserva.getListadoReservaHab().forEach(rh -> rh.setEstado(estado));
 			   reservaService.save(reserva);
 		   });
 		   return "redirect:/admin/reservas";
