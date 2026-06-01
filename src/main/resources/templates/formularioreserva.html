@@ -15,18 +15,33 @@
 			min-height: calc(100vh - 56px);
 			background: rgba(10, 8, 5, 0.65);
 		}
+
+		body.admin-reserva {
+			background: #f8f9fa;
+		}
+
+		body.admin-reserva .overlay {
+			background: transparent;
+		}
+
+		body.admin-reserva .formulario-admin {
+			border: 1px solid #b6d4fe;
+			border-radius: .5rem;
+		}
 	</style>
 	<script th:src="@{/js/formularioreserva.js}" type="text/javascript" defer></script>
 </head>
 
-<body>
+<body th:classappend="${#authorization.expression('hasRole(''ADMIN'')')} ? 'admin-reserva' : ''">
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 	<div class="overlay d-flex align-items-center py-5">
 		<div class="container">
-			<div class="row justify-content-end">
-				<div class="col-md-5">
-					<div class="bg-white p-5 shadow-lg">
+			<!--Todo esto es para que el formulario de reserva salga con un estilo distinto depende de si es rol usuario o admin el que está logueado-->
+			<div th:class="${#authorization.expression('hasRole(''ADMIN'')')} ? 'row justify-content-center' : 'row justify-content-end'">
+				<div th:class="${#authorization.expression('hasRole(''ADMIN'')')} ? 'col-lg-8 col-xl-7' : 'col-md-5'">
+					<div th:class="${#authorization.expression('hasRole(''ADMIN'')')} ? 'bg-white shadow-sm formulario-admin' : 'bg-white p-5 shadow-lg'">
+						<div th:class="${#authorization.expression('hasRole(''ADMIN'')')} ? 'p-4 p-lg-5' : ''">
 
 						<p class="text-uppercase text-secondary small mb-1">Hospedium</p>
 						<h2 class="fw-light mb-1" style="font-family:Georgia,serif">Gestión reserva</h2>
@@ -94,13 +109,15 @@
 							<div id="resumenPrecio" class="alert alert-secondary small mb-3 d-none"></div>
 
 							<div class="d-grid gap-2">
-								<button type="submit" class="btn btn-dark rounded-0 text-uppercase"
+								<button type="submit"
+									th:class="${#authorization.expression('hasRole(''ADMIN'')')} ? 'btn btn-primary rounded-0 text-uppercase' : 'btn btn-dark rounded-0 text-uppercase'"
 									style="letter-spacing:.05em">Confirmar reserva</button>
 								<a sec:authorize="hasRole('USER')" href="/" class="btn btn-outline-secondary rounded-0">Cancelar</a>
 								<a sec:authorize="hasRole('ADMIN')" href="/admin/reservas" class="btn btn-outline-primary rounded-0">Cancelar</a>
 							</div>
 						</form>
 
+						</div>
 					</div>
 				</div>
 			</div>

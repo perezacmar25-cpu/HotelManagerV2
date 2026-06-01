@@ -43,7 +43,16 @@ public class AdminController {
 	
 	
 	@GetMapping("/admin/admininicio")
-	public String panelAdmin() {
+	public String panelAdmin(Model model) {
+		LocalDate hoy = LocalDate.now();
+		List<Reserva> llegadasHoy = reservaService.findAll().stream()
+				.filter(r -> r.getFechaInicio() != null)
+				.filter(r -> r.getFechaInicio().equals(hoy))
+				.filter(r -> r.getEstadoReserva() == EstadoReserva.RESERVADA)
+				.collect(Collectors.toList());
+		
+		model.addAttribute("llegadasHoy", llegadasHoy);
+		model.addAttribute("hoy", hoy);
 		return "/admin/admininicio";
 	}
 	
