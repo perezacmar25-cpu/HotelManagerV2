@@ -39,8 +39,9 @@ public class Reserva {
     
     private double precioTotal;
     
-    @Min(value = 1)
-    private int numeroPersonas;
+    @NotNull(message = "El número de personas es obligatorio")
+    @Min(value = 1, message = "El número de personas debe ser al menos 1")
+    private Integer numeroPersonas;
 
     
     @Enumerated(EnumType.STRING)
@@ -88,7 +89,7 @@ public class Reserva {
         if (planComida != null) {
             planComida.setNumeroDias((int) dias);
 
-            totalComida = this.planComida.calcularTotalComida() * this.numeroPersonas;
+            totalComida = this.planComida.calcularTotalComida() * (this.numeroPersonas != null ? this.numeroPersonas : 0);
         }
 
         this.precioTotal = totalHabitaciones + totalServicios + totalComida;

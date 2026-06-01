@@ -40,6 +40,12 @@ public class ClienteController {
     		
     	    return "cliente";
     	}
+    	
+    	if (password == null || password.isBlank() || password.length() < 6) {
+    	    model.addAttribute("error", "La contraseña debe tener al menos 6 caracteres");
+    	    model.addAttribute("cliente", cliente);
+    	    return "cliente";
+    	}
 
         // comprobamos que las contraseñas coincidan
         if (!password.equals(confirmPassword)) {

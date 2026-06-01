@@ -59,11 +59,11 @@
                     <span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">Sin asignar</span>
                 </p>
                 
-                <p class="card-text"><strong>Plan de comida:</strong> 
-                    <span th:if="${reserva.planComida != null}" 
-                          th:text="${reserva.planComida.nombre != null ? reserva.planComida.nombre : reserva.planComida.tipo}"></span>
-                    <span th:if="${reserva.planComida == null}" class="text-secondary">Sin régimen de comidas</span>
-                </p>
+				<p class="card-text"><strong>Plan de comida:</strong>
+				    <span th:if="${reserva.planComida != null}"
+				          th:text="${#strings.replace(reserva.planComida.tipo.name(), '_', ' ')}"></span>
+				    <span th:if="${reserva.planComida == null}" class="text-secondary">Sin régimen de comidas</span>
+				</p>
                 
                 <p class="card-text"><strong>Servicios adicionales:</strong></p>
                 <span th:if="${#lists.isEmpty(reserva.serviciosReservados)}" class="text-secondary d-block mb-3">Ninguno</span>
