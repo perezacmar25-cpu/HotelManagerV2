@@ -85,6 +85,9 @@ public class Reserva {
         double totalHabitaciones = listadoReservaHab.stream()
                 .mapToDouble(reshab -> reshab.getHabitacion().getPrecioNoche() * dias * multiplicador)
                 .sum();
+        double totalCosteServiciosHabitacion = listadoReservaHab.stream()
+                .mapToDouble(ReservaHabitacion::getCosteServicios)
+                .sum();
         double totalServicios = Servicio.calcularTotalServicios(serviciosReservados);
         
         double totalComida = 0;
@@ -94,7 +97,7 @@ public class Reserva {
             totalComida = this.planComida.calcularTotalComida() * (this.numeroPersonas != null ? this.numeroPersonas : 0);
         }
 
-        this.precioTotal = totalHabitaciones + totalServicios + totalComida;
+        this.precioTotal = totalHabitaciones + totalServicios + totalComida + totalCosteServiciosHabitacion;
 
         return precioTotal;
     }

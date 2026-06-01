@@ -162,6 +162,29 @@ public class AdminController {
 		   });
 		   return "redirect:/admin/reservas";
 	   }
+	   
+	   /*el método busca la reserva, busca dentro de ella la habitación concreta, 
+	    * guarda el coste extra y las observaciones, recalcula el total y 
+	    * vuelve al listado.*/
+	   @PostMapping("/admin/reservas/{reservaId}/habitaciones/{reservaHabitacionId}/extras")
+	   public String guardarExtrasHabitacion(@PathVariable Long reservaId,
+			   								 @PathVariable Long reservaHabitacionId,
+			   								 @RequestParam(required = false) Double costeServicios,
+			   								 @RequestParam(required = false) String observaciones) {
+		   reservaService.findById(reservaId).ifPresent(reserva -> {
+			   reserva.getListadoReservaHab().stream()
+				   .filter(rh -> rh.getId().equals(reservaHabitacionId))
+				   .findFirst()
+				   .ifPresent(rh -> {
+					   rh.setCosteServicios(costeServicios != null ? costeServicios : 0.0);
+					   rh.setObservaciones(observaciones);
+					   reserva.calcularPrecioTotal();
+					   reservaService.save(reserva);
+				   });
+		   });
+		   
+		   return "redirect:/admin/reservas";
+	   }
 
 		
 	   @GetMapping("/admin/{id}/eliminar/habitaciones")

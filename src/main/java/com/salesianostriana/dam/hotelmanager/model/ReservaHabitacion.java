@@ -30,6 +30,8 @@ public class ReservaHabitacion {
 
     private String observaciones;
     
+    private double costeServicios;
+    
     private boolean futbol;
     private boolean padel;
     private boolean arco;

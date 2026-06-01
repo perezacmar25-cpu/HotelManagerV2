@@ -49,6 +49,7 @@
 							<th class="text-uppercase text-secondary small fw-semibold py-3 text-center text-nowrap">Pers.</th>
 							<th class="text-uppercase text-secondary small fw-semibold py-3">Servicios</th>
 							<th class="text-uppercase text-secondary small fw-semibold py-3 text-nowrap">Hab.</th>
+							<th class="text-uppercase text-secondary small fw-semibold py-3 text-nowrap">Minibar / obs.</th>
 							<th class="text-uppercase text-secondary small fw-semibold py-3">Plan</th>
 							<th class="text-uppercase text-secondary small fw-semibold py-3 text-nowrap">Estado</th>
 							<th class="text-uppercase text-secondary small fw-semibold pe-4 py-3 text-nowrap">Acciones</th>
@@ -75,6 +76,19 @@
 									th:text="${rh.habitacion.numero}"></span>
 								<span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">Sin
 									habitación</span>
+							</td>
+							<td>
+								<form th:each="rh : ${reserva.listadoReservaHab}"
+									th:action="@{/admin/reservas/{reservaId}/habitaciones/{reservaHabitacionId}/extras(reservaId=${reserva.id}, reservaHabitacionId=${rh.id})}"
+									method="post" class="d-flex flex-column gap-1 mb-2">
+									<input type="number" step="0.01" min="0" name="costeServicios"
+										class="form-control form-control-sm" placeholder="Coste"
+										th:value="${rh.costeServicios}">
+									<textarea name="observaciones" class="form-control form-control-sm" rows="2"
+										placeholder="Observaciones" th:text="${rh.observaciones}"></textarea>
+									<button type="submit" class="btn btn-outline-primary btn-sm rounded-0">Guardar</button>
+								</form>
+								<span th:if="${#lists.isEmpty(reserva.listadoReservaHab)}" class="text-secondary">Sin datos</span>
 							</td>
 							<!--El strings replace es para que no salga por ejemplo pensión_completa, que queda feo-->
 							<td>
@@ -103,7 +117,7 @@
 						</tr>
 
 						<tr th:if="${#lists.isEmpty(reservas)}">
-							<td colspan="11" class="text-center text-secondary py-5">Sin registros</td>
+							<td colspan="12" class="text-center text-secondary py-5">Sin registros</td>
 						</tr>
 					</tbody>
 				</table>
