@@ -13,7 +13,6 @@ import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
 import com.salesianostriana.dam.hotelmanager.service.base.BaseServiceImpl;
 
 @Service
-
 public class HabitacionService extends BaseServiceImpl<Habitacion, Integer, JpaRepository<Habitacion,Integer>>{
 	
 	  @Autowired

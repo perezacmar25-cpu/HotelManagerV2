@@ -7,12 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
+import com.salesianostriana.dam.hotelmanager.service.ReservaService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ClienteController {
  
     private final ClienteService clienteService;
+    private final ReservaService reservaService;
  
     @GetMapping("/registro")
     public String formulario(Model model) {
@@ -78,7 +81,7 @@ public class ClienteController {
         // mandamos directamente al formulario de reserva
         return "redirect:/reserva/nueva";
     }
- 
+    
 
 
 }
