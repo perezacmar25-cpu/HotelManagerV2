@@ -46,6 +46,7 @@
             <div class="card-body p-4">
                 <h5 class="card-title mb-4">Reserva de <span class="fw-bold" th:text="${reserva.cliente.nombre}"></span></h5>
                 
+                <p class="card-text"><strong>Código:</strong> <span th:text="${reserva.codigo != null ? reserva.codigo : 'RES-' + reserva.id}"></span></p>
                 <p class="card-text"><strong>DNI:</strong> <span th:text="${reserva.cliente.dni}"></span></p>
                 <p class="card-text"><strong>Fecha de entrada:</strong> <span th:text="${reserva.fechaInicio}"></span></p>
                 <p class="card-text"><strong>Fecha de salida:</strong> <span th:text="${reserva.fechaFin}"></span></p>
