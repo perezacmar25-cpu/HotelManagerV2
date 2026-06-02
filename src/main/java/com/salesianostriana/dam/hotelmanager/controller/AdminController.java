@@ -19,6 +19,7 @@ import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
+import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
 import com.salesianostriana.dam.hotelmanager.repository.PlanComidaRepository;
 import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
@@ -311,7 +312,7 @@ public class AdminController {
 		   return "redirect:/admin/clientes";
 	   }
 	   
-	   @GetMapping("/admin/agregar/habitacion")
+	   @PostMapping("/admin/agregar/habitacion")
 	   public String agregarHabitacion(@ModelAttribute Habitacion h) {
 		   if (h.getTipo().equals("Individual")) {
 			   h.setPrecioNoche(55.0);
@@ -358,6 +359,19 @@ public class AdminController {
 	   public String listarServicios(Model model) {
 		   model.addAttribute("servicios", servicioService.findAll());
 		   return "/admin/servicios";
+	   }
+	   
+	   @PostMapping("/admin/agregar/servicio")
+	   public String agregarServicio(@RequestParam String nombre,
+			   						 @RequestParam double precio,
+			   						 @RequestParam(required = false) String imagen) {
+		   Servicio servicio = Servicio.builder()
+				   .nombre(nombre)
+				   .precio(precio)
+				   .imagen(imagen)
+				   .build();
+		   servicioService.save(servicio);
+		   return "redirect:/admin/servicios";
 	   }
 	   
 	
