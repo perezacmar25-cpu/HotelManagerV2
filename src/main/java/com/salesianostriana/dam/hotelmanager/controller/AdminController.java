@@ -377,6 +377,12 @@ public class AdminController {
 		   return "/admin/servicios";
 	   }
 	   
+	   @GetMapping("/admin/planescomida")
+	   public String listarPlanesComida(Model model) {
+		   model.addAttribute("planes", planComidaService.findAll());
+		   return "/admin/planescomida";
+	   }
+	   
 	   @PostMapping("/admin/agregar/servicio")
 	   public String agregarServicio(@RequestParam String nombre,
 			   						 @RequestParam double precio,
