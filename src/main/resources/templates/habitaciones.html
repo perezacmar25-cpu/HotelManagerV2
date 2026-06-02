@@ -77,11 +77,13 @@
             </a>
         </div>
 
-		<div class="text-center mt-3">
+		<div class="text-center mt-3 mb-5">
 		    <a th:href="@{/}" class="btn btn-outline-dark rounded-0 px-4">Volver al inicio</a>
 		    <a th:href="@{/admin/admininicio}" class="btn btn-outline-dark rounded-0 px-4 ms-2"
 		       sec:authorize="hasRole('ADMIN')">Volver al panel</a>
 		</div>
     </div>
+
+	<footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
 </html>
