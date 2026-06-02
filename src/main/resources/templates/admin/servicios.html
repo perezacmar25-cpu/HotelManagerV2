@@ -76,6 +76,7 @@
 							<td th:text="${servicio.nombre}"></td>
 							<td class="fw-semibold text-success" th:text="${servicio.precio + ' €'}"></td>
 							<td>
+								<a th:href="@{/admin/editar/servicio/{id}(id=${servicio.id})}" class="btn btn-outline-info btn-sm px-3">Editar</a>
 								<form th:action="@{'/admin/' + ${servicio.id} + '/eliminar/servicio'}" method="post" class="d-inline">
 									<button type="submit" class="btn btn-outline-danger btn-sm px-3">Eliminar</button>
 								</form>

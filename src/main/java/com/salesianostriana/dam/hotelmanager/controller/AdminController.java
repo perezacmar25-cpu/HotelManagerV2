@@ -374,6 +374,31 @@ public class AdminController {
 		   return "redirect:/admin/servicios";
 	   }
 	   
+	   @GetMapping("/admin/editar/servicio/{id}")
+	   public String editarServicioForm(@PathVariable Long id, Model model) {
+		   Optional<Servicio> servicio = servicioService.findById(id);
+		   if (servicio.isEmpty()) {
+			   return "redirect:/admin/servicios";
+		   }
+		   model.addAttribute("servicio", servicio.get());
+		   return "/admin/formularioservicio";
+	   }
+
+	   @PostMapping("/admin/editar/servicio/{id}")
+	   public String actualizarServicio(@PathVariable Long id, @ModelAttribute Servicio servicioForm) {
+		   Optional<Servicio> servicioOpt = servicioService.findById(id);
+
+		   if (servicioOpt.isPresent()) {
+			   Servicio servicioReal = servicioOpt.get();
+			   servicioReal.setNombre(servicioForm.getNombre());
+			   servicioReal.setPrecio(servicioForm.getPrecio());
+			   servicioReal.setImagen(servicioForm.getImagen());
+			   servicioService.save(servicioReal);
+		   }
+
+		   return "redirect:/admin/servicios";
+	   }
+
 	   @PostMapping("/admin/{id}/eliminar/servicio")
 	   public String eliminarServicio(@PathVariable Long id) {
 		   servicioService.deleteById(id);
