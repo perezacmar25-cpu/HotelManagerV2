@@ -24,7 +24,8 @@ public class Servicio {
 	
 	private double precio;
 	
-    private String imagen;
+    
+    private String imagenUrl;
     
     public static double calcularTotalServicios(List<ReservaServicio> servicios) {
         if (servicios.isEmpty())

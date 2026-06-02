@@ -29,7 +29,7 @@ public class Habitacion {
 	
 	private boolean disponible;
 	
-	
+	private String imagenUrl;
 	@OneToMany(mappedBy = "habitacion")
 	@Builder.Default
 	private List<ReservaHabitacion> listadoReservas = new ArrayList<>();

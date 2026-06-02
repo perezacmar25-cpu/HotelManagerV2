@@ -372,7 +372,7 @@ public class AdminController {
 		   Servicio servicio = Servicio.builder()
 				   .nombre(nombre)
 				   .precio(precio)
-				   .imagen(imagen)
+				   .imagenUrl(imagen)
 				   .build();
 		   servicioService.save(servicio);
 		   return "redirect:/admin/servicios";
@@ -396,7 +396,7 @@ public class AdminController {
 			   Servicio servicioReal = servicioOpt.get();
 			   servicioReal.setNombre(servicioForm.getNombre());
 			   servicioReal.setPrecio(servicioForm.getPrecio());
-			   servicioReal.setImagen(servicioForm.getImagen());
+			   servicioReal.setImagenUrl(servicioForm.getImagenUrl());
 			   servicioService.save(servicioReal);
 		   }
 

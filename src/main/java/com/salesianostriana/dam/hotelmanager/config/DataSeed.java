@@ -27,57 +27,57 @@ public class DataSeed {
     CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer, PlanComidaService planSer, ReservaService reservaSer) {
         return args -> {
             if (habSer.findAll().isEmpty()) {
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
 
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Doble").precioNoche(100.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80").build());
 
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
-                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
+                habSer.save(Habitacion.builder().tipo("Suite").precioNoche(155.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80").build());
             }
 
             if (serSer.findAll().isEmpty()) {
-                serSer.save(Servicio.builder().nombre("Pista de voleyball").precio(10.0).imagen("voleyball.jpg").build());
-                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(15.0).imagen("padel.jpg").build());
-                serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).imagen("arco.jpg").build());
-                serSer.save(Servicio.builder().nombre("Spa").precio(40).imagen("spa.jpg").build());
-                serSer.save(Servicio.builder().nombre("Masaje spa").precio(30).imagen("spa.jpg").build());
-                serSer.save(Servicio.builder().nombre("Tratamiento facial").precio(25).imagen("spa.jpg").build());
-                serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).imagen("gimnasio.jpg").build());
-                serSer.save(Servicio.builder().nombre("Wifi").precio(0).imagen("recepcion.jpg").build());
+                serSer.save(Servicio.builder().nombre("Pista de voleyball").precio(10.0).imagenUrl("https://images.unsplash.com/photo-1593787406536-3676a152d9cb?auto=format&fit=crop&w=800&q=80").build());
+                serSer.save(Servicio.builder().nombre("Pista de pádel").precio(15.0).imagenUrl("https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=800&q=80").build());
+                serSer.save(Servicio.builder().nombre("Tiro con arco").precio(8.0).imagenUrl("https://www.shutterstock.com/image-photo/sports-archer-target-bow-arrow-600nw-2267402961.jpg").build());
+                serSer.save(Servicio.builder().nombre("Spa").precio(40).imagenUrl("https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80").build());
+                serSer.save(Servicio.builder().nombre("Masaje spa").precio(30).imagenUrl("https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80").build());
+                serSer.save(Servicio.builder().nombre("Tratamiento facial").precio(25).imagenUrl("https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80").build());
+                serSer.save(Servicio.builder().nombre("Gimnasio").precio(0).imagenUrl("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80").build());
+                serSer.save(Servicio.builder().nombre("Wifi").precio(0).imagenUrl("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80").build());
             }
 
             if (cliSer.findAll().isEmpty()) {
