@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habitaciones Más Reservadas - Hospedium</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+<body class="bg-light">
+    
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="container py-5">
+        
+        <div class="row mb-5 text-center">
+            <div class="col">
+                <h2 class="fw-light border-bottom d-inline-block pb-2 fs-1 text-uppercase">Habitaciones Más Populares</h2>
+                <p class="text-muted small text-uppercase tracking-wider mt-2">Nuestras estancias más solicitadas por los huéspedes</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                
+                <div th:each="hab, iterStat : ${habitacionesMasUsadas}" class="card border-0 shadow-sm rounded-0 mb-4 overflow-hidden">
+                    <div class="row g-0 align-items-center">
+                        
+                        <div class="col-md-4">
+                            <img th:src="@{'/img/' + ${hab[1]} + '.jpg'}" 
+                                 class="w-100 object-fit-cover" 
+                                 style="height: 180px;" 
+                                 alt="Imagen de habitación">
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                                    <div>
+                                        <span class="badge text-uppercase mb-2 rounded-0 px-3 py-1-5 fw-bold"
+                                              th:classappend="${iterStat.count == 1} ? 'bg-dark' : 'bg-secondary'"
+                                              th:text="${iterStat.count + 'º Más Reservada'}">
+                                            1º Más Reservada
+                                        </span>
+                                        <h3 class="h4 fw-bold text-uppercase mb-1">
+                                            Habitación Nº <span th:text="${hab[0]}">14</span>
+                                        </h3>
+                                        <p class="text-muted small mb-0">
+                                            Categoría: <strong class="text-dark text-uppercase" th:text="${hab[1]}">Doble</strong>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="text-md-end mt-2 mt-md-0">
+                                        <div class="fs-4 fw-bold text-success" th:text="${hab[2]}">1</div>
+                                        <div class="text-uppercase text-muted" style="font-size: 0.75rem; letter-spacing: 1px;">Reservas totales</div>
+                                    </div>
+                                </div>
+                                
+                                <hr class="my-3">
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="small text-muted"><i class="bi bi-star-fill text-warning"></i> Estancia recomendada</span>
+                                    <a th:href="@{/habitaciones}" class="btn btn-outline-dark btn-sm rounded-0 text-uppercase px-3">
+                                        Ver disponibilidad
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div> <div th:if="${habitacionesMasUsadas.isEmpty()}" class="alert alert-white border text-center py-5 rounded-0 shadow-sm">
+                    <h5 class="fw-bold text-uppercase small tracking-wide text-muted">No hay registros de reservas</h5>
+                    <p class="mb-0 text-muted small">El ranking se actualizará automáticamente en cuanto se procesen reservas.</p>
+                </div>

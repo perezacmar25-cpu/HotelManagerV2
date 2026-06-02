@@ -41,5 +41,15 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
 	            )
 	            """)
 	    List<Habitacion> findOcupadasHoy(@Param("hoy") LocalDate hoy);
+	 
+	 
+	 @Query("""
+	 		SELECT h.numero as numero, h.tipo as tipo, COUNT(rh) as vecesReservada
+    FROM Habitacion h 
+    LEFT JOIN ReservaHabitacion rh ON rh.habitacion.numero = h.numero
+    GROUP BY h.numero, h.tipo
+    ORDER BY vecesReservada DESC
+	 		""")
+	 List<Object[]>encontrarHabMasUsadas();
 	
 }

@@ -1,12 +1,12 @@
 package com.salesianostriana.dam.hotelmanager.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
 
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
@@ -30,6 +30,17 @@ public class HabitacionService extends BaseServiceImpl<Habitacion, Integer, JpaR
             .values()
             .stream()
             .toList();
+    }
+    
+    public List<Object[]> getHabitacionesMasUsadas() {
+        
+        List<Object[]> todas = habitacionRepository.encontrarHabMasUsadas();
+        
+        // Si la lista tiene más de 3 elementos, la cortamos para quedarnos solo con los 3 primeros
+        if (todas.size() > 3) {
+            return todas.subList(0, 3);
+        }
+        return todas;
     }
     
     
