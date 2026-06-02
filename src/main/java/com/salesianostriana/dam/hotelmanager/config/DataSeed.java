@@ -119,18 +119,22 @@ public class DataSeed {
             if (planSer.findAll().isEmpty()) {
                 PlanComida p1 = new PlanComida();
                 p1.setTipo(PlanComidaEnum.SOLO_DESAYUNO);
+                p1.setPrecio(0);
                 planSer.save(p1);
 
                 PlanComida p2 = new PlanComida();
                 p2.setTipo(PlanComidaEnum.MEDIA_PENSION);
+                p2.setPrecio(25);
                 planSer.save(p2);
 
                 PlanComida p3 = new PlanComida();
                 p3.setTipo(PlanComidaEnum.PENSION_COMPLETA);
+                p3.setPrecio(50);
                 planSer.save(p3);
 
                 PlanComida p4 = new PlanComida();
                 p4.setTipo(PlanComidaEnum.TODO_INCLUIDO);
+                p4.setPrecio(75);
                 planSer.save(p4);
             }
             

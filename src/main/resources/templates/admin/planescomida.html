@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Planes de Comida</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div class="container py-5">
+
+		<div class="card border-secondary-subtle shadow-sm rounded-3 mb-4">
+			<div class="card-body p-4 p-lg-5">
+				<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-4">
+					<div>
+						<h1 class="display-6 fw-light text-dark mb-2">Planes de Comida</h1>
+						<p class="text-secondary mb-0">Consulta y gestiona los planes de comida disponibles del hotel.</p>
+					</div>
+					<div class="d-flex flex-wrap gap-2">
+						<a th:href="@{/admin/admininicio}" class="btn btn-outline-dark px-4">Panel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card border-secondary-subtle shadow-sm rounded-3 overflow-hidden">
+			<div class="card-header bg-dark border-dark py-3 px-4">
+				<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+					<h2 class="h6 text-uppercase text-white fw-semibold mb-0">Planes registrados</h2>
+					<span
+						class="badge bg-white-50 border border-secondary text-white rounded-pill px-3 py-2"
+						th:text="${#lists.size(planes)} + ' registros'">0 registros</span>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-hover align-middle mb-0">
+					<thead class="table-light">
+						<tr>
+							<th class="text-uppercase text-secondary small fw-semibold ps-4 py-3">ID</th>
+							<th class="text-uppercase text-secondary small fw-semibold py-3">Tipo</th>
+							<th class="text-uppercase text-secondary small fw-semibold py-3">Precio/Día</th>
+							<th class="text-uppercase text-secondary small fw-semibold py-3">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="plan : ${planes}">
+							<td class="ps-4 fw-semibold text-dark" th:text="${plan.id}"></td>
+							<td>
+								<span class="badge bg-secondary-subtle text-secondary-emphasis" th:text="${plan.tipo}"></span>
+							</td>
+							<td class="fw-bold text-dark" th:text="${plan.precio + ' €'}"></td>
+							<td>
+								<a th:href="@{/admin/editar/plancomida/{id}(id=${plan.id})}" class="btn btn-outline-dark btn-sm px-3">Editar</a>
+								<form th:action="@{'/admin/' + ${plan.id} + '/eliminar/plancomida'}" method="post" class="d-inline">
+									<button type="submit" class="btn btn-outline-danger btn-sm px-3">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(planes)}">
+							<td colspan="7" class="text-center text-secondary py-5">Sin registros</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<a th:href="@{/admin/admininicio}" class="btn btn-outline-dark px-4">Volver al panel</a>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
+import com.salesianostriana.dam.hotelmanager.model.PlanComida;
+import com.salesianostriana.dam.hotelmanager.model.PlanComidaEnum;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.Servicio;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
@@ -26,6 +28,7 @@ import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
+import com.salesianostriana.dam.hotelmanager.service.PlanComidaService;
 import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
@@ -42,6 +45,7 @@ public class AdminController {
 	private final HabitacionRepository habitacionRepository;
 	private final TemporadaService temporadaService;
 	private final PlanComidaRepository planComidaRepository;
+	private final PlanComidaService planComidaService;
 	private final ServicioService servicioService;
 	
 	
@@ -404,6 +408,36 @@ public class AdminController {
 		   servicioService.deleteById(id);
 		   return "redirect:/admin/servicios";
 	   }
-	   
-	
+
+	   @GetMapping("/admin/editar/plancomida/{id}")
+	   public String editarPlanComidaForm(@PathVariable Integer id, Model model) {
+		   Optional<PlanComida> plan = planComidaService.findById(id);
+		   if (plan.isEmpty()) {
+			   return "redirect:/admin/planescomida";
+		   }
+		   model.addAttribute("plan", plan.get());
+		   model.addAttribute("tipos", PlanComidaEnum.values());
+		   return "/admin/formularioplancomida";
+	   }
+
+	   @PostMapping("/admin/editar/plancomida/{id}")
+	   public String actualizarPlanComida(@PathVariable Integer id, @ModelAttribute PlanComida planForm) {
+		   Optional<PlanComida> planOpt = planComidaService.findById(id);
+
+		   if (planOpt.isPresent()) {
+			   PlanComida planReal = planOpt.get();
+			   planReal.setTipo(planForm.getTipo());
+			   planReal.setPrecio(planForm.getPrecio());
+			   planComidaService.save(planReal);
+		   }
+
+		   return "redirect:/admin/planescomida";
+	   }
+
+	   @PostMapping("/admin/{id}/eliminar/plancomida")
+	   public String eliminarPlanComida(@PathVariable Integer id) {
+		   planComidaService.deleteById(id);
+		   return "redirect:/admin/planescomida";
+	   }
+
 }

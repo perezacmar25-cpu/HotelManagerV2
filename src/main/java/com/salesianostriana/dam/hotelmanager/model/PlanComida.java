@@ -17,34 +17,15 @@ public class PlanComida {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String nombre;
-	
 	@Enumerated(EnumType.STRING)
 	private PlanComidaEnum tipo;
 	
 	private int numeroDias;
 	
+	private double precio;
 	
-	public double getPrecioDiario() {
-        if (tipo == null) {
-        	return 0.0;
-        }
-        switch (tipo) {
-            case SOLO_DESAYUNO: 
-            	return 10.0;   
-            case MEDIA_PENSION:
-            	return 25.0;   
-            case PENSION_COMPLETA:
-            	return 45.0;
-            case TODO_INCLUIDO:
-            	return 70.0;   
-            default: 
-            	return 0.0;
-        }
-    }
     public double calcularTotalComida() {
-
-        return getPrecioDiario() * numeroDias;
+        return precio * numeroDias;
     }
 	
 
