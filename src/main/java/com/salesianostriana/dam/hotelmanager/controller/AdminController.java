@@ -150,7 +150,7 @@ public class AdminController {
 	    return "redirect:/admin/reservas";
 	}
 	
-	   @GetMapping("/admin/{id}/eliminar/reserva")
+	   @PostMapping("/admin/{id}/eliminar/reserva")
 	   public String eliminarReserva(@PathVariable Long id) {
 		   reservaService.deleteById(id);
 		   return "redirect:/admin/reservas";
@@ -199,7 +199,7 @@ public class AdminController {
 	   }
 
 		
-	   @GetMapping("/admin/{id}/eliminar/habitaciones")
+	   @PostMapping("/admin/{id}/eliminar/habitaciones")
 	   public String borrarHabitacion(@PathVariable int id) {
 	       reservaService.eliminarPorHabitacion(id);   // borra las reservas asociadas
 	       habitacionService.deleteById(id);            // borra la habitación
@@ -306,7 +306,7 @@ public class AdminController {
 	        return "/admin/clientes";
 	    }
 	   
-	   @GetMapping("/admin/{dni}/eliminar/cliente")
+	   @PostMapping("/admin/{dni}/eliminar/cliente")
 	   public String eliminarCliente(@PathVariable String dni) {
 		   clienteService.deleteById(dni);
 		   return "redirect:/admin/clientes";
@@ -373,6 +373,7 @@ public class AdminController {
 		   servicioService.save(servicio);
 		   return "redirect:/admin/servicios";
 	   }
+
 	   
 	
 }

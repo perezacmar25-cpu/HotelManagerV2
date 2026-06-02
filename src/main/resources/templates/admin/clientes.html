@@ -60,11 +60,12 @@
 							</td>
 							<td th:text="${cliente.telefono}"></td>
 							<td>
-								<a th:href="@{'/admin/' + ${cliente.dni} + '/editar/cliente'}"
-									class="btn btn-outline-primary btn-sm px-3 me-2">Editar</a>
-								<a th:href="@{'/admin/' + ${cliente.dni} + '/eliminar/cliente'}"
-									class="btn btn-outline-danger btn-sm px-3">Eliminar</a>
-							</td>
+							<a th:href="@{'/admin/' + ${cliente.dni} + '/editar/cliente'}"
+								class="btn btn-outline-primary btn-sm px-3 me-2">Editar</a>
+							<form th:action="@{'/admin/' + ${cliente.dni} + '/eliminar/cliente'}" method="post" class="d-inline">
+								<button type="submit" class="btn btn-outline-danger btn-sm px-3">Eliminar</button>
+							</form>
+						</td>
 
 						</tr>
 						<tr th:if="${#lists.isEmpty(clientes)}">

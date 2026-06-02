@@ -110,8 +110,9 @@
 								<div class="d-grid gap-2">
 									<a th:href="@{'/admin/editar/reserva/' + ${reserva.id}}"
 										class="btn btn-outline-dark btn-sm rounded-0 px-3">Editar</a>
-									<a th:href="@{'/admin/' + ${reserva.id} + '/eliminar/reserva'}"
-										class="btn btn-outline-danger btn-sm rounded-0 px-3">Eliminar</a>
+									<form th:action="@{'/admin/' + ${reserva.id} + '/eliminar/reserva'}" method="post" class="d-inline">
+										<button type="submit" class="btn btn-outline-danger btn-sm rounded-0 px-3">Eliminar</button>
+									</form>
 								</div>
 							</td>
 						</tr>
