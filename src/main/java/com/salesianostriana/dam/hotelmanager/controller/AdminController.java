@@ -25,6 +25,7 @@ import com.salesianostriana.dam.hotelmanager.security.RolUsuario;
 import com.salesianostriana.dam.hotelmanager.service.ClienteService;
 import com.salesianostriana.dam.hotelmanager.service.HabitacionService;
 import com.salesianostriana.dam.hotelmanager.service.ReservaService;
+import com.salesianostriana.dam.hotelmanager.service.ServicioService;
 import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 
 import jakarta.validation.Valid;
@@ -40,6 +41,7 @@ public class AdminController {
 	private final HabitacionRepository habitacionRepository;
 	private final TemporadaService temporadaService;
 	private final PlanComidaRepository planComidaRepository;
+	private final ServicioService servicioService;
 	
 	
 	@GetMapping("/admin/admininicio")
@@ -352,7 +354,11 @@ public class AdminController {
 			return 4;
 		}
 	   
-	   
+	   @GetMapping("/admin/servicios")
+	   public String listarServicios(Model model) {
+		   model.addAttribute("servicios", servicioService.findAll());
+		   return "/admin/servicios";
+	   }
 	   
 	
 }
