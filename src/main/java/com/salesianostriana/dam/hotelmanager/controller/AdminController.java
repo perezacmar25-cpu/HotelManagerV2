@@ -373,7 +373,12 @@ public class AdminController {
 		   servicioService.save(servicio);
 		   return "redirect:/admin/servicios";
 	   }
-
+	   
+	   @PostMapping("/admin/{id}/eliminar/servicio")
+	   public String eliminarServicio(@PathVariable Long id) {
+		   servicioService.deleteById(id);
+		   return "redirect:/admin/servicios";
+	   }
 	   
 	
 }
