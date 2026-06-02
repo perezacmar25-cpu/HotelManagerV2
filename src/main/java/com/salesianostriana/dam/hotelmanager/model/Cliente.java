@@ -51,6 +51,7 @@ public class Cliente implements UserDetails{
 	private String password;
 	
 	private RolUsuario rol;
+	
 	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Builder.Default
 	private List<Reserva> reservas = new ArrayList<>();

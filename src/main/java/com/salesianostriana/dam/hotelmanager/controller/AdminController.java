@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.salesianostriana.dam.hotelmanager.excepciones.BorrarAdminException;
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
@@ -306,12 +307,23 @@ public class AdminController {
 
 	   @GetMapping("/admin/clientes")
 	    public String listarClientes(Model model) {
-	        model.addAttribute("clientes", clienteService.findAll());
+	        model.addAttribute("clientes", clienteService.findByRolNot(RolUsuario.ADMIN));
 	        return "/admin/clientes";
 	    }
 	   
 	   @PostMapping("/admin/{dni}/eliminar/cliente")
 	   public String eliminarCliente(@PathVariable String dni) {
+		   
+		   
+		   if(clienteService.findById(dni).get().getUsername().equals("admin")){
+			   
+			   throw new BorrarAdminException("No se puede borrar el admin base");
+		   }
+		   
+		   
+		   
+		   
+		   
 		   clienteService.deleteById(dni);
 		   return "redirect:/admin/clientes";
 	   }

@@ -23,4 +23,12 @@ public class ExceptionControllerAdvice {
 	        model.addAttribute("errorMensaje", ex.getMessage());
 	        return "error";
 	    }
+	 
+	 @ExceptionHandler(BorrarAdminException.class)
+	 public String borrarAdmin(BorrarAdminException ex, Model model) {
+		 model.addAttribute("errorTitulo","Borrar admin");
+		 model.addAttribute("errorMensaje", ex.getMessage());
+	     return "error";
+	 }
+	 
 }
