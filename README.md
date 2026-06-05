@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80" alt="Hospedium Hotel Manager V2 Banner" width="100%" style="max-width: 900px; height="100px" border-radius: 8px;">
+  <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80" alt="Hospedium Hotel Manager V2 Banner" width="100%" style="max-width: 900px; border-radius: 8px;">
 </p>
 
 
