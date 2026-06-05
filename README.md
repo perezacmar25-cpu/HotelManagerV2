@@ -1,4 +1,4 @@
-# 🏨 HotelManagerV2 — Hospedium
+# HotelManagerV2 — Hospedium
 
 > Aplicación web de gestión hotelera construida con Spring Boot 3. Panel de admin completo, reservas inteligentes y experiencia de cliente pulida. Sin bases de datos externas, arranca en segundos.
 
