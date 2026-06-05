@@ -1,42 +1,45 @@
+<div align="center">
 
-<p align="center">
-  <a href="https://github.com/perezacmar25-cpu/HotelManagerV2">
-    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=900&q=80"
-         alt="HotelManagerV2 – Hospedium"
-         width="700"
-         style="border-radius:8px;">
-  </a>
-</p>
+<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80" width="100%"/>
 
+<br/><br/>
 
-# HotelManagerV2 — Hospedium
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot%203-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap%205-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![H2](https://img.shields.io/badge/H2%20Database-1316BF?style=for-the-badge&logo=h2&logoColor=white)
 
-> Aplicación web de gestión hotelera construida con Spring Boot 3. Panel de admin completo, reservas inteligentes y experiencia de cliente pulida. Sin bases de datos externas, arranca en segundos.
+<br/>
+
+# 🏨 HotelManagerV2 — Hospedium
+
+### *Aplicación web de gestión hotelera construida con Spring Boot 3*
+### *Panel de admin completo · Reservas inteligentes · Sin configuración externa*
+
+[![Estado](https://img.shields.io/badge/Estado-Activo-brightgreen?style=flat-square)]()
+[![Puerto](https://img.shields.io/badge/Puerto-9000-blue?style=flat-square)]()
+[![Licencia](https://img.shields.io/badge/Licencia-MIT-orange?style=flat-square)]()
+
+</div>
 
 ---
 
 ## Stack
-
-```
 Backend   →  Spring Boot 3 · Spring Data JPA · Spring Security
 Frontend  →  Thymeleaf · Bootstrap 5 · JavaScript vanilla
 Base de datos  →  H2 (en memoria, carga automática al arrancar)
 Extras    →  Lombok · Bean Validation · Generación de PDF
-```
 
 ---
 
 ## Arrancar el proyecto
-
 ```bash
 # 1. Clona o descomprime el proyecto
 git clone https://github.com/perezacmar25-cpu/HotelManagerV2/tree/main
-
 # 2. Abre en IntelliJ IDEA (recomendado) o Eclipse
-
 # 3. Ejecuta la clase principal
 com.salesianostriana.dam.hotelmanager.HotelManagerV21Application
-
 # 4. Abre el navegador
 http://localhost:9000
 ```
@@ -59,7 +62,6 @@ Consola H2 → `http://localhost:9000/h2-console`
 ## Qué puede hacer cada rol
 
 ### 👤 Cliente (USER)
-
 - Registro y login
 - Ver habitaciones disponibles con carrusel de fotos
 - Hacer reservas (validación de fechas, aforo y solapamientos incluidos)
@@ -69,9 +71,7 @@ Consola H2 → `http://localhost:9000/h2-console`
 - Cancelar una reserva
 
 ### 🔑 Administrador (ADMIN)
-
 Panel completo con gestión CRUD de:
-
 - **Clientes**
 - **Habitaciones**
 - **Reservas** — incluyendo cambio manual de estado
@@ -87,23 +87,20 @@ Vistas adicionales:
 ## Lógica de precios
 
 El precio final de una reserva se calcula automáticamente combinando:
-
-```
 Precio base de la habitación
-  + Ajuste por temporada
-  + Plan de comida seleccionado
-  + Servicios extras añadidos
+
+Ajuste por temporada
+Plan de comida seleccionado
+Servicios extras añadidos
 ─────────────────────────────
 = Total de la reserva
-```
+
 
 El resumen se actualiza en tiempo real en el formulario gracias a un pequeño script en JavaScript. Las validaciones de negocio (solapamiento de fechas, aforo máximo) se aplican tanto en frontend como en backend.
 
 ---
 
 ## Estructura del proyecto
-
-```
 src/
 ├── main/
 │   ├── java/.../
@@ -114,7 +111,6 @@ src/
 │   └── resources/
 │       ├── templates/      # Plantillas Thymeleaf
 │       └── static/         # CSS, JS e imágenes
-```
 
 ---
 
