@@ -19,7 +19,7 @@ Extras    →  Lombok · Bean Validation · Generación de PDF
 
 ```bash
 # 1. Clona o descomprime el proyecto
-git clone <repo-url>
+git clone https://github.com/perezacmar25-cpu/HotelManagerV2/tree/main
 
 # 2. Abre en IntelliJ IDEA (recomendado) o Eclipse
 
