@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80" alt="Hospedium Logo" width="400">
+</p>
+
+
 # HotelManagerV2 — Hospedium
 
 > Aplicación web de gestión hotelera construida con Spring Boot 3. Panel de admin completo, reservas inteligentes y experiencia de cliente pulida. Sin bases de datos externas, arranca en segundos.
