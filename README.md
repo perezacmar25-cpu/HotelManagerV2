@@ -1,6 +1,11 @@
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80" alt="Hospedium Hotel Manager V2 Banner" width="900">
+  <a href="https://github.com/perezacmar25-cpu/HotelManagerV2">
+    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=900&q=80"
+         alt="HotelManagerV2 – Hospedium"
+         width="700"
+         style="border-radius:8px;">
+  </a>
 </p>
 
 
