@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
+    <link th:href="@{/css/app.css}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
@@ -16,18 +17,18 @@
         }
     </style>
 </head>
-<body>
-<div class="overlay d-flex align-items-center py-5">
+<body class="guest-form-page">
+<main class="overlay guest-signup d-flex align-items-center py-5">
     <div class="container">
         <div class="row justify-content-end">
             <div class="col-md-5">
-                <div class="bg-white p-5 shadow-lg">
+                <div class="bg-white p-5 shadow-lg guest-signup__card">
 
                     <p class="text-uppercase text-secondary small mb-1">Hospedium</p>
                     <h2 class="fw-light mb-4" style="font-family:Georgia,serif"
                         th:text="${edicionCliente == true} ? 'Editar cliente' : 'Alta de huésped'">Alta de huésped</h2>
 
-                    <form th:action="${edicionCliente == true} ? @{/admin/{dni}/editar/cliente(dni=${cliente.dni})} : (${nuevoClienteAdmin == true} ? @{/admin/nuevo/cliente} : @{/nuevo})"
+                    <form class="guest-signup__form" th:action="${edicionCliente == true} ? @{/admin/{dni}/editar/cliente(dni=${cliente.dni})} : (${nuevoClienteAdmin == true} ? @{/admin/nuevo/cliente} : @{/nuevo})"
                           th:object="${cliente}" method="post">
 
                         <div class="mb-3">
@@ -77,7 +78,7 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 
 	<footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
