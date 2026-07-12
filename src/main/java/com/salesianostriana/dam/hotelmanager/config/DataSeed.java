@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.salesianostriana.dam.hotelmanager.model.Cliente;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
@@ -24,7 +25,7 @@ import com.salesianostriana.dam.hotelmanager.service.TemporadaService;
 public class DataSeed {
 
     @Bean
-    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer, PlanComidaService planSer, ReservaService reservaSer) {
+    CommandLineRunner initData(HabitacionService habSer, ServicioService serSer, ClienteService cliSer, TemporadaService temSer, PlanComidaService planSer, ReservaService reservaSer, PasswordEncoder passwordEncoder) {
         return args -> {
             if (habSer.findAll().isEmpty()) {
                 habSer.save(Habitacion.builder().tipo("Individual").precioNoche(55.0).disponible(true).imagenUrl("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80").build());
@@ -86,7 +87,7 @@ public class DataSeed {
                         .email("user@gmail.com")
                         .telefono("667555489")
                         .nombre("user")
-                        .password("{noop}user")
+                        .password(passwordEncoder.encode("user"))
                         .username("user")
                         .rol(RolUsuario.USER)
                         .build());
@@ -97,7 +98,7 @@ public class DataSeed {
                         .email("admin@hospedium.com")
                         .telefono("600000000")
                         .username("admin")
-                        .password("{noop}admin")
+                        .password(passwordEncoder.encode("admin"))
                         .rol(RolUsuario.ADMIN)
                         .build());
             }

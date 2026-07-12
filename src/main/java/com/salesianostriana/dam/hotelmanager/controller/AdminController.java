@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,7 @@ public class AdminController {
 	private final PlanComidaRepository planComidaRepository;
 	private final PlanComidaService planComidaService;
 	private final ServicioService servicioService;
+	private final PasswordEncoder passwordEncoder;
 	
 	
 	@GetMapping("/admin/admininicio")
@@ -284,6 +286,13 @@ public class AdminController {
 		        return "cliente";
 		    }
 		   
+		   if (password == null || password.isBlank() || password.length() < 6) {
+			   model.addAttribute("error", "La contraseña debe tener al menos 6 caracteres");
+			   model.addAttribute("cliente", cliente);
+			   model.addAttribute("nuevoClienteAdmin", true);
+			   return "cliente";
+		   }
+
 		   if (!password.equals(confirmPassword)) {
 			   model.addAttribute("error", "Las contraseñas no coinciden");
 			   model.addAttribute("cliente", cliente);
@@ -299,7 +308,7 @@ public class AdminController {
 		   }
 		   
 		   cliente.setRol(RolUsuario.USER);
-		   cliente.setPassword("{noop}" + password);
+		   cliente.setPassword(passwordEncoder.encode(password));
 		   clienteService.save(cliente);
 		   
 		   return "redirect:/admin/clientes";
@@ -313,18 +322,12 @@ public class AdminController {
 	   
 	   @PostMapping("/admin/{dni}/eliminar/cliente")
 	   public String eliminarCliente(@PathVariable String dni) {
-		   
-		   
-		   if(clienteService.findById(dni).get().getUsername().equals("admin")){
-			   
-			   throw new BorrarAdminException("No se puede borrar el admin base");
-		   }
-		   
-		   
-		   
-		   
-		   
-		   clienteService.deleteById(dni);
+		   clienteService.findById(dni).ifPresent(cliente -> {
+			   if (cliente.getRol() == RolUsuario.ADMIN) {
+				   throw new BorrarAdminException("No se puede borrar una cuenta de administrador");
+			   }
+			   clienteService.deleteById(dni);
+		   });
 		   return "redirect:/admin/clientes";
 	   }
 	   

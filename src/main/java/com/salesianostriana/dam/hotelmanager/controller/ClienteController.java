@@ -1,11 +1,11 @@
 package com.salesianostriana.dam.hotelmanager.controller;
  
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +30,7 @@ public class ClienteController {
  
     private final ClienteService clienteService;
     private final ReservaService reservaService;
+    private final PasswordEncoder passwordEncoder;
  
     @GetMapping("/registro")
     public String formulario(Model model) {
@@ -69,10 +70,9 @@ public class ClienteController {
             return "cliente";
         }
 
-        // asignamos rol USER y contraseña con {noop}
+        // Asignamos el rol y almacenamos la contraseña cifrada.
         cliente.setRol(RolUsuario.USER);
-        cliente.setPassword("{noop}" + password);
-        //noop sirve para comparar la contraseña directamente con la base de datos
+        cliente.setPassword(passwordEncoder.encode(password));
         
         // guardamos el cliente en la base de datos
         clienteService.save(cliente);
@@ -88,14 +88,11 @@ public class ClienteController {
     }
     
     @GetMapping("/mis-reservas")
-    public String listarReservas(@AuthenticationPrincipal Cliente cliente, Model model) {
-        List<Reserva> reservas = reservaService.findByClienteDni(cliente.getDni());
-        model.addAttribute("nombreCliente", cliente.getNombre());
-        model.addAttribute("reservas", reservas);
-        return "reservascliente";
+    public String redirigirMisReservas() {
+        return "redirect:/misreservas";
     }
     
-    @GetMapping("/{id}/eliminar/reserva")
+    @PostMapping("/{id}/eliminar/reserva")
     public String eliminarReserva(@PathVariable Long id, @AuthenticationPrincipal Cliente cliente) {
         Optional<Reserva> reserva = reservaService.findById(id);
         

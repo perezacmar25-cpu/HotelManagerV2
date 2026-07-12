@@ -62,7 +62,8 @@
 							<td>
 							<a th:href="@{'/admin/' + ${cliente.dni} + '/editar/cliente'}"
 								class="btn btn-outline-primary btn-sm px-3 me-2">Editar</a>
-							<form th:action="@{'/admin/' + ${cliente.dni} + '/eliminar/cliente'}" method="post" class="d-inline">
+							<form th:action="@{'/admin/' + ${cliente.dni} + '/eliminar/cliente'}" method="post" class="d-inline"
+								onsubmit="return confirm('Seguro que quieres eliminar este cliente?');">
 								<button type="submit" class="btn btn-outline-danger btn-sm px-3">Eliminar</button>
 							</form>
 						</td>

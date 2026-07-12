@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.hotelmanager.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,6 @@ import com.salesianostriana.dam.hotelmanager.excepciones.FechaFinInicioException
 import com.salesianostriana.dam.hotelmanager.excepciones.PersonasExcedidasException;
 import com.salesianostriana.dam.hotelmanager.model.EstadoReserva;
 import com.salesianostriana.dam.hotelmanager.model.Habitacion;
-import com.salesianostriana.dam.hotelmanager.model.PlanComida;
 import com.salesianostriana.dam.hotelmanager.model.Reserva;
 import com.salesianostriana.dam.hotelmanager.model.ReservaHabitacion;
 import com.salesianostriana.dam.hotelmanager.repository.HabitacionRepository;
@@ -35,6 +35,13 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
 
         validarFechas(reserva);
         validarPersonas(reserva.getNumeroPersonas(), tipoHabitacion);
+
+        // Los datos calculados y las relaciones se establecen en el servidor.
+        reserva.setPrecioTotal(0);
+        reserva.setTemporada(null);
+        reserva.setPlanComida(null);
+        reserva.setListadoReservaHab(new ArrayList<>());
+        reserva.setServiciosReservados(new ArrayList<>());
 
         List<Habitacion> disponibles = habitacionRepository.findDisponiblesSinSolapamiento(
                 tipoHabitacion,
@@ -62,8 +69,7 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
                 .ifPresent(reserva::setTemporada);
         
         if (planComidaId != null) {
-            PlanComida plan = planComidaRepository.findById(planComidaId).orElse(null);
-            reserva.setPlanComida(plan);
+            planComidaRepository.findById(planComidaId).ifPresent(reserva::setPlanComida);
         }
         reserva.calcularPrecioTotal();
 
@@ -91,10 +97,10 @@ public class ReservaService extends BaseServiceImpl<Reserva, Long, JpaRepository
         }
     }
     
-    public void validarPersonas(int personas, String tipoHabitacion) {
+    public void validarPersonas(Integer personas, String tipoHabitacion) {
         int maxPersonas = 0;
         
-        if (personas <= 0) {
+        if (personas == null || personas <= 0) {
             throw new PersonasExcedidasException("El número de personas debe ser mayor que 0");
         }
 

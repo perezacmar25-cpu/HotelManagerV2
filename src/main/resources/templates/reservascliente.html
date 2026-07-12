@@ -111,10 +111,12 @@
 										class="btn btn-outline-primary btn-sm rounded-0 flex-fill text-uppercase">
 										Ver detalles
 									</a>
-									<a th:href="@{/{id}/eliminar/reserva(id=${r.id})}"
-										class="btn btn-outline-danger btn-sm rounded-0 flex-fill text-uppercase">
-										Cancelar
-									</a>
+									<form th:action="@{/{id}/eliminar/reserva(id=${r.id})}" method="post" class="d-grid flex-fill"
+										onsubmit="return confirm('Seguro que quieres cancelar esta reserva?');">
+										<button type="submit" class="btn btn-outline-danger btn-sm rounded-0 text-uppercase">
+											Cancelar
+										</button>
+									</form>
 								</div>
 							</div>
 

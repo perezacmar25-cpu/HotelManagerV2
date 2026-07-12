@@ -2,7 +2,7 @@
 
 # 🏨 HotelManager
 
-**Sistema de gestión hotelera desarrollado en Java con Spring Boot**
+**Sistema de gestión hotelera desarrollado con Java y Spring Boot**
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
@@ -15,18 +15,19 @@
 
 ## 📋 Descripción
 
-HotelManager es una aplicación desarrollada en Java con Spring Boot para la gestión integral de un hotel. Permite administrar habitaciones, clientes y reservas, y controlar el estado de cada estancia mediante check-in y check-out.
+HotelManager es una aplicación para gestionar un hotel: habitaciones, clientes, reservas, servicios y planes de comida. Incluye un área de administración para consultar y actualizar esta información.
 
-Desarrollado como proyecto académico aplicando principios de programación orientada a objetos, arquitectura por capas y persistencia con base de datos embebida H2.
+Proyecto académico desarrollado aplicando programación orientada a objetos, arquitectura por capas y persistencia con H2.
 
 ---
 
 ## ✨ Funcionalidades
 
-- 🚪 **Gestión de habitaciones** — Alta, baja y modificación con tipo, número y estado (libre/ocupada)
-- 📅 **Reservas** — Creación y consulta de reservas asociando cliente, habitación y fechas
-- 🔑 **Check-in / Check-out** — Registro de entradas y salidas con actualización automática del estado
-- 👤 **Gestión de clientes** — Registro y consulta de datos de huéspedes
+- 🛏️ **Habitaciones** — Alta, edición, eliminación y consulta de disponibilidad.
+- 📅 **Reservas** — Creación, edición y gestión de estados.
+- 👤 **Clientes** — Registro, edición y consulta de huéspedes.
+- 🧾 **Servicios y planes de comida** — Gestión de extras asociados a la estancia.
+- 📊 **Administración** — Consulta de llegadas y habitaciones más utilizadas.
 
 ---
 
@@ -34,32 +35,34 @@ Desarrollado como proyecto académico aplicando principios de programación orie
 
 | Tecnología | Uso |
 |---|---|
-| Java | Lenguaje principal |
+| Java 21 | Lenguaje principal |
 | Spring Boot | Framework de aplicación |
+| Thymeleaf | Plantillas web del servidor |
+| Spring Security | Autenticación y autorización |
 | Maven | Gestión de dependencias y compilación |
-| H2 Database | Base de datos embebida (en fichero local) |
+| H2 Database | Base de datos embebida en memoria |
 
 ---
 
 ## 🚀 Cómo ejecutar
 
-**Requisitos:** Java 17+ y Maven instalados.
+**Requisito:** Java 21 o superior.
 
 ```bash
-# 1. Clona el repositorio
-git clone https://github.com/tu-usuario/hotelmanager.git
-
-# 2. Entra en la carpeta
-cd hotelmanager
-
-# 3. Compila y arranca
-mvn spring-boot:run
+# En la carpeta del proyecto
+./mvnw spring-boot:run
 ```
 
-> La base de datos H2 se crea automáticamente al arrancar. No necesitas configurar nada más.
+En Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+La aplicación estará disponible en `http://localhost:9000`. La base de datos se crea automáticamente al iniciar la aplicación.
 
 ---
 
-## 👥 Autores
+## 👥 Autor
 
 Mario Pérez Acosta
